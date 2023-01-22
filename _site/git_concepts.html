@@ -153,6 +153,7 @@
           <li><a href="#maintaining-better-commit-history" id="markdown-toc-maintaining-better-commit-history">Maintaining better commit history</a></li>
         </ol>
       </li>
+      <li><a href="#creating-new-github-repo" id="markdown-toc-creating-new-github-repo">Creating new github repo</a></li>
     </ol>
   </li>
 </ol>
@@ -414,6 +415,23 @@ merged with the develop branch only after some extensive code review and testing
 <a href="https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag">(see tagging)</a></p>
 
 <p>This tagging allows for easy identification as to what major release correspondeds to that commit</p>
+      <h2 id="creating-new-github-repo">
+        
+        
+          <a href="#creating-new-github-repo" class="anchor-heading" aria-labelledby="creating-new-github-repo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Creating new github repo
+        
+        
+      </h2>
+    
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">git init &amp;&amp; git symbolic-ref HEAD refs/heads/main</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git add .</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git commit -m "first commit"</code></li>
+  <li>Create new repo on github and copy SSH url</li>
+  <li><code class="language-plaintext highlighter-rouge">git init &amp;&amp; git symbolic-ref HEAD refs/heads/main</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git push origin main</code></li>
+</ol>
 
         
 

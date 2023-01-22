@@ -188,3 +188,13 @@ It is also common practice to tag certain commits of the develop branch.
 [(see tagging)](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag)
 
 This tagging allows for easy identification as to what major release correspondeds to that commit
+
+## Creating new github repo
+
+1. ```git init && git symbolic-ref HEAD refs/heads/main```
+2. ```git add .```
+3. ```git commit -m "first commit"```
+4. Create new repo on github and copy SSH url
+5. ```git init && git symbolic-ref HEAD refs/heads/main```
+6. ```git push origin main```
+
