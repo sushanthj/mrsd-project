@@ -39,6 +39,7 @@ Then directly start with heroku create as per the below link and the other steps
 [Deploy jekyll on heroku](https://blog.heroku.com/jekyll-on-heroku)
 
 Finally, go to heroku page -> settings -> change the name of the app and find the url
+Then, go to the deploy page on heroku and link the respective github repo for future updates
 
 # To better your experience of writing in code
 
