@@ -1,0 +1,194 @@
+{"0": {
+    "doc": "Git Concepts",
+    "title": "Before you Begin",
+    "content": "Reference . In the above link, follow the procedures, but instead of using username and password each time, setup the ssh keys and use them more often . ssh keys are found in ./.ssh folder (or lookup keygen to generate your keys) . ",
+    "url": "http://localhost:4000/git_concepts#before-you-begin",
+    "relUrl": "/git_concepts#before-you-begin"
+  },"1": {
+    "doc": "Git Concepts",
+    "title": "Basics of generating new content in local and pushing to github",
+    "content": " ",
+    "url": "http://localhost:4000/git_concepts#basics-of-generating-new-content-in-local-and-pushing-to-github",
+    "relUrl": "/git_concepts#basics-of-generating-new-content-in-local-and-pushing-to-github"
+  },"2": {
+    "doc": "Git Concepts",
+    "title": "Process for adding to a github page",
+    "content": "git add . git commit -m “made new code” git push or git push origin develop (if you cloned from develop branch) . ",
+    "url": "http://localhost:4000/git_concepts#process-for-adding-to-a-github-page",
+    "relUrl": "/git_concepts#process-for-adding-to-a-github-page"
+  },"3": {
+    "doc": "Git Concepts",
+    "title": "If you want to track a different branch",
+    "content": ". | git branch –set-upstream-to=origin/master git add . git push | . or make a new remote . | git remote add ts_origin_wiki git@github.com:sjayanth21/BR_Wiki.git git push –set-upstream ts_origin_wiki master git push ts_origin_wiki_master | . ",
+    "url": "http://localhost:4000/git_concepts#if-you-want-to-track-a-different-branch",
+    "relUrl": "/git_concepts#if-you-want-to-track-a-different-branch"
+  },"4": {
+    "doc": "Git Concepts",
+    "title": "Working with remotes",
+    "content": "Any folder can have a number of remotes like: origin and ts_origin_github . To make local branch master track a different remote branch (branch in your cloud github repo) do: git branch –set-upstream-to=origin/master . or git branch –set-upstream-to=origin/develop . ",
+    "url": "http://localhost:4000/git_concepts#working-with-remotes",
+    "relUrl": "/git_concepts#working-with-remotes"
+  },"5": {
+    "doc": "Git Concepts",
+    "title": "Handling merge conflicts",
+    "content": "If you cloned a repo or forked your own branch you may need to pull from upstream to update your codebase. However, running a simple ‘git pull’ may throw merge conflicts . Let’s begin by assuming our local branch is called ‘feature/sj’ Our remote branch is called ‘develop’ . So do the following . | Run a ‘git fetch’ to get the updates on all branches (and if any new branch has been added) | In your personal branch commit all changes by doing: git add, commit and push | sudo apt install meld | Now to get the upstream updates do ‘git checkout main’ (or whichever is the upstream branch with latest updates) | Now to put this in your personal branch run ‘git checkout feature/sj’ | Now we do the actual merging using ‘git merge develop’ (this will merge everythin in deveop into the current branch viz feature/sj) | The above step would have thrown some merge conflicts, to solve that run ‘git mergetool’ | The above step opens meld, make all necessary resolutions and save | Now our codebase would have been updated to whatever we resolved in meld | Now run ‘git commit’ without any arguments as it is a ‘merge commit’ | Now as usual do ‘git push origin feature/sj’ to push your updated personal branch to github | . Note. When you open meld, the middle window is the final merged file which you will finally get as output. Your job will be to choose which lines of code : . | from develop | from feature/sj that will be going into your final output. develop may be on the right window and feature/sj may be on the left window. You will have two options: . | Move the lines from the left into both middle and right windows (the code highlight for that line should vanish) | Move the lines from the right into both middle and left windows (the code highlight for that line should vanish) | . | . ",
+    "url": "http://localhost:4000/git_concepts#handling-merge-conflicts",
+    "relUrl": "/git_concepts#handling-merge-conflicts"
+  },"6": {
+    "doc": "Git Concepts",
+    "title": "Points to Note",
+    "content": ". | If you checkout a file ‘git checkout blade.py’ it resets the file to whatever is the latest from that branch in upstream . | If you want to physically add or change remotes go to the respective folder and do ‘nano .git/config’ . | the correct syntax for the merge command is: ‘git merge ts_origin/master’ What this does is that if the current branch is origin/develop it will merge the files of current branch i.e origin/develop with ts_origin/master . | Note that even if ts_origin/master is in ts_github account and origin/master is in sushanthj github account, it will still merge as long as remotes exist for both these accounts. If remotes don’t exist, you can always add as shown up above . | . Concepts for working with two repos or two repos on two different github accounts: . Basically locally you will have ‘master’ branch if you do ‘git branch’ This master can track two upstream branches using two different remotes One remote is added automatically when you clone the repo The next remote will have to be added manually to your other git account or other repo . Then to push the same commit to both branches first do ‘git push’ and see which repo it pushes to (say it pushes to origin/master Then do ‘git push –set-upstream ts_origin/develop’ to push to your second repo However, do note that your local branch always tracks to the latest branch you pushed to i.e if you do a git pull, it will pull from the latest branch to which you pushed in this case it will pull from ts_origin/develop . Saving a patch file . If you have changes made which you want to save locally and not push to remote, you can save a patch file . git diff &gt; new_changes.patch . Now to apply this patch onto any branch, do: . git apply new_changes.patch . Saving changes by stashing . Instead of saving a specific file for changes (such as a patch file), you could also stash your changes locally . git stash . The above command will stash all tracked changes. You could also stash only committed changes. Refer: stashing . To then apply the stashed changes (one time use only as pop will remove from stash) . git stash pop . To apply without popping do: . git stash apply . To remove any particular item in stash: . git stash drop . To view all entries in stash and then apply specific one do: . git stash list git stash apply n . n = stash item number . ",
+    "url": "http://localhost:4000/git_concepts#points-to-note",
+    "relUrl": "/git_concepts#points-to-note"
+  },"7": {
+    "doc": "Git Concepts",
+    "title": "Nomenclature of Git Branches",
+    "content": "Usually you will need to follow the branch nomenclature which your company uses. However, it’s good to know the common industry practice: . | The branch which will be running on all production would be main (or master) | The main branch in which developers will push finalized code would be develop (sometimes develop can itself be production branch) | For any new addition that an employee wants to propose to the codebase, a branch called ‘feature/sj’ will be created (sj is my initials). This feature branch will be merged with the develop branch only after some extensive code review and testing | . Maintaining better commit history . It is also common practice to tag certain commits of the develop branch. (see tagging) . This tagging allows for easy identification as to what major release correspondeds to that commit . ",
+    "url": "http://localhost:4000/git_concepts#nomenclature-of-git-branches",
+    "relUrl": "/git_concepts#nomenclature-of-git-branches"
+  },"8": {
+    "doc": "Git Concepts",
+    "title": "Git Concepts",
+    "content": ". | Before you Begin | Basics of generating new content in local and pushing to github . | Process for adding to a github page | If you want to track a different branch | Working with remotes | Handling merge conflicts | Points to Note . | Concepts for working with two repos or two repos on two different github accounts: | Saving a patch file | Saving changes by stashing | . | Nomenclature of Git Branches . | Maintaining better commit history | . | . | . ",
+    "url": "http://localhost:4000/git_concepts",
+    "relUrl": "/git_concepts"
+  },"9": {
+    "doc": "Intro",
+    "title": "To better your experience of writing in code",
+    "content": "Download the following extensions in vscode: . | Markdown All in one | code runner (see youtube video on how to setup vscode for C++) | . ",
+    "url": "http://localhost:4000/intro/#to-better-your-experience-of-writing-in-code",
+    "relUrl": "/intro/#to-better-your-experience-of-writing-in-code"
+  },"10": {
+    "doc": "Intro",
+    "title": "Shortcuts in general pour toi",
+    "content": ". | Once Markdown all in one is installed, you can do ctrl+shift+v to see preview of markdown immediately | To run any C++ file it’s just ctrl+shift+n | If you want to bold any specific text in markdown just select the text by holding down ctrl+shift and using arrow keys to select the required text. Then once text is selected just do ctrl+b to bolden and ctrl+i to italicize . | click on tab after using - for normal bullet pointing to get sub-points | . | To get numbered list continuously, in-between two headings 1. and 2. all content should be indented with 4 spaces in the markdown script . | To shift between windows in ubuntu, just do windows_key+shift+right/left_arrow | To minimize or unmaximize any window in hold down alt and press space, then choose to minimize | To then maximize or move window to right half/left half of screen, windows_key+shift+right/left_arrow | . ",
+    "url": "http://localhost:4000/intro/#shortcuts-in-general-pour-toi",
+    "relUrl": "/intro/#shortcuts-in-general-pour-toi"
+  },"11": {
+    "doc": "Intro",
+    "title": "Intro",
+    "content": "For Jekyll reference see just_the_docs . The following pages are built in order to understand Computer Vision and Machine Learning . To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url . ",
+    "url": "http://localhost:4000/intro/",
+    "relUrl": "/intro/"
+  },"12": {
+    "doc": "Mechanical Development",
+    "title": "Mechanical Development",
+    "content": " ",
+    "url": "http://localhost:4000/docs/Mechanical",
+    "relUrl": "/docs/Mechanical"
+  },"13": {
+    "doc": "RealSense Setup",
+    "title": "RealSense Drivers for Linux",
+    "content": " ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-linux",
+    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-linux"
+  },"14": {
+    "doc": "RealSense Setup",
+    "title": "Add Server’s public keys and to list of repositories",
+    "content": ". | sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE | sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE | sudo add-apt-repository \"deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main\" -u | . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#add-servers-public-keys-and-to-list-of-repositories",
+    "relUrl": "/docs/software_bringup/RealSense.html#add-servers-public-keys-and-to-list-of-repositories"
+  },"15": {
+    "doc": "RealSense Setup",
+    "title": "Install Libraries",
+    "content": ". | sudo apt-get install librealsense2-dkms | sudo apt-get install librealsense2-utils | . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#install-libraries",
+    "relUrl": "/docs/software_bringup/RealSense.html#install-libraries"
+  },"16": {
+    "doc": "RealSense Setup",
+    "title": "Verify Installation",
+    "content": "modinfo uvcvideo | grep \"version:\" should include realsense string . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#verify-installation",
+    "relUrl": "/docs/software_bringup/RealSense.html#verify-installation"
+  },"17": {
+    "doc": "RealSense Setup",
+    "title": "Camera Trial",
+    "content": "After above steps, connect camera and try: realsense-viewer . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#camera-trial",
+    "relUrl": "/docs/software_bringup/RealSense.html#camera-trial"
+  },"18": {
+    "doc": "RealSense Setup",
+    "title": "RealSense Drivers for Jetson",
+    "content": "Reference . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-jetson",
+    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-jetson"
+  },"19": {
+    "doc": "RealSense Setup",
+    "title": "ROS2 Wrappers",
+    "content": "Reference . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#ros2-wrappers",
+    "relUrl": "/docs/software_bringup/RealSense.html#ros2-wrappers"
+  },"20": {
+    "doc": "RealSense Setup",
+    "title": "SLAM with ROS2",
+    "content": "Realsense has some Turtlebot3 robot images for example which can build a map . Reference . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#slam-with-ros2",
+    "relUrl": "/docs/software_bringup/RealSense.html#slam-with-ros2"
+  },"21": {
+    "doc": "RealSense Setup",
+    "title": "RealSense Setup",
+    "content": ". | RealSense Drivers for Linux . | Add Server’s public keys and to list of repositories | Install Libraries | Verify Installation | Camera Trial | . | RealSense Drivers for Jetson | ROS2 Wrappers | SLAM with ROS2 | . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html",
+    "relUrl": "/docs/software_bringup/RealSense.html"
+  },"22": {
+    "doc": "Understanding 8020",
+    "title": "Understanding 8020",
+    "content": " ",
+    "url": "http://localhost:4000/docs/Mechanical/frame.html",
+    "relUrl": "/docs/Mechanical/frame.html"
+  },"23": {
+    "doc": "Home",
+    "title": "Team Dock Dock Go!",
+    "content": "Explaining the steps taken to setup and build the systems necessary for an autonomous mobile robot capable of transporting LEGOs for MFI’s Testbed . ",
+    "url": "http://localhost:4000/#team-dock-dock-go",
+    "relUrl": "/#team-dock-dock-go"
+  },"24": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "http://localhost:4000/",
+    "relUrl": "/"
+  },"25": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Xavier AGX Setup",
+    "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
+  },"26": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Links for above steps",
+    "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
+  },"27": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "ROS Setup via Dockerfile on Desktop",
+    "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-via-dockerfile-on-desktop",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-via-dockerfile-on-desktop"
+  },"28": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Why use Docker?",
+    "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
+  },"29": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Steps to setup ROS",
+    "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-setup-ros",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-setup-ros"
+  },"30": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "ROS2 on the Jetson and Desktop",
+    "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup via Dockerfile on Desktop . | Why use Docker? | Steps to setup ROS | . | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html"
+  },"31": {
+    "doc": "Systems Setup",
+    "title": "Systems Setup",
+    "content": " ",
+    "url": "http://localhost:4000/docs/software_bringup",
+    "relUrl": "/docs/software_bringup"
+  }
+}
