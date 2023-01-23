@@ -29,7 +29,7 @@ Setting up the AGX involves the following steps:
 - [SDK Manager Usage](https://docs.nvidia.com/sdk-manager/install-with-sdkm-jetson/index.html)
 - [Initial Kit Setup](https://www.youtube.com/watch?v=-nX8eD7FusQ&ab_channel=NVIDIADeveloper)
 
-# ROS Setup via Dockerfile on Desktop
+# ROS Setup for Desktop using Dockerfile
 
 I watched a few videos online and managed to write a Dockerfile to build ros. 
 
@@ -117,7 +117,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 ```
 
-## Steps to setup ROS
+## Steps to create Docker Image
 
 1. Clone the Repository [mfi-amr](https://github.com/sushanthj/mfi-amr)
 2. Enter the cloned repo and run the following command \
@@ -145,3 +145,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ```
 4. Now, the last line of that script requests docker to build the latest image with the
    tag ```trial_ros_image```
+
+# Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)
+
+[Reference](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
+
+```bash
+#!/bin/bash
+
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+sudo apt update && sudo apt install curl
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+sudo apt update
+sudo apt upgrade
+
+sudo apt install ros-foxy-desktop python3-argcomplete
+```
+
+## Checking if it's installed
+```printenv | grep -i ROS``` should return ROS_DISTRO and PYTHON_VERSION and others..
+
+# Add ros to .bashrc
+
+1. Navigate to ```~/.bashrc```
+2. Add the following to the last line: ```source /opt/ros/foxy/setup.bash```
