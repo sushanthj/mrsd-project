@@ -63,3 +63,9 @@ sudo make uninstall && make clean && make && sudo make install
 
 [Reference](https://github.com/IntelRealSense/realsense-ros)
 
+# View RealSense on rqt
+
+1. open rqt by typing ```rqt``` in the terminal
+2. Navigate to Plugins -> Visualization -> Image View
+3. You should then see something like this \
+   ![](/images/ros_setup/rqt.png)
