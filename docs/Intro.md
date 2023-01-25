@@ -54,7 +54,3 @@ Download the following extensions in vscode:
 - If you want to bold any specific text in markdown just select the text by holding down **ctrl+shift** and using arrow keys to select the required text. Then once text is selected just do **ctrl+b** to **bolden** and **ctrl+i** to ***italicize***
   - click on tab after using **-** for normal bullet pointing to get sub-points
 - To get numbered list continuously, in-between two headings 1. and 2. all content should be indented with 4 spaces in the markdown script
-
-- To shift between windows in ubuntu, just do **windows_key+shift+right/left_arrow**
-- To minimize or unmaximize any window in **hold down alt and press space**, then choose to minimize
-- To then maximize or move window to right half/left half of screen, **windows_key+shift+right/left_arrow**
