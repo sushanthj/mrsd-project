@@ -90,7 +90,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Intro</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item  active"><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link active">RealSense Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Understanding 8020</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Concepts</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Intro</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item  active"><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link active">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Understanding 8020</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Concepts</a></li></ul>
 
       
     </nav>
@@ -145,23 +145,23 @@
     Table of contents
   </summary>
 <ol id="markdown-toc">
-  <li><a href="#realsense-drivers-for-linux" id="markdown-toc-realsense-drivers-for-linux">RealSense Drivers for Linux</a>    <ol>
+  <li><a href="#realsense-drivers-for-computer-x86-and-ubuntu-2004" id="markdown-toc-realsense-drivers-for-computer-x86-and-ubuntu-2004">RealSense Drivers for Computer (x86 and Ubuntu 20.04)</a>    <ol>
       <li><a href="#add-servers-public-keys-and-to-list-of-repositories" id="markdown-toc-add-servers-public-keys-and-to-list-of-repositories">Add Server’s public keys and to list of repositories</a></li>
       <li><a href="#install-libraries" id="markdown-toc-install-libraries">Install Libraries</a></li>
       <li><a href="#verify-installation" id="markdown-toc-verify-installation">Verify Installation</a></li>
       <li><a href="#camera-trial" id="markdown-toc-camera-trial">Camera Trial</a></li>
     </ol>
   </li>
-  <li><a href="#realsense-drivers-for-jetson" id="markdown-toc-realsense-drivers-for-jetson">RealSense Drivers for Jetson</a></li>
-  <li><a href="#ros2-wrappers" id="markdown-toc-ros2-wrappers">ROS2 Wrappers</a></li>
-  <li><a href="#slam-with-ros2" id="markdown-toc-slam-with-ros2">SLAM with ROS2</a></li>
+  <li><a href="#realsense-drivers-for-xavier-agx" id="markdown-toc-realsense-drivers-for-xavier-agx">RealSense Drivers for Xavier AGX</a></li>
+  <li><a href="#setup-realsense-wrappers-to-publish-realsense-images" id="markdown-toc-setup-realsense-wrappers-to-publish-realsense-images">Setup RealSense wrappers to publish RealSense Images</a></li>
+  <li><a href="#view-realsense-on-rqt" id="markdown-toc-view-realsense-on-rqt">View RealSense on rqt</a></li>
 </ol>
 
 </details>
-      <h1 id="realsense-drivers-for-linux">
+      <h1 id="realsense-drivers-for-computer-x86-and-ubuntu-2004">
         
         
-          <a href="#realsense-drivers-for-linux" class="anchor-heading" aria-labelledby="realsense-drivers-for-linux"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RealSense Drivers for Linux
+          <a href="#realsense-drivers-for-computer-x86-and-ubuntu-2004" class="anchor-heading" aria-labelledby="realsense-drivers-for-computer-x86-and-ubuntu-2004"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RealSense Drivers for Computer (x86 and Ubuntu 20.04)
         
         
       </h1>
@@ -211,38 +211,68 @@
     
 
 <p>After above steps, connect camera and try: <code class="language-plaintext highlighter-rouge">realsense-viewer</code></p>
-      <h1 id="realsense-drivers-for-jetson">
+      <h1 id="realsense-drivers-for-xavier-agx">
         
         
-          <a href="#realsense-drivers-for-jetson" class="anchor-heading" aria-labelledby="realsense-drivers-for-jetson"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RealSense Drivers for Jetson
+          <a href="#realsense-drivers-for-xavier-agx" class="anchor-heading" aria-labelledby="realsense-drivers-for-xavier-agx"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RealSense Drivers for Xavier AGX
         
         
       </h1>
     
 
-<p><a href="https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_jetson.md">Reference</a></p>
-      <h1 id="ros2-wrappers">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get update <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>apt-get <span class="nt">-y</span> upgrade
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="nt">--no-install-recommends</span> <span class="se">\</span>
+    python3 <span class="se">\</span>
+    python3-setuptools <span class="se">\</span>
+    python3-pip <span class="se">\</span>
+    python3-dev
+
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
+
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>libusb-1.0-0-dev
+
+<span class="c"># This is sort of the most important step</span>
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>python3.9-dev
+
+git clone https://github.com/IntelRealSense/librealsense.git
+<span class="nb">cd </span>librealsense/
+<span class="nb">mkdir </span>build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build
+cmake ../ <span class="nt">-DFORCE_RSUSB_BACKEND</span><span class="o">=</span><span class="nb">false</span> <span class="nt">-DBUILD_PYTHON_BINDINGS</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>release <span class="nt">-DBUILD_EXAMPLES</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-DBUILD_GRAPHICAL_EXAMPLES</span><span class="o">=</span><span class="nb">true
+sudo </span>make uninstall <span class="o">&amp;&amp;</span> make clean <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>make <span class="nb">install</span>
+</code></pre></div></div>
+      <h1 id="setup-realsense-wrappers-to-publish-realsense-images">
         
         
-          <a href="#ros2-wrappers" class="anchor-heading" aria-labelledby="ros2-wrappers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ROS2 Wrappers
+          <a href="#setup-realsense-wrappers-to-publish-realsense-images" class="anchor-heading" aria-labelledby="setup-realsense-wrappers-to-publish-realsense-images"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setup RealSense wrappers to publish RealSense Images
         
         
       </h1>
     
 
 <p><a href="https://github.com/IntelRealSense/realsense-ros">Reference</a></p>
-      <h1 id="slam-with-ros2">
+
+<p>The steps in the above reference can be setup anywhere, but it’s better to put it into <br />
+a dev_workspace which will be our primary workspace where all other ros nodes will lie.</p>
+
+<p>Hence it’s better to follow the above steps within the <code class="language-plaintext highlighter-rouge">/dev_ws/src/</code> folder as explained <br />
+in [ROS Learnings section]</p>
+      <h1 id="view-realsense-on-rqt">
         
         
-          <a href="#slam-with-ros2" class="anchor-heading" aria-labelledby="slam-with-ros2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> SLAM with ROS2
+          <a href="#view-realsense-on-rqt" class="anchor-heading" aria-labelledby="view-realsense-on-rqt"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> View RealSense on rqt
         
         
       </h1>
     
 
-<p>Realsense has some Turtlebot3 robot images for example which can build a map</p>
-
-<p><a href="https://intel.github.io/robot_devkit_doc/pages/rs_slam.html">Reference</a></p>
+<ol>
+  <li>open rqt by typing <code class="language-plaintext highlighter-rouge">rqt</code> in the terminal</li>
+  <li>Navigate to Plugins -&gt; Visualization -&gt; Image View</li>
+  <li>You should then see something like this <br />
+<img src="/images/ros_setup/rqt.png" alt="" /></li>
+</ol>
 
         
 

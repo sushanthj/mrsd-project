@@ -63,6 +63,12 @@ sudo make uninstall && make clean && make && sudo make install
 
 [Reference](https://github.com/IntelRealSense/realsense-ros)
 
+The steps in the above reference can be setup anywhere, but it's better to put it into \
+a dev_workspace which will be our primary workspace where all other ros nodes will lie.
+
+Hence it's better to follow the above steps within the ```/dev_ws/src/``` folder as explained \
+in [ROS Learnings section]
+
 # View RealSense on rqt
 
 1. open rqt by typing ```rqt``` in the terminal

@@ -49,7 +49,7 @@
   },"8": {
     "doc": "Git Concepts",
     "title": "Creating new github repo",
-    "content": ". | git init &amp;&amp; git symbolic-ref HEAD refs/heads/main | git add . | git commit -m \"first commit\" | Create new repo on github and copy SSH url | git init &amp;&amp; git symbolic-ref HEAD refs/heads/main | git push origin main | . ",
+    "content": ". | git init | git add . | git commit -m \"first commit\" | Create new repo on github and copy SSH url | git init &amp;&amp; git symbolic-ref HEAD refs/heads/main | git push origin main | . ",
     "url": "http://localhost:4000/git_concepts#creating-new-github-repo",
     "relUrl": "/git_concepts#creating-new-github-repo"
   },"9": {
@@ -73,7 +73,7 @@
   },"12": {
     "doc": "Intro",
     "title": "Intro",
-    "content": "For Jekyll reference see just_the_docs . The following pages are built in order to understand Computer Vision and Machine Learning . To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url . ",
+    "content": "For Jekyll reference see just_the_docs . The following pages are built in order to understand Computer Vision and Machine Learning . To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url Then, go to the deploy page on heroku and link the respective github repo for future updates . ",
     "url": "http://localhost:4000/intro/",
     "relUrl": "/intro/"
   },"13": {
@@ -84,10 +84,10 @@
     "relUrl": "/docs/Mechanical"
   },"14": {
     "doc": "RealSense Setup",
-    "title": "RealSense Drivers for Linux",
+    "title": "RealSense Drivers for Computer (x86 and Ubuntu 20.04)",
     "content": " ",
-    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-linux",
-    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-linux"
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-computer-x86-and-ubuntu-2004",
+    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-computer-x86-and-ubuntu-2004"
   },"15": {
     "doc": "RealSense Setup",
     "title": "Add Server’s public keys and to list of repositories",
@@ -114,26 +114,26 @@
     "relUrl": "/docs/software_bringup/RealSense.html#camera-trial"
   },"19": {
     "doc": "RealSense Setup",
-    "title": "RealSense Drivers for Jetson",
-    "content": "Reference . ",
-    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-jetson",
-    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-jetson"
+    "title": "RealSense Drivers for Xavier AGX",
+    "content": "sudo apt-get update &amp;&amp; sudo apt-get -y upgrade sudo apt-get install -y --no-install-recommends \\ python3 \\ python3-setuptools \\ python3-pip \\ python3-dev sudo apt-get install -y git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev sudo apt-get install -y libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev sudo apt-get install libusb-1.0-0-dev # This is sort of the most important step sudo apt-get install python3.9-dev git clone https://github.com/IntelRealSense/librealsense.git cd librealsense/ mkdir build &amp;&amp; cd build cmake ../ -DFORCE_RSUSB_BACKEND=false -DBUILD_PYTHON_BINDINGS=true -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true sudo make uninstall &amp;&amp; make clean &amp;&amp; make &amp;&amp; sudo make install . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-xavier-agx",
+    "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-xavier-agx"
   },"20": {
     "doc": "RealSense Setup",
-    "title": "ROS2 Wrappers",
-    "content": "Reference . ",
-    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#ros2-wrappers",
-    "relUrl": "/docs/software_bringup/RealSense.html#ros2-wrappers"
+    "title": "Setup RealSense wrappers to publish RealSense Images",
+    "content": "Reference . The steps in the above reference can be setup anywhere, but it’s better to put it into a dev_workspace which will be our primary workspace where all other ros nodes will lie. Hence it’s better to follow the above steps within the /dev_ws/src/ folder as explained in [ROS Learnings section] . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#setup-realsense-wrappers-to-publish-realsense-images",
+    "relUrl": "/docs/software_bringup/RealSense.html#setup-realsense-wrappers-to-publish-realsense-images"
   },"21": {
     "doc": "RealSense Setup",
-    "title": "SLAM with ROS2",
-    "content": "Realsense has some Turtlebot3 robot images for example which can build a map . Reference . ",
-    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#slam-with-ros2",
-    "relUrl": "/docs/software_bringup/RealSense.html#slam-with-ros2"
+    "title": "View RealSense on rqt",
+    "content": ". | open rqt by typing rqt in the terminal | Navigate to Plugins -&gt; Visualization -&gt; Image View | You should then see something like this | . ",
+    "url": "http://localhost:4000/docs/software_bringup/RealSense.html#view-realsense-on-rqt",
+    "relUrl": "/docs/software_bringup/RealSense.html#view-realsense-on-rqt"
   },"22": {
     "doc": "RealSense Setup",
     "title": "RealSense Setup",
-    "content": ". | RealSense Drivers for Linux . | Add Server’s public keys and to list of repositories | Install Libraries | Verify Installation | Camera Trial | . | RealSense Drivers for Jetson | ROS2 Wrappers | SLAM with ROS2 | . ",
+    "content": ". | RealSense Drivers for Computer (x86 and Ubuntu 20.04) . | Add Server’s public keys and to list of repositories | Install Libraries | Verify Installation | Camera Trial | . | RealSense Drivers for Xavier AGX | Setup RealSense wrappers to publish RealSense Images | View RealSense on rqt | . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html",
     "relUrl": "/docs/software_bringup/RealSense.html"
   },"23": {
@@ -155,46 +155,118 @@
     "url": "http://localhost:4000/",
     "relUrl": "/"
   },"26": {
+    "doc": "ROS Learnings",
+    "title": "ROS Learnings",
+    "content": " ",
+    "url": "http://localhost:4000/docs/ros",
+    "relUrl": "/docs/ros"
+  },"27": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Xavier AGX Setup",
     "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
-  },"27": {
+  },"28": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Links for above steps",
     "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
-  },"28": {
-    "doc": "ROS2 on the Jetson and Desktop",
-    "title": "ROS Setup via Dockerfile on Desktop",
-    "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
-    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-via-dockerfile-on-desktop",
-    "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-via-dockerfile-on-desktop"
   },"29": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "ROS Setup for Desktop using Dockerfile",
+    "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile"
+  },"30": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Why use Docker?",
     "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
-  },"30": {
-    "doc": "ROS2 on the Jetson and Desktop",
-    "title": "Steps to setup ROS",
-    "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
-    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-setup-ros",
-    "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-setup-ros"
   },"31": {
     "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Steps to create Docker Image",
+    "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image"
+  },"32": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)",
+    "content": "Reference . #!/bin/bash sudo apt update &amp;&amp; sudo apt install locales sudo locale-gen en_US en_US.UTF-8 sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 export LANG=en_US.UTF-8 sudo apt install software-properties-common sudo add-apt-repository universe sudo apt update &amp;&amp; sudo apt install curl sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null sudo apt update sudo apt upgrade sudo apt install ros-foxy-desktop python3-argcomplete . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"
+  },"33": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Checking if it’s installed",
+    "content": "printenv | grep -i ROS should return ROS_DISTRO and PYTHON_VERSION and others.. ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#checking-if-its-installed",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#checking-if-its-installed"
+  },"34": {
+    "doc": "ROS2 on the Jetson and Desktop",
+    "title": "Add ros to .bashrc",
+    "content": ". | Navigate to ~/.bashrc | Add the following to the last line: source /opt/ros/foxy/setup.bash | . ",
+    "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc",
+    "relUrl": "/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc"
+  },"35": {
+    "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS2 on the Jetson and Desktop",
-    "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup via Dockerfile on Desktop . | Why use Docker? | Steps to setup ROS | . | . ",
+    "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup for Desktop using Dockerfile . | Why use Docker? | Steps to create Docker Image | . | Setup ROS2 globally on any Ubuntu Device (including Xavier AGX) . | Checking if it’s installed | . | Add ros to .bashrc | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
     "relUrl": "/docs/software_bringup/ros_setup_2.html"
-  },"32": {
+  },"36": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
+  },"37": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Before You Begin",
+    "content": " ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
+    "relUrl": "/docs/ros/subscribers.html#before-you-begin"
+  },"38": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Bare Minimum",
+    "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
+    "relUrl": "/docs/ros/subscribers.html#bare-minimum"
+  },"39": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Building in a ROS Package Setup",
+    "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
+    "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
+  },"40": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Simple Example Subscriber from ROS",
+    "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
+    "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
+  },"41": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Subscriber for RealSense Images",
+    "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
+    "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
+  },"42": {
+    "doc": "Building Subscribers and Publishers",
+    "title": "Building Subscribers and Publishers",
+    "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
+    "url": "http://localhost:4000/docs/ros/subscribers.html",
+    "relUrl": "/docs/ros/subscribers.html"
+  },"43": {
+    "doc": "VS Code Setup",
+    "title": "VS Code Setup on AGX",
+    "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
+    "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
+    "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
+  },"44": {
+    "doc": "VS Code Setup",
+    "title": "VS Code Setup",
+    "content": ". | VS Code Setup on AGX | . ",
+    "url": "http://localhost:4000/docs/software_bringup/vscode.html",
+    "relUrl": "/docs/software_bringup/vscode.html"
   }
 }

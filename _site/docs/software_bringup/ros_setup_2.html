@@ -90,7 +90,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Intro</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link active">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Understanding 8020</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Concepts</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Intro</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link active">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Understanding 8020</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Concepts</a></li></ul>
 
       
     </nav>
@@ -149,11 +149,16 @@
       <li><a href="#links-for-above-steps" id="markdown-toc-links-for-above-steps">Links for above steps</a></li>
     </ol>
   </li>
-  <li><a href="#ros-setup-via-dockerfile-on-desktop" id="markdown-toc-ros-setup-via-dockerfile-on-desktop">ROS Setup via Dockerfile on Desktop</a>    <ol>
+  <li><a href="#ros-setup-for-desktop-using-dockerfile" id="markdown-toc-ros-setup-for-desktop-using-dockerfile">ROS Setup for Desktop using Dockerfile</a>    <ol>
       <li><a href="#why-use-docker" id="markdown-toc-why-use-docker">Why use Docker?</a></li>
-      <li><a href="#steps-to-setup-ros" id="markdown-toc-steps-to-setup-ros">Steps to setup ROS</a></li>
+      <li><a href="#steps-to-create-docker-image" id="markdown-toc-steps-to-create-docker-image">Steps to create Docker Image</a></li>
     </ol>
   </li>
+  <li><a href="#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx" id="markdown-toc-setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx">Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)</a>    <ol>
+      <li><a href="#checking-if-its-installed" id="markdown-toc-checking-if-its-installed">Checking if it’s installed</a></li>
+    </ol>
+  </li>
+  <li><a href="#add-ros-to-bashrc" id="markdown-toc-add-ros-to-bashrc">Add ros to .bashrc</a></li>
 </ol>
 
 </details>
@@ -188,10 +193,10 @@ adjacent to the HDMI port)</li>
   <li><a href="https://docs.nvidia.com/sdk-manager/install-with-sdkm-jetson/index.html">SDK Manager Usage</a></li>
   <li><a href="https://www.youtube.com/watch?v=-nX8eD7FusQ&amp;ab_channel=NVIDIADeveloper">Initial Kit Setup</a></li>
 </ul>
-      <h1 id="ros-setup-via-dockerfile-on-desktop">
+      <h1 id="ros-setup-for-desktop-using-dockerfile">
         
         
-          <a href="#ros-setup-via-dockerfile-on-desktop" class="anchor-heading" aria-labelledby="ros-setup-via-dockerfile-on-desktop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ROS Setup via Dockerfile on Desktop
+          <a href="#ros-setup-for-desktop-using-dockerfile" class="anchor-heading" aria-labelledby="ros-setup-for-desktop-using-dockerfile"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ROS Setup for Desktop using Dockerfile
         
         
       </h1>
@@ -288,10 +293,10 @@ adjacent to the HDMI port)</li>
 </span>    ros-foxy-desktop<span class="o">=</span>0.9.2-1<span class="k">*</span> <span class="se">\
 </span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span>
 </code></pre></div></div>
-      <h2 id="steps-to-setup-ros">
+      <h2 id="steps-to-create-docker-image">
         
         
-          <a href="#steps-to-setup-ros" class="anchor-heading" aria-labelledby="steps-to-setup-ros"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps to setup ROS
+          <a href="#steps-to-create-docker-image" class="anchor-heading" aria-labelledby="steps-to-create-docker-image"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps to create Docker Image
         
         
       </h2>
@@ -324,6 +329,59 @@ One can do this manually, but I created a bash script to make it simple
   </li>
   <li>Now, the last line of that script requests docker to build the latest image with the
 tag <code class="language-plaintext highlighter-rouge">trial_ros_image</code></li>
+</ol>
+      <h1 id="setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx">
+        
+        
+          <a href="#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx" class="anchor-heading" aria-labelledby="setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)
+        
+        
+      </h1>
+    
+
+<p><a href="https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html">Reference</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nb">sudo </span>apt update <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>apt <span class="nb">install </span>locales
+<span class="nb">sudo </span>locale-gen en_US en_US.UTF-8
+<span class="nb">sudo </span>update-locale <span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8 <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+
+<span class="nb">sudo </span>apt <span class="nb">install </span>software-properties-common
+<span class="nb">sudo </span>add-apt-repository universe
+
+<span class="nb">sudo </span>apt update <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>apt <span class="nb">install </span>curl
+<span class="nb">sudo </span>curl <span class="nt">-sSL</span> https://raw.githubusercontent.com/ros/rosdistro/master/ros.key <span class="nt">-o</span> /usr/share/keyrings/ros-archive-keyring.gpg
+
+<span class="nb">echo</span> <span class="s2">"deb [arch=</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2"> signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu </span><span class="si">$(</span><span class="nb">.</span> /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$UBUNTU_CODENAME</span><span class="si">)</span><span class="s2"> main"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/ros2.list <span class="o">&gt;</span> /dev/null
+
+<span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt upgrade
+
+<span class="nb">sudo </span>apt <span class="nb">install </span>ros-foxy-desktop python3-argcomplete
+</code></pre></div></div>
+      <h2 id="checking-if-its-installed">
+        
+        
+          <a href="#checking-if-its-installed" class="anchor-heading" aria-labelledby="checking-if-its-installed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checking if it’s installed
+        
+        
+      </h2>
+    
+<p><code class="language-plaintext highlighter-rouge">printenv | grep -i ROS</code> should return ROS_DISTRO and PYTHON_VERSION and others..</p>
+      <h1 id="add-ros-to-bashrc">
+        
+        
+          <a href="#add-ros-to-bashrc" class="anchor-heading" aria-labelledby="add-ros-to-bashrc"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Add ros to .bashrc
+        
+        
+      </h1>
+    
+
+<ol>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">~/.bashrc</code></li>
+  <li>Add the following to the last line: <code class="language-plaintext highlighter-rouge">source /opt/ros/foxy/setup.bash</code></li>
 </ol>
 
         
