@@ -2,7 +2,7 @@
 layout: default
 title: Building Subscribers and Publishers
 parent: ROS Learnings
-nav_order: 1
+nav_order: 3
 ---
 
 <details open markdown="block">

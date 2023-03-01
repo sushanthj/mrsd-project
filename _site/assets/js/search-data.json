@@ -1,292 +1,322 @@
 {"0": {
-    "doc": "Git Concepts",
-    "title": "Before you Begin",
-    "content": "Reference . In the above link, follow the procedures, but instead of using username and password each time, setup the ssh keys and use them more often . ssh keys are found in ./.ssh folder (or lookup keygen to generate your keys) . ",
-    "url": "http://localhost:4000/git_concepts#before-you-begin",
-    "relUrl": "/git_concepts#before-you-begin"
-  },"1": {
-    "doc": "Git Concepts",
-    "title": "Basics of generating new content in local and pushing to github",
+    "doc": "Git Usage",
+    "title": "Git Usage",
     "content": " ",
-    "url": "http://localhost:4000/git_concepts#basics-of-generating-new-content-in-local-and-pushing-to-github",
-    "relUrl": "/git_concepts#basics-of-generating-new-content-in-local-and-pushing-to-github"
-  },"2": {
-    "doc": "Git Concepts",
-    "title": "Process for adding to a github page",
-    "content": "git add . git commit -m “made new code” git push or git push origin develop (if you cloned from develop branch) . ",
-    "url": "http://localhost:4000/git_concepts#process-for-adding-to-a-github-page",
-    "relUrl": "/git_concepts#process-for-adding-to-a-github-page"
-  },"3": {
-    "doc": "Git Concepts",
-    "title": "If you want to track a different branch",
-    "content": ". | git branch –set-upstream-to=origin/master git add . git push | . or make a new remote . | git remote add ts_origin_wiki git@github.com:sjayanth21/BR_Wiki.git git push –set-upstream ts_origin_wiki master git push ts_origin_wiki_master | . ",
-    "url": "http://localhost:4000/git_concepts#if-you-want-to-track-a-different-branch",
-    "relUrl": "/git_concepts#if-you-want-to-track-a-different-branch"
-  },"4": {
-    "doc": "Git Concepts",
-    "title": "Working with remotes",
-    "content": "Any folder can have a number of remotes like: origin and ts_origin_github . To make local branch master track a different remote branch (branch in your cloud github repo) do: git branch –set-upstream-to=origin/master . or git branch –set-upstream-to=origin/develop . ",
-    "url": "http://localhost:4000/git_concepts#working-with-remotes",
-    "relUrl": "/git_concepts#working-with-remotes"
-  },"5": {
-    "doc": "Git Concepts",
-    "title": "Handling merge conflicts",
-    "content": "If you cloned a repo or forked your own branch you may need to pull from upstream to update your codebase. However, running a simple ‘git pull’ may throw merge conflicts . Let’s begin by assuming our local branch is called ‘feature/sj’ Our remote branch is called ‘develop’ . So do the following . | Run a ‘git fetch’ to get the updates on all branches (and if any new branch has been added) | In your personal branch commit all changes by doing: git add, commit and push | sudo apt install meld | Now to get the upstream updates do ‘git checkout main’ (or whichever is the upstream branch with latest updates) | Now to put this in your personal branch run ‘git checkout feature/sj’ | Now we do the actual merging using ‘git merge develop’ (this will merge everythin in deveop into the current branch viz feature/sj) | The above step would have thrown some merge conflicts, to solve that run ‘git mergetool’ | The above step opens meld, make all necessary resolutions and save | Now our codebase would have been updated to whatever we resolved in meld | Now run ‘git commit’ without any arguments as it is a ‘merge commit’ | Now as usual do ‘git push origin feature/sj’ to push your updated personal branch to github | . Note. When you open meld, the middle window is the final merged file which you will finally get as output. Your job will be to choose which lines of code : . | from develop | from feature/sj that will be going into your final output. develop may be on the right window and feature/sj may be on the left window. You will have two options: . | Move the lines from the left into both middle and right windows (the code highlight for that line should vanish) | Move the lines from the right into both middle and left windows (the code highlight for that line should vanish) | . | . ",
-    "url": "http://localhost:4000/git_concepts#handling-merge-conflicts",
-    "relUrl": "/git_concepts#handling-merge-conflicts"
-  },"6": {
-    "doc": "Git Concepts",
-    "title": "Points to Note",
-    "content": ". | If you checkout a file ‘git checkout blade.py’ it resets the file to whatever is the latest from that branch in upstream . | If you want to physically add or change remotes go to the respective folder and do ‘nano .git/config’ . | the correct syntax for the merge command is: ‘git merge ts_origin/master’ What this does is that if the current branch is origin/develop it will merge the files of current branch i.e origin/develop with ts_origin/master . | Note that even if ts_origin/master is in ts_github account and origin/master is in sushanthj github account, it will still merge as long as remotes exist for both these accounts. If remotes don’t exist, you can always add as shown up above . | . Concepts for working with two repos or two repos on two different github accounts: . Basically locally you will have ‘master’ branch if you do ‘git branch’ This master can track two upstream branches using two different remotes One remote is added automatically when you clone the repo The next remote will have to be added manually to your other git account or other repo . Then to push the same commit to both branches first do ‘git push’ and see which repo it pushes to (say it pushes to origin/master Then do ‘git push –set-upstream ts_origin/develop’ to push to your second repo However, do note that your local branch always tracks to the latest branch you pushed to i.e if you do a git pull, it will pull from the latest branch to which you pushed in this case it will pull from ts_origin/develop . Saving a patch file . If you have changes made which you want to save locally and not push to remote, you can save a patch file . git diff &gt; new_changes.patch . Now to apply this patch onto any branch, do: . git apply new_changes.patch . Saving changes by stashing . Instead of saving a specific file for changes (such as a patch file), you could also stash your changes locally . git stash . The above command will stash all tracked changes. You could also stash only committed changes. Refer: stashing . To then apply the stashed changes (one time use only as pop will remove from stash) . git stash pop . To apply without popping do: . git stash apply . To remove any particular item in stash: . git stash drop . To view all entries in stash and then apply specific one do: . git stash list git stash apply n . n = stash item number . ",
-    "url": "http://localhost:4000/git_concepts#points-to-note",
-    "relUrl": "/git_concepts#points-to-note"
-  },"7": {
-    "doc": "Git Concepts",
-    "title": "Nomenclature of Git Branches",
-    "content": "Usually you will need to follow the branch nomenclature which your company uses. However, it’s good to know the common industry practice: . | The branch which will be running on all production would be main (or master) | The main branch in which developers will push finalized code would be develop (sometimes develop can itself be production branch) | For any new addition that an employee wants to propose to the codebase, a branch called ‘feature/sj’ will be created (sj is my initials). This feature branch will be merged with the develop branch only after some extensive code review and testing | . Maintaining better commit history . It is also common practice to tag certain commits of the develop branch. (see tagging) . This tagging allows for easy identification as to what major release correspondeds to that commit . ",
-    "url": "http://localhost:4000/git_concepts#nomenclature-of-git-branches",
-    "relUrl": "/git_concepts#nomenclature-of-git-branches"
-  },"8": {
-    "doc": "Git Concepts",
-    "title": "Creating new github repo",
-    "content": ". | git init | git add . | git commit -m \"first commit\" | Create new repo on github and copy SSH url | git init &amp;&amp; git symbolic-ref HEAD refs/heads/main | git push origin main | . ",
-    "url": "http://localhost:4000/git_concepts#creating-new-github-repo",
-    "relUrl": "/git_concepts#creating-new-github-repo"
-  },"9": {
-    "doc": "Git Concepts",
-    "title": "Git Concepts",
-    "content": ". | Before you Begin | Basics of generating new content in local and pushing to github . | Process for adding to a github page | If you want to track a different branch | Working with remotes | Handling merge conflicts | Points to Note . | Concepts for working with two repos or two repos on two different github accounts: | Saving a patch file | Saving changes by stashing | . | Nomenclature of Git Branches . | Maintaining better commit history | . | Creating new github repo | . | . ",
     "url": "http://localhost:4000/git_concepts",
     "relUrl": "/git_concepts"
-  },"10": {
-    "doc": "Intro",
+  },"1": {
+    "doc": "Building this Website",
     "title": "To better your experience of writing in code",
     "content": "Download the following extensions in vscode: . | Markdown All in one | code runner (see youtube video on how to setup vscode for C++) | . ",
     "url": "http://localhost:4000/intro/#to-better-your-experience-of-writing-in-code",
     "relUrl": "/intro/#to-better-your-experience-of-writing-in-code"
-  },"11": {
-    "doc": "Intro",
+  },"2": {
+    "doc": "Building this Website",
     "title": "Shortcuts in general pour toi",
     "content": ". | Once Markdown all in one is installed, you can do ctrl+shift+v to see preview of markdown immediately | To run any C++ file it’s just ctrl+shift+n | If you want to bold any specific text in markdown just select the text by holding down ctrl+shift and using arrow keys to select the required text. Then once text is selected just do ctrl+b to bolden and ctrl+i to italicize . | click on tab after using - for normal bullet pointing to get sub-points | . | To get numbered list continuously, in-between two headings 1. and 2. all content should be indented with 4 spaces in the markdown script | . ",
     "url": "http://localhost:4000/intro/#shortcuts-in-general-pour-toi",
     "relUrl": "/intro/#shortcuts-in-general-pour-toi"
-  },"12": {
-    "doc": "Intro",
-    "title": "Intro",
+  },"3": {
+    "doc": "Building this Website",
+    "title": "Building this Website",
     "content": "For Jekyll reference see just_the_docs . The following pages are built in order to understand Computer Vision and Machine Learning . To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url Then, go to the deploy page on heroku and link the respective github repo for future updates . ",
     "url": "http://localhost:4000/intro/",
     "relUrl": "/intro/"
-  },"13": {
+  },"4": {
     "doc": "Mechanical Development",
     "title": "Mechanical Development",
     "content": " ",
     "url": "http://localhost:4000/docs/Mechanical",
     "relUrl": "/docs/Mechanical"
-  },"14": {
+  },"5": {
     "doc": "RealSense Setup",
     "title": "RealSense Drivers for Computer (x86 and Ubuntu 20.04)",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-computer-x86-and-ubuntu-2004",
     "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-computer-x86-and-ubuntu-2004"
-  },"15": {
+  },"6": {
     "doc": "RealSense Setup",
     "title": "Add Server’s public keys and to list of repositories",
     "content": ". | sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE | sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE | sudo add-apt-repository \"deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main\" -u | . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#add-servers-public-keys-and-to-list-of-repositories",
     "relUrl": "/docs/software_bringup/RealSense.html#add-servers-public-keys-and-to-list-of-repositories"
-  },"16": {
+  },"7": {
     "doc": "RealSense Setup",
     "title": "Install Libraries",
     "content": ". | sudo apt-get install librealsense2-dkms | sudo apt-get install librealsense2-utils | . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#install-libraries",
     "relUrl": "/docs/software_bringup/RealSense.html#install-libraries"
-  },"17": {
+  },"8": {
     "doc": "RealSense Setup",
     "title": "Verify Installation",
     "content": "modinfo uvcvideo | grep \"version:\" should include realsense string . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#verify-installation",
     "relUrl": "/docs/software_bringup/RealSense.html#verify-installation"
-  },"18": {
+  },"9": {
     "doc": "RealSense Setup",
     "title": "Camera Trial",
     "content": "After above steps, connect camera and try: realsense-viewer . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#camera-trial",
     "relUrl": "/docs/software_bringup/RealSense.html#camera-trial"
-  },"19": {
+  },"10": {
     "doc": "RealSense Setup",
     "title": "RealSense Drivers for Xavier AGX",
     "content": "sudo apt-get update &amp;&amp; sudo apt-get -y upgrade sudo apt-get install -y --no-install-recommends \\ python3 \\ python3-setuptools \\ python3-pip \\ python3-dev sudo apt-get install -y git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev sudo apt-get install -y libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev sudo apt-get install libusb-1.0-0-dev # This is sort of the most important step sudo apt-get install python3.9-dev git clone https://github.com/IntelRealSense/librealsense.git cd librealsense/ mkdir build &amp;&amp; cd build cmake ../ -DFORCE_RSUSB_BACKEND=false -DBUILD_PYTHON_BINDINGS=true -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true sudo make uninstall &amp;&amp; make clean &amp;&amp; make &amp;&amp; sudo make install . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#realsense-drivers-for-xavier-agx",
     "relUrl": "/docs/software_bringup/RealSense.html#realsense-drivers-for-xavier-agx"
-  },"20": {
+  },"11": {
     "doc": "RealSense Setup",
     "title": "Setup RealSense wrappers to publish RealSense Images",
     "content": "Reference . The steps in the above reference can be setup anywhere, but it’s better to put it into a dev_workspace which will be our primary workspace where all other ros nodes will lie. Hence it’s better to follow the above steps within the /dev_ws/src/ folder as explained in [ROS Learnings section] . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#setup-realsense-wrappers-to-publish-realsense-images",
     "relUrl": "/docs/software_bringup/RealSense.html#setup-realsense-wrappers-to-publish-realsense-images"
-  },"21": {
+  },"12": {
     "doc": "RealSense Setup",
     "title": "View RealSense on rqt",
     "content": ". | open rqt by typing rqt in the terminal | Navigate to Plugins -&gt; Visualization -&gt; Image View | You should then see something like this | . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html#view-realsense-on-rqt",
     "relUrl": "/docs/software_bringup/RealSense.html#view-realsense-on-rqt"
-  },"22": {
+  },"13": {
     "doc": "RealSense Setup",
     "title": "RealSense Setup",
     "content": ". | RealSense Drivers for Computer (x86 and Ubuntu 20.04) . | Add Server’s public keys and to list of repositories | Install Libraries | Verify Installation | Camera Trial | . | RealSense Drivers for Xavier AGX | Setup RealSense wrappers to publish RealSense Images | View RealSense on rqt | . ",
     "url": "http://localhost:4000/docs/software_bringup/RealSense.html",
     "relUrl": "/docs/software_bringup/RealSense.html"
+  },"14": {
+    "doc": "Simulation Development",
+    "title": "Building the Simulation environment in Gazebo",
+    "content": " ",
+    "url": "http://localhost:4000/docs/Simulation#building-the-simulation-environment-in-gazebo",
+    "relUrl": "/docs/Simulation#building-the-simulation-environment-in-gazebo"
+  },"15": {
+    "doc": "Simulation Development",
+    "title": "Simulation Development",
+    "content": " ",
+    "url": "http://localhost:4000/docs/Simulation",
+    "relUrl": "/docs/Simulation"
+  },"16": {
+    "doc": "Basics",
+    "title": "Basics of Setting up with ROS2",
+    "content": " ",
+    "url": "http://localhost:4000/docs/ros/basics.html#basics-of-setting-up-with-ros2",
+    "relUrl": "/docs/ros/basics.html#basics-of-setting-up-with-ros2"
+  },"17": {
+    "doc": "Basics",
+    "title": "Changing Between ROS versions (ROS1 and ROS2)",
+    "content": "Ensure the environment variables are set correctly: . printenv | grep -i ROS . Change any environment variables to the right path if required. Note. The variable ROS_LOCALHOST_ONLY should be set to ROS_LOCALHOST_ONLY=1 for Foxy and ROS_LOCALHOST_ONLY=0 for Noetic (I think) . ",
+    "url": "http://localhost:4000/docs/ros/basics.html#changing-between-ros-versions-ros1-and-ros2",
+    "relUrl": "/docs/ros/basics.html#changing-between-ros-versions-ros1-and-ros2"
+  },"18": {
+    "doc": "Basics",
+    "title": "Create a Workspace and Package",
+    "content": ". | Create WS mkdir -p ~/ros2_ws/src cd ~/ros2_ws . | Now, go into the src directory to clone some example packages cd src git clone https://github.com/ros2/examples src/examples -b foxy . | Building the workspace (and packages inside) colcon build --symlink-install . The –symlink-install allows us to make changes to backend by updated non-compiled files like python files . | In the root directory of our workspace (i.e. inside ros2_ws) source the environment (this will also source the workspace internally) . install/setup.bash . | Add sources to .bashrc echo \"source /usr/share/colcon_cd/function/colcon_cd.sh\" &gt;&gt; ~/.bashrc echo \"export _colcon_cd_root=/opt/ros/foxy/\" &gt;&gt; ~/.bashrc echo \"source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash\" &gt;&gt; ~/.bashrc . | . ",
+    "url": "http://localhost:4000/docs/ros/basics.html#create-a-workspace-and-package",
+    "relUrl": "/docs/ros/basics.html#create-a-workspace-and-package"
+  },"19": {
+    "doc": "Basics",
+    "title": "Adding more packages",
+    "content": "This is simple once we have a workspace setup. To add another new package into existing workspace just do: . | Go to your ros2_ws/src folder | Add any new repo (ros package) to this src folder git clone https://github.com/ros/ros_tutorials.git -b foxy-devel . | Resolve Dependencies: . | cd .. | rosdep install -i --from-path src --rosdistro foxy -y | . | Build the workspace again (remember you should NOT be in src folder when doing this) | . ",
+    "url": "http://localhost:4000/docs/ros/basics.html#adding-more-packages",
+    "relUrl": "/docs/ros/basics.html#adding-more-packages"
+  },"20": {
+    "doc": "Basics",
+    "title": "Creating your own package",
+    "content": "Previously, we added existing packages to our /src/ folder. Now, let’s build a package from scratch. We can do so in two ways: . | Copy paste an existing package and then make changes to the package.xml and CMakeLists.txt (if you choose to use Cmake) | Copy paste an existing package and then make changes to the package.xml, setup.py, setup.cfg and another folder with same name as package (with an __init__ file) (if you choose to use Python) | Use ros2 pkg create to make our lives easier | . Let’s use step 3 and with Python for simplicity: . | cd ~/ros2_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ros2_ws | colcon build or colcon build --packages-select my_package | Source again . install/setup.bash | . Running the node is then just ros2 run my_package my_node . Note: You could also configure the package.xml and setup.py present inside each node. But everything will work without this also . ",
+    "url": "http://localhost:4000/docs/ros/basics.html#creating-your-own-package",
+    "relUrl": "/docs/ros/basics.html#creating-your-own-package"
+  },"21": {
+    "doc": "Basics",
+    "title": "Learning about TF2",
+    "content": " ",
+    "url": "http://localhost:4000/docs/ros/basics.html#learning-about-tf2",
+    "relUrl": "/docs/ros/basics.html#learning-about-tf2"
+  },"22": {
+    "doc": "Basics",
+    "title": "Basics",
+    "content": ". | Basics of Setting up with ROS2 . | Changing Between ROS versions (ROS1 and ROS2) | Create a Workspace and Package | Adding more packages | Creating your own package | . | Learning about TF2 | . ",
+    "url": "http://localhost:4000/docs/ros/basics.html",
+    "relUrl": "/docs/ros/basics.html"
   },"23": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Building Environment From a Floorplan",
+    "content": "Gazebo provides a ‘Building Editor’ to make floorplans in 2D and autogenerate walls, doors and windows. We will then use a floorplan (eg. from MFI Lego Testbed) as a reference (import using the button shown above): . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan",
+    "relUrl": "/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan"
+  },"24": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Editing the Environment",
+    "content": ". | We build walls everywhere required (click on the ‘Wall’ button and then click on workspace to begin drawing) | Add doors accordingly where walls are not present | Windows can be placed on any walls | . After placing the initial walls, double clicking on the walls gives us the option to edit the size and position of these walls . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#editing-the-environment",
+    "relUrl": "/docs/Simulation/build_floorplan.html#editing-the-environment"
+  },"25": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Saving the Floorplan",
+    "content": "You can do File and Save As to save the floorplan. This will save three files: . | MODEL_NAME (given by user) . | model.config | model.sdf | . | . Additionally, if you ever download a model from git clone https://github.com/osrf/gazebo_models then the following files will be present for: . | model_1 : A directory for model_1 . | model.config : Meta-data about model_1 | model.sdf : SDF description of the model | model.sdf.erb : Ruby embedded SDF model description | meshes : A directory for all COLLADA and STL files | materials : A directory which should only contain the textures and scripts subdirectories | textures : A directory for image files (jpg, png, etc). | scripts : A directory for OGRE material scripts | plugins: A directory for plugin source and header files | . | . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#saving-the-floorplan",
+    "relUrl": "/docs/Simulation/build_floorplan.html#saving-the-floorplan"
+  },"26": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Example model.sdf (simulator description format)",
+    "content": "&lt;?xml version='1.0'?&gt; &lt;sdf version='1.7'&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;0.011095 -0.309692 0 0 -0 0&lt;/pose&gt; &lt;link name='Wall_10'&gt; &lt;collision name='Wall_10_Collision'&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;/collision&gt; &lt;visual name='Wall_10_Visual'&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;material&gt; &lt;script&gt; &lt;uri&gt;file://media/materials/scripts/gazebo.material&lt;/uri&gt; &lt;name&gt;Gazebo/Grey&lt;/name&gt; &lt;/script&gt; &lt;ambient&gt;1 1 1 1&lt;/ambient&gt; &lt;/material&gt; &lt;meta&gt; &lt;layer&gt;0&lt;/layer&gt; &lt;/meta&gt; &lt;/visual&gt; &lt;pose&gt;-6.0041 -1.14431 0 0 -0 3.14159&lt;/pose&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;/sdf&gt; . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format",
+    "relUrl": "/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format"
+  },"27": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Just the Environemnt in Gazebo",
+    "content": ". | Building Environment From a Floorplan . | Editing the Environment | Saving the Floorplan | Example model.sdf (simulator description format) | . | . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html",
+    "relUrl": "/docs/Simulation/build_floorplan.html"
+  },"28": {
     "doc": "Frame Design",
     "title": "8020 Frame",
     "content": "We are using an Autonomous Mobile Robot (AMR) to transport LEGO bricks as part of MFI’s Lego Testbed. We will be procuring the Neobotix MP400 AMR. After the sensors and motors lab, I began designing a modular frame which can house various sensors, power supply systems and on-board compute. ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#8020-frame",
     "relUrl": "/docs/Mechanical/frame.html#8020-frame"
-  },"24": {
+  },"29": {
     "doc": "Frame Design",
     "title": "Frame Design",
     "content": ". The Frame is designed to be modular, i.e. it can be mounted on any mobile platform for testing. Addi- tionally, the frame is also designed to allow for minimal tolerance stack-up on the sensor mountings. | Flat plate joints for the bottom links ensure perpendicularity between columns and beams. | Base-sheet mounting holes are precision machined. Additionally the laser cut base-sheets imposes strict constraints on position of sensors and consequently the accuracy of the calculated transforma- tion matrices would improve. | matching mounting points on top and bottom base-sheets ensures frame links are joined accurately. | floating corner connectors allow fixing the level-2 sheet at a flexible height. | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#frame-design",
     "relUrl": "/docs/Mechanical/frame.html#frame-design"
-  },"25": {
+  },"30": {
     "doc": "Frame Design",
     "title": "Base Sheet",
     "content": ". | The base sheet mounting holes will be laser-cut and additionally the origin of the base sheet was kept aligned to the robot’s origin throughout the design stage. | Mounts for the RealSense camera were designed to be 3D printed | Four camera mounting positions were provided to allow for future additions. | LIDAR was placed acoording to the figure below (to ensure the rays don’t get blocked by the 8020 frame in front) | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#base-sheet",
     "relUrl": "/docs/Mechanical/frame.html#base-sheet"
-  },"26": {
+  },"31": {
     "doc": "Frame Design",
     "title": "RealSense Mount",
     "content": ". ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#realsense-mount",
     "relUrl": "/docs/Mechanical/frame.html#realsense-mount"
-  },"27": {
+  },"32": {
     "doc": "Frame Design",
     "title": "Frame Design",
     "content": ". | 8020 Frame . | Frame Design | Base Sheet | RealSense Mount | . | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html",
     "relUrl": "/docs/Mechanical/frame.html"
-  },"28": {
+  },"33": {
     "doc": "Home",
     "title": "Team Dock Dock Go!",
     "content": "Explaining the steps taken to setup and build the systems necessary for an autonomous mobile robot capable of transporting LEGOs for MFI’s Testbed . ",
     "url": "http://localhost:4000/#team-dock-dock-go",
     "relUrl": "/#team-dock-dock-go"
-  },"29": {
+  },"34": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "http://localhost:4000/",
     "relUrl": "/"
-  },"30": {
+  },"35": {
     "doc": "ROS Learnings",
     "title": "ROS Learnings",
     "content": " ",
     "url": "http://localhost:4000/docs/ros",
     "relUrl": "/docs/ros"
-  },"31": {
+  },"36": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Xavier AGX Setup",
     "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
-  },"32": {
+  },"37": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Links for above steps",
     "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
-  },"33": {
+  },"38": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS Setup for Desktop using Dockerfile",
     "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile"
-  },"34": {
+  },"39": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Why use Docker?",
     "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
-  },"35": {
+  },"40": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Steps to create Docker Image",
     "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image"
-  },"36": {
+  },"41": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)",
     "content": "Reference . #!/bin/bash sudo apt update &amp;&amp; sudo apt install locales sudo locale-gen en_US en_US.UTF-8 sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 export LANG=en_US.UTF-8 sudo apt install software-properties-common sudo add-apt-repository universe sudo apt update &amp;&amp; sudo apt install curl sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null sudo apt update sudo apt upgrade sudo apt install ros-foxy-desktop python3-argcomplete . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"
-  },"37": {
+  },"42": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Checking if it’s installed",
     "content": "printenv | grep -i ROS should return ROS_DISTRO and PYTHON_VERSION and others.. ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#checking-if-its-installed",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#checking-if-its-installed"
-  },"38": {
+  },"43": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Add ros to .bashrc",
     "content": ". | Navigate to ~/.bashrc | Add the following to the last line: source /opt/ros/foxy/setup.bash | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc"
-  },"39": {
+  },"44": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS2 on the Jetson and Desktop",
     "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup for Desktop using Dockerfile . | Why use Docker? | Steps to create Docker Image | . | Setup ROS2 globally on any Ubuntu Device (including Xavier AGX) . | Checking if it’s installed | . | Add ros to .bashrc | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
     "relUrl": "/docs/software_bringup/ros_setup_2.html"
-  },"40": {
+  },"45": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"41": {
+  },"46": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"42": {
+  },"47": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"43": {
+  },"48": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"44": {
+  },"49": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"45": {
+  },"50": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"46": {
+  },"51": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"47": {
+  },"52": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"48": {
+  },"53": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",

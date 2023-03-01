@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Intro
+title: Building this Website
 permalink: /intro/
 nav_order: 2
 ---
