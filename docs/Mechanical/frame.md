@@ -36,6 +36,14 @@ tionally, the frame is also designed to allow for minimal tolerance stack-up on 
 - matching mounting points on top and bottom base-sheets ensures frame links are joined accurately.
 - floating corner connectors allow fixing the level-2 sheet at a flexible height.
 
+The [CAD Files](https://drive.google.com/file/d/1p7STYoNwQ2TOB133yYeL374bRsbvibkU/view?usp=sharing)
+are available on drive for reference.
+
+### Design Tools
+
+The [8020 Dynamic Library](https://8020.net/downloads/index/designfiles) is useful to quickly
+prototype on building the frame using the 8020 library.
+
 ## Base Sheet
 
 ![](/images/Mechanical/Frame/3_mod.png)
@@ -51,3 +59,15 @@ tionally, the frame is also designed to allow for minimal tolerance stack-up on 
 ## RealSense Mount
 
 ![](/images/Mechanical/Frame/4_mod.png)
+
+# Final Machining and Results
+
+The mounting holes on the 8020 frame were precision CNC cut using a Haas 5 axis CNC. At time
+of writing, this is the only 5 axis CNC available at CMU. (We don't need 5 axis, but this was
+a super fancy machine!)
+
+![](/images/Mechanical/Frame/machining.gif)
+
+## Finished Product
+
+![](/images/Mechanical/Frame/8020_frame.jpg)

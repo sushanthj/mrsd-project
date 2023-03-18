@@ -121,7 +121,7 @@
   },"20": {
     "doc": "Basics",
     "title": "Creating your own package",
-    "content": "Previously, we added existing packages to our /src/ folder. Now, let’s build a package from scratch. We can do so in two ways: . | Copy paste an existing package and then make changes to the package.xml and CMakeLists.txt (if you choose to use Cmake) | Copy paste an existing package and then make changes to the package.xml, setup.py, setup.cfg and another folder with same name as package (with an __init__ file) (if you choose to use Python) | Use ros2 pkg create to make our lives easier | . Let’s use step 3 and with Python for simplicity: . | cd ~/ros2_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ros2_ws | colcon build or colcon build --packages-select my_package | Source again . install/setup.bash | . Running the node is then just ros2 run my_package my_node . Note: You could also configure the package.xml and setup.py present inside each node. But everything will work without this also . ",
+    "content": "Previously, we added existing packages to our /src/ folder. Now, let’s build a package from scratch. We can do so in two ways: . | Copy paste an existing package and then make changes to the package.xml and CMakeLists.txt (if you choose to use Cmake) | Copy paste an existing package and then make changes to the package.xml, setup.py, setup.cfg and another folder with same name as package (with an __init__ file) (if you choose to use Python) | Use ros2 pkg create to make our lives easier | . Let’s use step 3 and with Python for simplicity: . | cd ~/ros2_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ros2_ws | colcon build or colcon build --packages-select my_package | Source again . install/setup.bash or source install/local_setup.bash (I prefer the latter) | . Running the node is then just ros2 run my_package my_node . Note: You could also configure the package.xml and setup.py present inside each node. But everything will work without this also . ",
     "url": "http://localhost:4000/docs/ros/basics.html#creating-your-own-package",
     "relUrl": "/docs/ros/basics.html#creating-your-own-package"
   },"21": {
@@ -132,191 +132,251 @@
     "relUrl": "/docs/ros/basics.html#learning-about-tf2"
   },"22": {
     "doc": "Basics",
+    "title": "Better way to create a test node",
+    "content": "ros2 pkg create --build-type ament_python --node_name learning_tf2 tf2_trial . In the above statement, tf2_trial = package_name, learning_tf2 = node name. ",
+    "url": "http://localhost:4000/docs/ros/basics.html#better-way-to-create-a-test-node",
+    "relUrl": "/docs/ros/basics.html#better-way-to-create-a-test-node"
+  },"23": {
+    "doc": "Basics",
     "title": "Basics",
-    "content": ". | Basics of Setting up with ROS2 . | Changing Between ROS versions (ROS1 and ROS2) | Create a Workspace and Package | Adding more packages | Creating your own package | . | Learning about TF2 | . ",
+    "content": ". | Basics of Setting up with ROS2 . | Changing Between ROS versions (ROS1 and ROS2) | Create a Workspace and Package | Adding more packages | Creating your own package | . | Learning about TF2 . | Better way to create a test node | . | . ",
     "url": "http://localhost:4000/docs/ros/basics.html",
     "relUrl": "/docs/ros/basics.html"
-  },"23": {
+  },"24": {
     "doc": "Just the Environemnt in Gazebo",
     "title": "Building Environment From a Floorplan",
     "content": "Gazebo provides a ‘Building Editor’ to make floorplans in 2D and autogenerate walls, doors and windows. We will then use a floorplan (eg. from MFI Lego Testbed) as a reference (import using the button shown above): . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan",
     "relUrl": "/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan"
-  },"24": {
+  },"25": {
     "doc": "Just the Environemnt in Gazebo",
     "title": "Editing the Environment",
     "content": ". | We build walls everywhere required (click on the ‘Wall’ button and then click on workspace to begin drawing) | Add doors accordingly where walls are not present | Windows can be placed on any walls | . After placing the initial walls, double clicking on the walls gives us the option to edit the size and position of these walls . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#editing-the-environment",
     "relUrl": "/docs/Simulation/build_floorplan.html#editing-the-environment"
-  },"25": {
+  },"26": {
     "doc": "Just the Environemnt in Gazebo",
     "title": "Saving the Floorplan",
-    "content": "You can do File and Save As to save the floorplan. This will save three files: . | MODEL_NAME (given by user) . | model.config | model.sdf | . | . Additionally, if you ever download a model from git clone https://github.com/osrf/gazebo_models then the following files will be present for: . | model_1 : A directory for model_1 . | model.config : Meta-data about model_1 | model.sdf : SDF description of the model | model.sdf.erb : Ruby embedded SDF model description | meshes : A directory for all COLLADA and STL files | materials : A directory which should only contain the textures and scripts subdirectories | textures : A directory for image files (jpg, png, etc). | scripts : A directory for OGRE material scripts | plugins: A directory for plugin source and header files | . | . ",
+    "content": "You can do File and Save As to save the floorplan. This will save three files: . | MODEL_NAME (given by user) eg. mfi_floor_trial1 . | model.config | model.sdf | world.sdf | . | . Additionally, if you ever download a model from git clone https://github.com/osrf/gazebo_models then the following files will be present for: . | model_1 : A directory for model_1 . | model.config : Meta-data about model_1 | model.sdf : SDF description of the model | model.sdf.erb : Ruby embedded SDF model description | meshes : A directory for all COLLADA and STL files | materials : A directory which should only contain the textures and scripts subdirectories | textures : A directory for image files (jpg, png, etc). | scripts : A directory for OGRE material scripts | plugins: A directory for plugin source and header files | . | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#saving-the-floorplan",
     "relUrl": "/docs/Simulation/build_floorplan.html#saving-the-floorplan"
-  },"26": {
+  },"27": {
     "doc": "Just the Environemnt in Gazebo",
     "title": "Example model.sdf (simulator description format)",
     "content": "&lt;?xml version='1.0'?&gt; &lt;sdf version='1.7'&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;0.011095 -0.309692 0 0 -0 0&lt;/pose&gt; &lt;link name='Wall_10'&gt; &lt;collision name='Wall_10_Collision'&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;/collision&gt; &lt;visual name='Wall_10_Visual'&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;material&gt; &lt;script&gt; &lt;uri&gt;file://media/materials/scripts/gazebo.material&lt;/uri&gt; &lt;name&gt;Gazebo/Grey&lt;/name&gt; &lt;/script&gt; &lt;ambient&gt;1 1 1 1&lt;/ambient&gt; &lt;/material&gt; &lt;meta&gt; &lt;layer&gt;0&lt;/layer&gt; &lt;/meta&gt; &lt;/visual&gt; &lt;pose&gt;-6.0041 -1.14431 0 0 -0 3.14159&lt;/pose&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;/sdf&gt; . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format",
     "relUrl": "/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format"
-  },"27": {
+  },"28": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Creating world files from the model we designed above",
+    "content": "Now that we have a model in the mfi_floor_trial1 folder, let’s change the folder structure a little bit. ├── worlds ├── models │ ├── mfi_floor_trial1 | ├── model.config | ├── model.sdf | ├── world.sdf . Now, open gazebo and load the above model mfi_floor_trial1. Then follow the below steps: . | Add any new objects onto this model (like sofa, chair, trashcan) | save this as trial_world.world file in the worlds folder. | . The final folder structure should look like below: . ├── worlds | ├── trial_world.world ├── models │ ├── mfi_floor_trial1 | ├── model.config | ├── model.sdf | ├── world.sdf . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#creating-world-files-from-the-model-we-designed-above",
+    "relUrl": "/docs/Simulation/build_floorplan.html#creating-world-files-from-the-model-we-designed-above"
+  },"29": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Adding models to existing neobotix world files",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#adding-models-to-existing-neobotix-world-files",
+    "relUrl": "/docs/Simulation/build_floorplan.html#adding-models-to-existing-neobotix-world-files"
+  },"30": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Barebones view of neobotix_workshop.world",
+    "content": "This world file is provided by neobotix here. We will use this world file as our template and add models (walls, tables, trashcan and sofa) to this world as required. Process Overview . | The world file you created in the saving floorplan section called world.sdf will contain the info on walls and tables which we will need to use | The neobotix world file “neo_workshop.world” looks like this: | We need to modify it to the below format | . &lt;sdf version='1.6'&gt; &lt;world name='default'&gt; &lt;light name='sun' type='directional'&gt; &lt;/light&gt; &lt;gravity&gt;0 0 -9.8&lt;/gravity&gt; &lt;magnetic_field&gt;6e-06 2.3e-05 -4.2e-05&lt;/magnetic_field&gt; &lt;atmosphere type='adiabatic'/&gt; &lt;physics name='default_physics' default='0' type='ode'&gt; &lt;/physics&gt; &lt;scene&gt; &lt;/scene&gt; &lt;wind/&gt; &lt;spherical_coordinates&gt; &lt;/spherical_coordinates&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;1.22275 -0.717257 0 0 -0 0&lt;/pose&gt; &lt;link name='Wall_10'&gt; &lt;/link&gt; &lt;link name='Wall_14'&gt; &lt;/link&gt; &lt;link name='Wall_16'&gt; &lt;/link&gt; &lt;link name='Wall_20'&gt; &lt;/link&gt; &lt;link name='Wall_21'&gt; &lt;/link&gt; &lt;link name='Wall_4'&gt; &lt;/link&gt; &lt;link name='Wall_5'&gt; &lt;/link&gt; &lt;link name='Wall_6'&gt; &lt;/link&gt; &lt;link name='Wall_7'&gt; &lt;/link&gt; &lt;link name='Wall_8'&gt; &lt;/link&gt; &lt;link name='Wall_9'&gt; &lt;/link&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;model name='table'&gt; &lt;/model&gt; &lt;model name='table_0'&gt; &lt;/model&gt; &lt;state world_name='default'&gt; &lt;sim_time&gt;12155 846000000&lt;/sim_time&gt; &lt;real_time&gt;151 139215044&lt;/real_time&gt; &lt;wall_time&gt;1592070340 176042788&lt;/wall_time&gt; &lt;iterations&gt;15065&lt;/iterations&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;1.22275 -0.717257 0 0 -0 0&lt;/pose&gt; &lt;scale&gt;1 1 1&lt;/scale&gt; &lt;link name='Wall_10'&gt; &lt;/link&gt; &lt;link name='Wall_14'&gt; &lt;/link&gt; &lt;link name='Wall_16'&gt; &lt;/link&gt; &lt;link name='Wall_20'&gt; &lt;/link&gt; &lt;link name='Wall_21'&gt; &lt;/link&gt; &lt;link name='Wall_4'&gt; &lt;/link&gt; &lt;link name='Wall_5'&gt; &lt;/link&gt; &lt;link name='Wall_6'&gt; &lt;/link&gt; &lt;link name='Wall_7'&gt; &lt;/link&gt; &lt;link name='Wall_8'&gt; &lt;/link&gt; &lt;link name='Wall_9'&gt; &lt;/link&gt; &lt;/model&gt; &lt;model name='table'&gt; &lt;/model&gt; &lt;model name='table_0'&gt; &lt;/model&gt; &lt;light name='sun'&gt; &lt;pose&gt;0 0 10 0 -0 0&lt;/pose&gt; &lt;/light&gt; &lt;/state&gt; &lt;gui fullscreen='0'&gt; &lt;camera name='user_camera'&gt; &lt;pose frame=''&gt;-1.29545 -2.55987 1.20273 0 0.241796 -2.66221&lt;/pose&gt; &lt;view_controller&gt;orbit&lt;/view_controller&gt; &lt;projection_type&gt;perspective&lt;/projection_type&gt; &lt;/camera&gt; &lt;/gui&gt; &lt;audio&gt; &lt;device&gt;default&lt;/device&gt; &lt;/audio&gt; &lt;model name='neobotix_ground_plane'&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;/world&gt; &lt;/sdf&gt; . | After modifying the neo_workshop.world file, we can see that there’s a line in the above file called &lt;model name='mfi_floor_trial1'&gt; which refers to the model we saved in the “Saving the floorplan” section (we saved the model as mfi_floor_trial1 folder). We simply need to copy this folder to the models folder in the neo_simulation2 workspace. | Run the neobotix simulation as shown in the next section | . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#barebones-view-of-neobotix_workshopworld",
+    "relUrl": "/docs/Simulation/build_floorplan.html#barebones-view-of-neobotix_workshopworld"
+  },"31": {
+    "doc": "Just the Environemnt in Gazebo",
+    "title": "Running the Neobotix simulation",
+    "content": "The neo_simulation2 package uses ros2 Humble and will not run on the foxy docker which the team will be using for most of the development. Therefore, a separate docker container was setup to run this simulation natively. The instructions to run this are present in this repository . ",
+    "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#running-the-neobotix-simulation",
+    "relUrl": "/docs/Simulation/build_floorplan.html#running-the-neobotix-simulation"
+  },"32": {
     "doc": "Just the Environemnt in Gazebo",
     "title": "Just the Environemnt in Gazebo",
-    "content": ". | Building Environment From a Floorplan . | Editing the Environment | Saving the Floorplan | Example model.sdf (simulator description format) | . | . ",
+    "content": ". | Building Environment From a Floorplan . | Editing the Environment | Saving the Floorplan | Example model.sdf (simulator description format) | . | Creating world files from the model we designed above | Adding models to existing neobotix world files . | Barebones view of neobotix_workshop.world . | Process Overview | . | . | Running the Neobotix simulation | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html",
     "relUrl": "/docs/Simulation/build_floorplan.html"
-  },"28": {
+  },"33": {
     "doc": "Frame Design",
     "title": "8020 Frame",
     "content": "We are using an Autonomous Mobile Robot (AMR) to transport LEGO bricks as part of MFI’s Lego Testbed. We will be procuring the Neobotix MP400 AMR. After the sensors and motors lab, I began designing a modular frame which can house various sensors, power supply systems and on-board compute. ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#8020-frame",
     "relUrl": "/docs/Mechanical/frame.html#8020-frame"
-  },"29": {
+  },"34": {
     "doc": "Frame Design",
     "title": "Frame Design",
-    "content": ". The Frame is designed to be modular, i.e. it can be mounted on any mobile platform for testing. Addi- tionally, the frame is also designed to allow for minimal tolerance stack-up on the sensor mountings. | Flat plate joints for the bottom links ensure perpendicularity between columns and beams. | Base-sheet mounting holes are precision machined. Additionally the laser cut base-sheets imposes strict constraints on position of sensors and consequently the accuracy of the calculated transforma- tion matrices would improve. | matching mounting points on top and bottom base-sheets ensures frame links are joined accurately. | floating corner connectors allow fixing the level-2 sheet at a flexible height. | . ",
+    "content": ". The Frame is designed to be modular, i.e. it can be mounted on any mobile platform for testing. Addi- tionally, the frame is also designed to allow for minimal tolerance stack-up on the sensor mountings. | Flat plate joints for the bottom links ensure perpendicularity between columns and beams. | Base-sheet mounting holes are precision machined. Additionally the laser cut base-sheets imposes strict constraints on position of sensors and consequently the accuracy of the calculated transforma- tion matrices would improve. | matching mounting points on top and bottom base-sheets ensures frame links are joined accurately. | floating corner connectors allow fixing the level-2 sheet at a flexible height. | . The CAD Files are available on drive for reference. Design Tools . The 8020 Dynamic Library is useful to quickly prototype on building the frame using the 8020 library. ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#frame-design",
     "relUrl": "/docs/Mechanical/frame.html#frame-design"
-  },"30": {
+  },"35": {
     "doc": "Frame Design",
     "title": "Base Sheet",
     "content": ". | The base sheet mounting holes will be laser-cut and additionally the origin of the base sheet was kept aligned to the robot’s origin throughout the design stage. | Mounts for the RealSense camera were designed to be 3D printed | Four camera mounting positions were provided to allow for future additions. | LIDAR was placed acoording to the figure below (to ensure the rays don’t get blocked by the 8020 frame in front) | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#base-sheet",
     "relUrl": "/docs/Mechanical/frame.html#base-sheet"
-  },"31": {
+  },"36": {
     "doc": "Frame Design",
     "title": "RealSense Mount",
     "content": ". ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#realsense-mount",
     "relUrl": "/docs/Mechanical/frame.html#realsense-mount"
-  },"32": {
+  },"37": {
+    "doc": "Frame Design",
+    "title": "Final Machining and Results",
+    "content": "The mounting holes on the 8020 frame were precision CNC cut using a Haas 5 axis CNC. At time of writing, this is the only 5 axis CNC available at CMU. (We don’t need 5 axis, but this was a super fancy machine!) . ",
+    "url": "http://localhost:4000/docs/Mechanical/frame.html#final-machining-and-results",
+    "relUrl": "/docs/Mechanical/frame.html#final-machining-and-results"
+  },"38": {
+    "doc": "Frame Design",
+    "title": "Finished Product",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/Mechanical/frame.html#finished-product",
+    "relUrl": "/docs/Mechanical/frame.html#finished-product"
+  },"39": {
     "doc": "Frame Design",
     "title": "Frame Design",
-    "content": ". | 8020 Frame . | Frame Design | Base Sheet | RealSense Mount | . | . ",
+    "content": ". | 8020 Frame . | Frame Design . | Design Tools | . | Base Sheet | RealSense Mount | . | Final Machining and Results . | Finished Product | . | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html",
     "relUrl": "/docs/Mechanical/frame.html"
-  },"33": {
+  },"40": {
     "doc": "Home",
     "title": "Team Dock Dock Go!",
     "content": "Explaining the steps taken to setup and build the systems necessary for an autonomous mobile robot capable of transporting LEGOs for MFI’s Testbed . ",
     "url": "http://localhost:4000/#team-dock-dock-go",
     "relUrl": "/#team-dock-dock-go"
-  },"34": {
+  },"41": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "http://localhost:4000/",
     "relUrl": "/"
-  },"35": {
+  },"42": {
+    "doc": "Understand Model and World Files",
+    "title": "What is an SDF file? What’s the difference between SDF and URDF?",
+    "content": "SDF is an XML format that describes objects and environments for robot simulators, visualization, and control. Now it was developed originally for Gazebo, but URDF is the type of file format that ROS supports. One post said My understanding can be boiled down to this: URDF specifies a robot, but SDF also specifies a world for the robot to live in, which is a much larger set of things. Based on this premise, SDF is designed to represent a superset of everything that can be represented in URDF. ",
+    "url": "http://localhost:4000/docs/Simulation/model_basics.html#what-is-an-sdf-file-whats-the-difference-between-sdf-and-urdf",
+    "relUrl": "/docs/Simulation/model_basics.html#what-is-an-sdf-file-whats-the-difference-between-sdf-and-urdf"
+  },"43": {
+    "doc": "Understand Model and World Files",
+    "title": "If URDF is better then?",
+    "content": " ",
+    "url": "http://localhost:4000/docs/Simulation/model_basics.html#if-urdf-is-better-then",
+    "relUrl": "/docs/Simulation/model_basics.html#if-urdf-is-better-then"
+  },"44": {
+    "doc": "Understand Model and World Files",
+    "title": "Understand Model and World Files",
+    "content": ". | What is an SDF file? What’s the difference between SDF and URDF? | If URDF is better then? | . ",
+    "url": "http://localhost:4000/docs/Simulation/model_basics.html",
+    "relUrl": "/docs/Simulation/model_basics.html"
+  },"45": {
     "doc": "ROS Learnings",
     "title": "ROS Learnings",
     "content": " ",
     "url": "http://localhost:4000/docs/ros",
     "relUrl": "/docs/ros"
-  },"36": {
+  },"46": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Xavier AGX Setup",
     "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
-  },"37": {
+  },"47": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Links for above steps",
     "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
-  },"38": {
+  },"48": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS Setup for Desktop using Dockerfile",
     "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile"
-  },"39": {
+  },"49": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Why use Docker?",
     "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
-  },"40": {
+  },"50": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Steps to create Docker Image",
     "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image"
-  },"41": {
+  },"51": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)",
     "content": "Reference . #!/bin/bash sudo apt update &amp;&amp; sudo apt install locales sudo locale-gen en_US en_US.UTF-8 sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 export LANG=en_US.UTF-8 sudo apt install software-properties-common sudo add-apt-repository universe sudo apt update &amp;&amp; sudo apt install curl sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null sudo apt update sudo apt upgrade sudo apt install ros-foxy-desktop python3-argcomplete . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"
-  },"42": {
+  },"52": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Checking if it’s installed",
     "content": "printenv | grep -i ROS should return ROS_DISTRO and PYTHON_VERSION and others.. ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#checking-if-its-installed",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#checking-if-its-installed"
-  },"43": {
+  },"53": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Add ros to .bashrc",
     "content": ". | Navigate to ~/.bashrc | Add the following to the last line: source /opt/ros/foxy/setup.bash | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc"
-  },"44": {
+  },"54": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS2 on the Jetson and Desktop",
     "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup for Desktop using Dockerfile . | Why use Docker? | Steps to create Docker Image | . | Setup ROS2 globally on any Ubuntu Device (including Xavier AGX) . | Checking if it’s installed | . | Add ros to .bashrc | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
     "relUrl": "/docs/software_bringup/ros_setup_2.html"
-  },"45": {
+  },"55": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"46": {
+  },"56": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"47": {
+  },"57": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"48": {
+  },"58": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"49": {
+  },"59": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"50": {
+  },"60": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"51": {
+  },"61": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"52": {
+  },"62": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"53": {
+  },"63": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",

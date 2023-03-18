@@ -90,7 +90,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link active">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link">Just the Environemnt in Gazebo</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link active">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link">Just the Environemnt in Gazebo</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/model_basics.html" class="nav-list-link">Understand Model and World Files</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li></ul>
 
       
     </nav>
@@ -152,7 +152,10 @@
       <li><a href="#creating-your-own-package" id="markdown-toc-creating-your-own-package">Creating your own package</a></li>
     </ol>
   </li>
-  <li><a href="#learning-about-tf2" id="markdown-toc-learning-about-tf2">Learning about TF2</a></li>
+  <li><a href="#learning-about-tf2" id="markdown-toc-learning-about-tf2">Learning about TF2</a>    <ol>
+      <li><a href="#better-way-to-create-a-test-node" id="markdown-toc-better-way-to-create-a-test-node">Better way to create a test node</a></li>
+    </ol>
+  </li>
 </ol>
 
 </details>
@@ -273,7 +276,7 @@ just do:</p>
   <li><code class="language-plaintext highlighter-rouge">ros2 pkg create --build-type ament_python &lt;package_name&gt;</code></li>
   <li><code class="language-plaintext highlighter-rouge">cd ~/ros2_ws</code></li>
   <li><code class="language-plaintext highlighter-rouge">colcon build</code> or <code class="language-plaintext highlighter-rouge">colcon build --packages-select my_package</code></li>
-  <li>Source again <code class="language-plaintext highlighter-rouge">. install/setup.bash</code></li>
+  <li>Source again <code class="language-plaintext highlighter-rouge">. install/setup.bash</code> or <code class="language-plaintext highlighter-rouge">source install/local_setup.bash</code> (I prefer the latter)</li>
 </ul>
 
 <p>Running the node is then just <code class="language-plaintext highlighter-rouge">ros2 run my_package my_node</code></p>
@@ -287,6 +290,19 @@ everything will work without this also</p>
         
         
       </h1>
+    
+      <h2 id="better-way-to-create-a-test-node">
+        
+        
+          <a href="#better-way-to-create-a-test-node" class="anchor-heading" aria-labelledby="better-way-to-create-a-test-node"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Better way to create a test node
+        
+        
+      </h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">ros2 pkg create --build-type ament_python --node_name learning_tf2 tf2_trial</code></p>
+
+<p>In the above statement, tf2_trial = package_name, learning_tf2 = node name.</p>
 
         
 

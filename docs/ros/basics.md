@@ -97,7 +97,7 @@ Let's use step 3 and with Python for simplicity:
 - ```ros2 pkg create --build-type ament_python <package_name>```
 - ```cd ~/ros2_ws```
 - ```colcon build``` or ```colcon build --packages-select my_package```
-- Source again ```. install/setup.bash```
+- Source again ```. install/setup.bash``` or ```source install/local_setup.bash``` (I prefer the latter)
 
 Running the node is then just ```ros2 run my_package my_node```
 
@@ -107,4 +107,10 @@ everything will work without this also
 
 
 # Learning about TF2
+
+## Better way to create a test node
+
+```ros2 pkg create --build-type ament_python --node_name learning_tf2 tf2_trial```
+
+In the above statement, tf2_trial = package_name, learning_tf2 = node name.
 

@@ -90,7 +90,7 @@
     </div>
     <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
       
-        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link active">Just the Environemnt in Gazebo</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li></ul>
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link active">Just the Environemnt in Gazebo</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/model_basics.html" class="nav-list-link">Understand Model and World Files</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li></ul>
 
       
     </nav>
@@ -151,6 +151,15 @@
       <li><a href="#example-modelsdf-simulator-description-format" id="markdown-toc-example-modelsdf-simulator-description-format">Example model.sdf (simulator description format)</a></li>
     </ol>
   </li>
+  <li><a href="#creating-world-files-from-the-model-we-designed-above" id="markdown-toc-creating-world-files-from-the-model-we-designed-above">Creating world files from the model we designed above</a></li>
+  <li><a href="#adding-models-to-existing-neobotix-world-files" id="markdown-toc-adding-models-to-existing-neobotix-world-files">Adding models to existing neobotix world files</a>    <ol>
+      <li><a href="#barebones-view-of-neobotix_workshopworld" id="markdown-toc-barebones-view-of-neobotix_workshopworld">Barebones view of neobotix_workshop.world</a>        <ol>
+          <li><a href="#process-overview" id="markdown-toc-process-overview">Process Overview</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li><a href="#running-the-neobotix-simulation" id="markdown-toc-running-the-neobotix-simulation">Running the Neobotix simulation</a></li>
 </ol>
 
 </details>
@@ -203,10 +212,11 @@ to make floorplans in 2D and autogenerate walls, doors and windows.</p>
 <p>You can do <code class="language-plaintext highlighter-rouge">File</code> and <code class="language-plaintext highlighter-rouge">Save As</code> to save the floorplan. This will save three files:</p>
 
 <ul>
-  <li>MODEL_NAME (given by user)
+  <li>MODEL_NAME (given by user) eg. <strong>mfi_floor_trial1</strong>
     <ul>
       <li>model.config</li>
       <li>model.sdf</li>
+      <li>world.sdf</li>
     </ul>
   </li>
 </ul>
@@ -272,6 +282,206 @@ to make floorplans in 2D and autogenerate walls, doors and windows.</p>
   <span class="nt">&lt;/model&gt;</span>
 <span class="nt">&lt;/sdf&gt;</span>
 </code></pre></div></div>
+      <h1 id="creating-world-files-from-the-model-we-designed-above">
+        
+        
+          <a href="#creating-world-files-from-the-model-we-designed-above" class="anchor-heading" aria-labelledby="creating-world-files-from-the-model-we-designed-above"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Creating world files from the model we designed above
+        
+        
+      </h1>
+    
+
+<p>Now that we have a model in the <strong>mfi_floor_trial1</strong> folder, let’s change the folder structure
+a little bit.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── worlds
+├── models
+│   ├── mfi_floor_trial1
+|       ├── model.config
+|       ├── model.sdf
+|       ├── world.sdf
+</code></pre></div></div>
+
+<p>Now, open gazebo and load the above model <strong>mfi_floor_trial1</strong>. Then follow the below steps:</p>
+
+<ul>
+  <li>Add any new objects onto this model (like sofa, chair, trashcan)</li>
+  <li>save this as <code class="language-plaintext highlighter-rouge">trial_world.world</code> file in the worlds folder.</li>
+</ul>
+
+<p>The final folder structure should look like below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── worlds
+|   ├── trial_world.world
+├── models
+│   ├── mfi_floor_trial1
+|       ├── model.config
+|       ├── model.sdf
+|       ├── world.sdf
+</code></pre></div></div>
+      <h1 id="adding-models-to-existing-neobotix-world-files">
+        
+        
+          <a href="#adding-models-to-existing-neobotix-world-files" class="anchor-heading" aria-labelledby="adding-models-to-existing-neobotix-world-files"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding models to existing neobotix world files
+        
+        
+      </h1>
+    
+
+<p><img src="/images/Simulation/neo_workshop_custom.png" alt="" /></p>
+      <h2 id="barebones-view-of-neobotix_workshopworld">
+        
+        
+          <a href="#barebones-view-of-neobotix_workshopworld" class="anchor-heading" aria-labelledby="barebones-view-of-neobotix_workshopworld"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Barebones view of neobotix_workshop.world
+        
+        
+      </h2>
+    
+
+<p>This world file is provided by neobotix
+<a href="https://github.com/neobotix/neo_simulation2/blob/rolling/worlds/neo_workshop.world">here</a>.
+We will use this world file as our template and add models (walls, tables, trashcan and sofa)
+to this world as required.</p>
+      <h3 id="process-overview">
+        
+        
+          <a href="#process-overview" class="anchor-heading" aria-labelledby="process-overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Process Overview
+        
+        
+      </h3>
+    
+
+<ol>
+  <li>The world file you created in the saving floorplan section called world.sdf will contain the
+ info on walls and tables which we will need to use</li>
+  <li>The neobotix world file “neo_workshop.world” looks like this:
+ <img src="/images/Simulation/neo_workshop.orig.png" alt="" /></li>
+  <li>We need to modify it to the below format</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">'1.6'</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;world</span> <span class="na">name=</span><span class="s">'default'</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;light</span> <span class="na">name=</span><span class="s">'sun'</span> <span class="na">type=</span><span class="s">'directional'</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/light&gt;</span>
+    <span class="nt">&lt;gravity&gt;</span>0 0 -9.8<span class="nt">&lt;/gravity&gt;</span>
+    <span class="nt">&lt;magnetic_field&gt;</span>6e-06 2.3e-05 -4.2e-05<span class="nt">&lt;/magnetic_field&gt;</span>
+    <span class="nt">&lt;atmosphere</span> <span class="na">type=</span><span class="s">'adiabatic'</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;physics</span> <span class="na">name=</span><span class="s">'default_physics'</span> <span class="na">default=</span><span class="s">'0'</span> <span class="na">type=</span><span class="s">'ode'</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/physics&gt;</span>
+    <span class="nt">&lt;scene&gt;</span>
+    <span class="nt">&lt;/scene&gt;</span>
+    <span class="nt">&lt;wind/&gt;</span>
+    <span class="nt">&lt;spherical_coordinates&gt;</span>
+    <span class="nt">&lt;/spherical_coordinates&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'mfi_floor_trial1'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>1.22275 -0.717257 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_10'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_14'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_16'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_20'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_21'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_4'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_5'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_6'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_7'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_8'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_9'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;static&gt;</span>1<span class="nt">&lt;/static&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'table'</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'table_0'</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+    <span class="nt">&lt;state</span> <span class="na">world_name=</span><span class="s">'default'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;sim_time&gt;</span>12155 846000000<span class="nt">&lt;/sim_time&gt;</span>
+      <span class="nt">&lt;real_time&gt;</span>151 139215044<span class="nt">&lt;/real_time&gt;</span>
+      <span class="nt">&lt;wall_time&gt;</span>1592070340 176042788<span class="nt">&lt;/wall_time&gt;</span>
+      <span class="nt">&lt;iterations&gt;</span>15065<span class="nt">&lt;/iterations&gt;</span>
+      <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'mfi_floor_trial1'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>1.22275 -0.717257 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;scale&gt;</span>1 1 1<span class="nt">&lt;/scale&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_10'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_14'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_16'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_20'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_21'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_4'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_5'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_6'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_7'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_8'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">'Wall_9'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;/model&gt;</span>
+      <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'table'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/model&gt;</span>
+      <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'table_0'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;/model&gt;</span>
+      <span class="nt">&lt;light</span> <span class="na">name=</span><span class="s">'sun'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 10 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;/light&gt;</span>
+    <span class="nt">&lt;/state&gt;</span>
+    <span class="nt">&lt;gui</span> <span class="na">fullscreen=</span><span class="s">'0'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;camera</span> <span class="na">name=</span><span class="s">'user_camera'</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose</span> <span class="na">frame=</span><span class="s">''</span><span class="nt">&gt;</span>-1.29545 -2.55987 1.20273 0 0.241796 -2.66221<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;view_controller&gt;</span>orbit<span class="nt">&lt;/view_controller&gt;</span>
+        <span class="nt">&lt;projection_type&gt;</span>perspective<span class="nt">&lt;/projection_type&gt;</span>
+      <span class="nt">&lt;/camera&gt;</span>
+    <span class="nt">&lt;/gui&gt;</span>
+    <span class="nt">&lt;audio&gt;</span>
+      <span class="nt">&lt;device&gt;</span>default<span class="nt">&lt;/device&gt;</span>
+    <span class="nt">&lt;/audio&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">'neobotix_ground_plane'</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;static&gt;</span>1<span class="nt">&lt;/static&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+  <span class="nt">&lt;/world&gt;</span>
+<span class="nt">&lt;/sdf&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>After modifying the <code class="language-plaintext highlighter-rouge">neo_workshop.world</code> file, we can see that there’s a line in the
+  above file called <code class="language-plaintext highlighter-rouge">&lt;model name='mfi_floor_trial1'&gt;</code> which refers to the model we saved
+  in the “Saving the floorplan” section (we saved the model as mfi_floor_trial1 folder). We
+  simply need to copy this folder to the
+  <a href="https://github.com/neobotix/neo_simulation2/tree/rolling/models">models</a>
+  folder in the neo_simulation2 workspace.</li>
+  <li>Run the neobotix simulation as shown in the next section</li>
+</ul>
+      <h1 id="running-the-neobotix-simulation">
+        
+        
+          <a href="#running-the-neobotix-simulation" class="anchor-heading" aria-labelledby="running-the-neobotix-simulation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running the Neobotix simulation
+        
+        
+      </h1>
+    
+
+<p>The neo_simulation2 package uses ros2 Humble and will not run on the foxy docker which the
+team will be using for most of the development. Therefore, a separate docker container was
+setup to run this simulation natively.</p>
+
+<p>The instructions to run this are present in <a href="https://github.com/sushanthj/robot-setup-tool">this repository</a></p>
 
         
 
