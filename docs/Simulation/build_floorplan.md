@@ -266,3 +266,18 @@ setup to run this simulation natively.
 
 The instructions to run this are present in [this repository](https://github.com/sushanthj/robot-setup-tool)
 
+## Debugging
+
+1. clone the neobotix package ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
+2. ```colcon build --symlink-install```
+3. ```source /root/neobotix_workspace/install/local_setup.bash```
+4. set the environment variables
+    export MY_ROBOT=mp_400
+    export MAP_NAME=neo_workshop
+5. run ```RMW_IMPLEMENTATION=rmw_fastrtps_cpp```
+6. run ```FASTRTPS_DEFAULT_PROFILES_FILE=/root/neobotix_workspace/src/neo_mp_400-2/DEFAULT_FASTRTPS_PROFILES.xml```
+7. run ```ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml```
+8. Open another tmux panel and run simulation
+    ```ros2 launch neo_simulation2 simulation.launch.py```
+9. Run ```ros2 run rviz2 rviz2``` and add the topics which are being published from the slam toolbox
+10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct)
