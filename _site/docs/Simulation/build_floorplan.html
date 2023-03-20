@@ -160,13 +160,17 @@
     </ol>
   </li>
   <li><a href="#running-the-neobotix-simulation" id="markdown-toc-running-the-neobotix-simulation">Running the Neobotix simulation</a></li>
-  <li><a href="#using-neobotix-mapping-package" id="markdown-toc-using-neobotix-mapping-package">Using Neobotix Mapping Package</a>    <ol>
-      <li><a href="#debugging-on-map-generation-trying-to-use-the-neobotix-mapping-setup" id="markdown-toc-debugging-on-map-generation-trying-to-use-the-neobotix-mapping-setup">Debugging on Map Generation (trying to use the neobotix mapping setup)</a></li>
-    </ol>
-  </li>
-  <li><a href="#mapping-setup" id="markdown-toc-mapping-setup">Mapping Setup</a>    <ol>
-      <li><a href="#build-steps" id="markdown-toc-build-steps">Build Steps</a></li>
-      <li><a href="#run-steps" id="markdown-toc-run-steps">Run Steps</a></li>
+  <li><a href="#running-slam-in-simulation" id="markdown-toc-running-slam-in-simulation">Running SLAM in Simulation</a>    <ol>
+      <li><a href="#neobotix-mapping-package" id="markdown-toc-neobotix-mapping-package">Neobotix Mapping Package</a>        <ol>
+          <li><a href="#build-steps" id="markdown-toc-build-steps">Build Steps</a></li>
+          <li><a href="#run-steps" id="markdown-toc-run-steps">Run Steps</a></li>
+        </ol>
+      </li>
+      <li><a href="#manual-mapping-package" id="markdown-toc-manual-mapping-package">Manual Mapping Package</a>        <ol>
+          <li><a href="#build-steps-1" id="markdown-toc-build-steps-1">Build Steps</a></li>
+          <li><a href="#run-steps-1" id="markdown-toc-run-steps-1">Run Steps</a></li>
+        </ol>
+      </li>
       <li><a href="#final-results" id="markdown-toc-final-results">Final Results</a></li>
       <li><a href="#miscellaneous" id="markdown-toc-miscellaneous">Miscellaneous</a></li>
     </ol>
@@ -493,51 +497,44 @@ team will be using for most of the development. Therefore, a separate docker con
 setup to run this simulation natively.</p>
 
 <p>The instructions to run this are present in <a href="https://github.com/sushanthj/robot-setup-tool">this repository</a></p>
-      <h1 id="using-neobotix-mapping-package">
+      <h1 id="running-slam-in-simulation">
         
         
-          <a href="#using-neobotix-mapping-package" class="anchor-heading" aria-labelledby="using-neobotix-mapping-package"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using Neobotix Mapping Package
+          <a href="#running-slam-in-simulation" class="anchor-heading" aria-labelledby="running-slam-in-simulation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running SLAM in Simulation
         
         
       </h1>
     
 
-<p>This internally uses the SLAM toolbox, but some pipeline issues seem to be there.</p>
-      <h2 id="debugging-on-map-generation-trying-to-use-the-neobotix-mapping-setup">
+<p>The Neobotix mapping package uses the slam_toolbox in synchronous mode and shows better results in loop-closure
+in comparison to the Manual mapping package which uses async mode.</p>
+
+<p>A comparison of the two is shown below (final .pgm outputs):</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th style="text-align: left">async mode</th>
+      <th style="text-align: left">sync mode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><img src="/images/Simulation/async_pgm.png" alt="" /></td>
+      <td style="text-align: left"><img src="/images/Simulation/sync_pgm.png" alt="" /></td>
+    </tr>
+  </tbody>
+</table></div>
+      <h2 id="neobotix-mapping-package">
         
         
-          <a href="#debugging-on-map-generation-trying-to-use-the-neobotix-mapping-setup" class="anchor-heading" aria-labelledby="debugging-on-map-generation-trying-to-use-the-neobotix-mapping-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Debugging on Map Generation (trying to use the neobotix mapping setup)
+          <a href="#neobotix-mapping-package" class="anchor-heading" aria-labelledby="neobotix-mapping-package"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Neobotix Mapping Package
         
         
       </h2>
     
 
-<ol>
-  <li>clone the neobotix package <code class="language-plaintext highlighter-rouge">git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git</code></li>
-  <li><code class="language-plaintext highlighter-rouge">colcon build --symlink-install</code></li>
-  <li><code class="language-plaintext highlighter-rouge">source /root/neobotix_workspace/install/local_setup.bash</code></li>
-  <li>set the environment variables
- export MY_ROBOT=mp_400
- export MAP_NAME=neo_workshop</li>
-  <li>run <code class="language-plaintext highlighter-rouge">RMW_IMPLEMENTATION=rmw_fastrtps_cpp</code></li>
-  <li>run <code class="language-plaintext highlighter-rouge">FASTRTPS_DEFAULT_PROFILES_FILE=/root/neobotix_workspace/src/neo_mp_400-2/DEFAULT_FASTRTPS_PROFILES.xml</code></li>
-  <li>run <code class="language-plaintext highlighter-rouge">ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml</code></li>
-  <li>Open another tmux panel and run simulation
- <code class="language-plaintext highlighter-rouge">ros2 launch neo_simulation2 simulation.launch.py</code></li>
-  <li>Run <code class="language-plaintext highlighter-rouge">ros2 run rviz2 rviz2</code> and add the topics which are being published from the slam toolbox</li>
-  <li>Watch <a href="https://www.youtube.com/watch?v=rZOxPGCn4QM&amp;ab_channel=TheConstruct">this youtube video</a></li>
-</ol>
-      <h1 id="mapping-setup">
-        
-        
-          <a href="#mapping-setup" class="anchor-heading" aria-labelledby="mapping-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mapping Setup
-        
-        
-      </h1>
-    
-
-<p>Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper
-is probably not an issue</p>
+<p>This internally uses the slam_toolbox in online sync mode</p>
       <h3 id="build-steps">
         
         
@@ -546,25 +543,119 @@ is probably not an issue</p>
         
       </h3>
     
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">cd /root/neobotix_workspace/src</code></li>
-  <li><code class="language-plaintext highlighter-rouge">git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git</code></li>
-  <li><code class="language-plaintext highlighter-rouge">cd neo_mp_400-2</code></li>
-  <li><code class="language-plaintext highlighter-rouge">colcon build</code></li>
-  <li><code class="language-plaintext highlighter-rouge">cd ..</code></li>
-  <li>Copy the package which will launch the slam_toolbox <code class="language-plaintext highlighter-rouge">cp /home/admin/worlds/sush_mapping .</code></li>
-  <li><code class="language-plaintext highlighter-rouge">cd sush_mapping</code></li>
-  <li><code class="language-plaintext highlighter-rouge">colcon build</code></li>
-  <li><code class="language-plaintext highlighter-rouge">cd ..</code></li>
+
+<ol>
+  <li>Setup the docker environment (should be done when setting up Neobotix simulation above)</li>
+  <li>To skip some steps in the above repo, you can pull a pre-built image <code class="language-plaintext highlighter-rouge">docker pull sushanthj/humble_sim_docker_built</code></li>
+  <li>go to the neobotix workspace on the docker environemnt <code class="language-plaintext highlighter-rouge">cd /root/neobotix_workspace/src</code></li>
+  <li>If the neo_mp_400-2 package has not been installed, do so manually using <code class="language-plaintext highlighter-rouge">git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git</code></li>
+  <li>A config file in neo_mp_400-2 package has an error.
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">slam_toolbox</span><span class="pi">:</span>
+  <span class="na">ros__parameters</span><span class="pi">:</span>
+
+ <span class="c1"># Plugin params</span>
+<span class="err"> </span><span class="na">solver_plugin</span><span class="pi">:</span> <span class="s">solver_plugins::CeresSolver</span>
+ <span class="na">ceres_linear_solver</span><span class="pi">:</span> <span class="s">SPARSE_NORMAL_CHOLESKY</span>
+ <span class="na">ceres_preconditioner</span><span class="pi">:</span> <span class="s">SCHUR_JACOBI</span>
+ <span class="na">ceres_trust_strategy</span><span class="pi">:</span> <span class="s">LEVENBERG_MARQUARDT</span>
+ <span class="na">ceres_dogleg_type</span><span class="pi">:</span> <span class="s">TRADITIONAL_DOGLEG</span>
+ <span class="na">ceres_loss_function</span><span class="pi">:</span> <span class="s">None</span>
+
+ <span class="c1"># ROS Parameters</span>
+ <span class="na">odom_frame</span><span class="pi">:</span> <span class="s">odom</span>
+ <span class="na">map_frame</span><span class="pi">:</span> <span class="s">map</span>
+ <span class="na">base_frame</span><span class="pi">:</span> <span class="s">base_footprint</span>
+ <span class="na">scan_topic</span><span class="pi">:</span> <span class="s">/lidar_1/scan_filtered</span>
+ <span class="na">mode</span><span class="pi">:</span> <span class="s">mapping</span> <span class="c1">#localization</span>
+</code></pre></div>    </div>
+    <p>Change the scan_topic to <code class="language-plaintext highlighter-rouge">scan_topic: /scan</code>. This <code class="language-plaintext highlighter-rouge">/scan</code> topic is what will be used by slam_toolbox to build the map</p>
+  </li>
+  <li>Move back to workspace to build <code class="language-plaintext highlighter-rouge">cd /root/neobotix_workspace</code></li>
   <li><code class="language-plaintext highlighter-rouge">colcon build --symlink-install</code></li>
-  <li><code class="language-plaintext highlighter-rouge">cd ..</code></li>
-  <li><code class="language-plaintext highlighter-rouge">colcon build --symlink-install</code></li>
-  <li>source necessary files <code class="language-plaintext highlighter-rouge">source install/setup.bash</code></li>
-</ul>
+</ol>
       <h3 id="run-steps">
         
         
           <a href="#run-steps" class="anchor-heading" aria-labelledby="run-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run Steps
+        
+        
+      </h3>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ros2 launch neo_simulation2 simulation.launch.py</code></li>
+  <li>The above script should launch simulation which starts publishing topics called ‘/scan’ and some odometry topics</li>
+  <li><em>Note. the above topics should match the topics slam_toolbox requires, this is present in <a href="https://github.com/SteveMacenski/slam_toolbox/blob/ros2/config/mapper_params_online_sync.yaml">this file</a></em></li>
+  <li>Now that we have simulation running, we can launch the slam toolbox by launching the package we created (i.e. sush_mapping, sorry about the name)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml</code></li>
+    </ul>
+  </li>
+  <li>The SLAM toolbox might throw some errors in XML-Parser errors, these can be ignored</li>
+  <li>Now, to vizualise the map being generated, launch rviz <code class="language-plaintext highlighter-rouge">ros2 run rviz2 rviz2</code></li>
+  <li>Once in rviz, click <strong>Add</strong> in the botton left corner and in the first pane itself (<em>by display type</em>), there is a Map option. Select that.</li>
+  <li>Now, the map still won’t load until you choose the right topic.
+    <ul>
+      <li>Select Topic = map</li>
+      <li>Select Update Topic = /map_updates</li>
+    </ul>
+  </li>
+  <li>Then move around the robot (using teleop) and you should see the map being generated as shown below</li>
+  <li>Now, we run map_saver package to save the map created by the SLAM toolbox as a .pgm file
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ros2 run nav2_map_server map_saver_cli -f /root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/trial_map</code></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- ## Debugging on Map Generation (trying to use the neobotix mapping setup)
+
+1. clone the neobotix package ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
+2. ```colcon build --symlink-install```
+3. ```source /root/neobotix_workspace/install/local_setup.bash```
+4. set the environment variables
+    export MY_ROBOT=mp_400
+    export MAP_NAME=neo_workshop
+5. run ```RMW_IMPLEMENTATION=rmw_fastrtps_cpp```
+6. run ```FASTRTPS_DEFAULT_PROFILES_FILE=/root/neobotix_workspace/src/neo_mp_400-2/DEFAULT_FASTRTPS_PROFILES.xml```
+7. run ```ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml```
+8. Open another tmux panel and run simulation
+    ```ros2 launch neo_simulation2 simulation.launch.py```
+9. Run ```ros2 run rviz2 rviz2``` and add the topics which are being published from the slam toolbox
+10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct) -->
+      <h2 id="manual-mapping-package">
+        
+        
+          <a href="#manual-mapping-package" class="anchor-heading" aria-labelledby="manual-mapping-package"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Manual Mapping Package
+        
+        
+      </h2>
+    
+
+<p>Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper
+is probably not an issue</p>
+      <h3 id="build-steps-1">
+        
+        
+          <a href="#build-steps-1" class="anchor-heading" aria-labelledby="build-steps-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Build Steps
+        
+        
+      </h3>
+    
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">cd /root/neobotix_workspace/src</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git</code></li>
+  <li><code class="language-plaintext highlighter-rouge">cd neo_mp_400-2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">cd ..</code></li>
+  <li>Copy the package which will launch the slam_toolbox <code class="language-plaintext highlighter-rouge">cp /home/admin/worlds/sush_mapping .</code></li>
+  <li><code class="language-plaintext highlighter-rouge">cd ..</code></li>
+  <li><code class="language-plaintext highlighter-rouge">colcon build --symlink-install</code></li>
+  <li>source necessary files <code class="language-plaintext highlighter-rouge">source install/setup.bash</code></li>
+</ul>
+      <h3 id="run-steps-1">
+        
+        
+          <a href="#run-steps-1" class="anchor-heading" aria-labelledby="run-steps-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run Steps
         
         
       </h3>

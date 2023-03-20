@@ -258,6 +258,7 @@ to this world as required.
     folder in the neo_simulation2 workspace.
 - Run the neobotix simulation as shown in the next section
 
+
 # Running the Neobotix simulation
 
 The neo_simulation2 package uses ros2 Humble and will not run on the foxy docker which the
@@ -266,11 +267,69 @@ setup to run this simulation natively.
 
 The instructions to run this are present in [this repository](https://github.com/sushanthj/robot-setup-tool)
 
-# Using Neobotix Mapping Package
+# Running SLAM in Simulation
 
-This internally uses the SLAM toolbox, but some pipeline issues seem to be there.
+The Neobotix mapping package uses the slam_toolbox in synchronous mode and shows better results in loop-closure
+in comparison to the Manual mapping package which uses async mode.
 
-## Debugging on Map Generation (trying to use the neobotix mapping setup)
+A comparison of the two is shown below (final .pgm outputs):
+
+|             async mode                 |              sync mode               |
+|:---------------------------------------|:-------------------------------------|
+| ![](/images/Simulation/async_pgm.png)  | ![](/images/Simulation/sync_pgm.png) |
+
+## Neobotix Mapping Package
+
+This internally uses the slam_toolbox in online sync mode
+
+### Build Steps
+
+1. Setup the docker environment (should be done when setting up Neobotix simulation above)
+2. To skip some steps in the above repo, you can pull a pre-built image ```docker pull sushanthj/humble_sim_docker_built```
+3. go to the neobotix workspace on the docker environemnt ```cd /root/neobotix_workspace/src```
+4. If the neo_mp_400-2 package has not been installed, do so manually using ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
+5. A config file in neo_mp_400-2 package has an error.
+  ```yaml
+  slam_toolbox:
+  ros__parameters:
+
+    # Plugin params
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+
+    # ROS Parameters
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_footprint
+    scan_topic: /lidar_1/scan_filtered
+    mode: mapping #localization
+    ```
+    Change the scan_topic to ```scan_topic: /scan```. This ```/scan``` topic is what will be used by slam_toolbox to build the map
+6. Move back to workspace to build ```cd /root/neobotix_workspace```
+7. ```colcon build --symlink-install```
+
+### Run Steps
+
+- ```ros2 launch neo_simulation2 simulation.launch.py```
+- The above script should launch simulation which starts publishing topics called '/scan' and some odometry topics
+- *Note. the above topics should match the topics slam_toolbox requires, this is present in [this file](https://github.com/SteveMacenski/slam_toolbox/blob/ros2/config/mapper_params_online_sync.yaml)*
+- Now that we have simulation running, we can launch the slam toolbox by launching the package we created (i.e. sush_mapping, sorry about the name)
+  - ```ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml```
+- The SLAM toolbox might throw some errors in XML-Parser errors, these can be ignored
+- Now, to vizualise the map being generated, launch rviz ```ros2 run rviz2 rviz2```
+- Once in rviz, click **Add** in the botton left corner and in the first pane itself (*by display type*), there is a Map option. Select that.
+- Now, the map still won't load until you choose the right topic.
+  - Select Topic = map
+  - Select Update Topic = /map_updates
+- Then move around the robot (using teleop) and you should see the map being generated as shown below
+- Now, we run map_saver package to save the map created by the SLAM toolbox as a .pgm file
+  - ```ros2 run nav2_map_server map_saver_cli -f /root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/trial_map```
+
+<!-- ## Debugging on Map Generation (trying to use the neobotix mapping setup)
 
 1. clone the neobotix package ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
 2. ```colcon build --symlink-install```
@@ -284,9 +343,12 @@ This internally uses the SLAM toolbox, but some pipeline issues seem to be there
 8. Open another tmux panel and run simulation
     ```ros2 launch neo_simulation2 simulation.launch.py```
 9. Run ```ros2 run rviz2 rviz2``` and add the topics which are being published from the slam toolbox
-10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct)
+10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct) -->
 
-# Mapping Setup
+
+
+
+## Manual Mapping Package
 
 Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper
 is probably not an issue
@@ -295,14 +357,9 @@ is probably not an issue
 - ```cd /root/neobotix_workspace/src```
 - ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
 - ```cd neo_mp_400-2```
-- ```colcon build```
 - ```cd ..```
 - Copy the package which will launch the slam_toolbox ```cp /home/admin/worlds/sush_mapping .```
-- ```cd sush_mapping```
-- ```colcon build```
 - ``` cd ..```
-- ```colcon build --symlink-install```
-- ```cd ..```
 - ```colcon build --symlink-install```
 - source necessary files ```source install/setup.bash```
 
