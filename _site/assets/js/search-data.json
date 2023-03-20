@@ -19,7 +19,7 @@
   },"3": {
     "doc": "Building this Website",
     "title": "Building this Website",
-    "content": "For Jekyll reference see just_the_docs . The following pages are built in order to understand Computer Vision and Machine Learning . To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url Then, go to the deploy page on heroku and link the respective github repo for future updates . ",
+    "content": "For Jekyll reference see just_the_docs . The following pages are built in order to document the development work during our MRSD capstone project. To deploy on heroku follow the steps in the link below (and use the gem files, rake files and proc files in this repo for reference) . The following files will need to be copied from this repo: . | config.ru | Rakefile | Procfile | static.json | config.yaml (modify this file as per requirement) | Gemfile | . And only if necessary: . | Gemfile.lock | remove _sites from .gitignore | . Run bundle once to intialize Run bundle exec jekyll serve Go to the specified webpage by the above command . After copying these files (or their necessary contents), install heroku cli and do heroku login: . curl https://cli-assets.heroku.com/install.sh | sh heroku login . Then directly start with heroku create as per the below link and the other steps necessary (git push heroku master) . Deploy jekyll on heroku . Finally, go to heroku page -&gt; settings -&gt; change the name of the app and find the url Then, go to the deploy page on heroku and link the respective github repo for future updates . ",
     "url": "http://localhost:4000/intro/",
     "relUrl": "/intro/"
   },"4": {
@@ -211,7 +211,7 @@
   },"35": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Final Results",
-    "content": ". ",
+    "content": "Complete Simulation Video . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#final-results",
     "relUrl": "/docs/Simulation/build_floorplan.html#final-results"
   },"36": {
