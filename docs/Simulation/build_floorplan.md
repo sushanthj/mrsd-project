@@ -285,7 +285,7 @@ This internally uses the slam_toolbox in online sync mode
 ### Build Steps
 
 1. Setup the docker environment (should be done when setting up Neobotix simulation above)
-2. To skip some steps in the above repo, you can pull a pre-built image ```docker pull sushanthj/humble_sim_docker_built```
+2. To skip some steps in the above repo, you can pull a pre-built image ```docker pull sushanthj/humble_sim_mapping_built```
 3. go to the neobotix workspace on the docker environemnt ```cd /root/neobotix_workspace/src```
 4. If the neo_mp_400-2 package has not been installed, do so manually using ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
 5. A config file in neo_mp_400-2 package has an error.
