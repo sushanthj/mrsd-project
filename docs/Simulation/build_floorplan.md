@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Just the Environemnt in Gazebo
+title: Gazebo Environment and Mapping
 parent: Simulation Development
 nav_order: 2
 ---
@@ -266,7 +266,11 @@ setup to run this simulation natively.
 
 The instructions to run this are present in [this repository](https://github.com/sushanthj/robot-setup-tool)
 
-## Debugging
+# Using Neobotix Mapping Package
+
+This internally uses the SLAM toolbox, but some pipeline issues seem to be there.
+
+## Debugging on Map Generation (trying to use the neobotix mapping setup)
 
 1. clone the neobotix package ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
 2. ```colcon build --symlink-install```
@@ -281,3 +285,50 @@ The instructions to run this are present in [this repository](https://github.com
     ```ros2 launch neo_simulation2 simulation.launch.py```
 9. Run ```ros2 run rviz2 rviz2``` and add the topics which are being published from the slam toolbox
 10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct)
+
+# Mapping Setup
+
+Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper
+is probably not an issue
+
+### Build Steps
+- ```cd /root/neobotix_workspace/src```
+- ```git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git```
+- ```cd neo_mp_400-2```
+- ```colcon build```
+- ```cd ..```
+- Copy the package which will launch the slam_toolbox ```cp /home/admin/worlds/sush_mapping .```
+- ```cd sush_mapping```
+- ```colcon build```
+- ``` cd ..```
+- ```colcon build --symlink-install```
+- ```cd ..```
+- ```colcon build --symlink-install```
+- source necessary files ```source install/setup.bash```
+
+### Run Steps
+
+- ```ros2 launch neo_simulation2 simulation.launch.py```
+- The above script should launch simulation which starts publishing topics called '/scan' and some odometry topics
+- *Note. the above topics should match the topics slam_toolbox requires, this is present in [this file](https://github.com/SteveMacenski/slam_toolbox/blob/ros2/config/mapper_params_online_async.yaml)*
+- Now that we have simulation running, we can launch the slam toolbox by launching the package we created (i.e. sush_mapping, sorry about the name)
+- ```ros2 launch sush_mapping online_async_launch.py```
+- The SLAM toolbox might throw some errors in XML-Parser errors, these can be ignored
+- Now, to vizualise the map being generated, launch rviz ```ros2 run rviz2 rviz2```
+- Once in rviz, click **Add** in the botton left corner and in the first pane itself (*by display type*), there is a Map option. Select that.
+- Now, the map still won't load until you choose the right topic.
+  - Select Topic = map
+  - Select Update Topic = /map_updates
+- Then move around the robot (using teleop) and you should see the map being generated as shown below
+- Now, we run map_saver package to save the map created by the SLAM toolbox as a .pgm file
+  - ```ros2 run nav2_map_server map_saver_cli -f /root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map```
+
+
+## Final Results
+
+![](/images/Simulation/slam_in_sim.gif)
+
+## Miscellaneous
+
+- Check if a particular package is installed: ```ros2 pkg list | grep slam```
+
