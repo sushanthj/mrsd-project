@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Setup for SLAM Toolbox | Team Dock Dock Go!</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Setup for SLAM Toolbox" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="MRSD project Team H’s system description" />
+<meta property="og:description" content="MRSD project Team H’s system description" />
+<link rel="canonical" href="http://localhost:4000/docs/SLAM_Toolbox/setup.html" />
+<meta property="og:url" content="http://localhost:4000/docs/SLAM_Toolbox/setup.html" />
+<meta property="og:site_name" content="Team Dock Dock Go!" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Setup for SLAM Toolbox" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"MRSD project Team H’s system description","headline":"Setup for SLAM Toolbox","url":"http://localhost:4000/docs/SLAM_Toolbox/setup.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="http://localhost:4000/" class="site-title lh-tight">
+  Team Dock Dock Go!
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/docker_image_management.html" class="nav-list-link">Docker and Dockerhub</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link">Gazebo Environment and Mapping</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/model_basics.html" class="nav-list-link">Understand Model and World Files</a></li></ul></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/SLAM_toolbox" class="nav-list-link">Understanding SLAM Toolbox</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/SLAM_Toolbox/running.html" class="nav-list-link">Running SLAM Toolbox</a></li><li class="nav-list-item  active"><a href="http://localhost:4000/docs/SLAM_Toolbox/setup.html" class="nav-list-link active">Setup for SLAM Toolbox</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Team Dock Dock Go!" aria-label="Search Team Dock Dock Go!" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+        <nav aria-label="Auxiliary" class="aux-nav">
+          <ul class="aux-nav-list">
+            
+              <li class="aux-nav-list-item">
+                <a href="//github.com/sushanthj/mfi-amr" class="site-button"
+                  
+                >
+                  Teams's GitHub
+                </a>
+              </li>
+            
+          </ul>
+        </nav>
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <ol class="breadcrumb-nav-list">
+              
+                <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/SLAM_toolbox">Understanding SLAM Toolbox</a></li>
+              
+              <li class="breadcrumb-nav-list-item"><span>Setup for SLAM Toolbox</span></li>
+            </ol>
+          </nav>
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <details open="">
+  <summary class="text-delta">
+    Table of contents
+  </summary>
+<ol id="markdown-toc">
+  <li><a href="#nodes-to-start" id="markdown-toc-nodes-to-start">Nodes to Start</a></li>
+  <li><a href="#sensors-frames-and-pipeline" id="markdown-toc-sensors-frames-and-pipeline">Sensors, Frames, and Pipeline</a>    <ol>
+      <li><a href="#tf2-transforms" id="markdown-toc-tf2-transforms">TF2 Transforms</a>        <ol>
+          <li><a href="#motivation" id="markdown-toc-motivation">Motivation</a></li>
+          <li><a href="#interfacing-with-slam_toolbox" id="markdown-toc-interfacing-with-slam_toolbox">Interfacing with slam_toolbox</a></li>
+        </ol>
+      </li>
+      <li><a href="#config-files-and-launching-slam-toolbox" id="markdown-toc-config-files-and-launching-slam-toolbox">Config Files and Launching SLAM toolbox</a>        <ol>
+          <li><a href="#which-launch-file-to-use" id="markdown-toc-which-launch-file-to-use">Which launch file to use?</a></li>
+          <li><a href="#config-file-nitty-gritties" id="markdown-toc-config-file-nitty-gritties">Config file nitty-gritties</a></li>
+        </ol>
+      </li>
+      <li><a href="#republishing-velodyne-topic" id="markdown-toc-republishing-velodyne-topic">Republishing Velodyne Topic</a></li>
+    </ol>
+  </li>
+</ol>
+
+</details>
+      <h1 id="nodes-to-start">
+        
+        
+          <a href="#nodes-to-start" class="anchor-heading" aria-labelledby="nodes-to-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Nodes to Start
+        
+        
+      </h1>
+    
+
+<ul>
+  <li>velodyne</li>
+  <li>laser odometry</li>
+  <li>slam_toolbox_launch</li>
+  <li>slam_toobox_tf2</li>
+  <li>repub_velo</li>
+</ul>
+      <h1 id="sensors-frames-and-pipeline">
+        
+        
+          <a href="#sensors-frames-and-pipeline" class="anchor-heading" aria-labelledby="sensors-frames-and-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sensors, Frames, and Pipeline
+        
+        
+      </h1>
+    
+
+<p>The SLAM toolbox is super picky in that it needs TF2 frames and sensor data published in specific
+topics to even start running.</p>
+
+<p>This document highlights some of the pipelining required to make slam toolbox run.</p>
+      <h2 id="tf2-transforms">
+        
+        
+          <a href="#tf2-transforms" class="anchor-heading" aria-labelledby="tf2-transforms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TF2 Transforms
+        
+        
+      </h2>
+    
+
+<p><a href="https://github.com/DockDockGo/slam_toolbox_tf2" class="btn fs-3 mb-4 mb-md-0">Github Repo of Package</a></p>
+
+<p>The SLAM toolbox needs few specific transformations with the TF tree looking like:</p>
+
+<p><img src="/images/slam_toolbox/TF_tree.png" alt="" /></p>
+
+<p>However, the above picture was taken from simulation where multiple links were shown. We will
+only worry about the following frames:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── odom
+│   ├── base_footprint
+|       ├── base_link
+|           ├── lidar_1_link
+</code></pre></div></div>
+
+<p>The below frames I’m guessing is necessary only during initialization of slam_toolbox node.
+This is becasue the slam_toolbox is meant to publish it’s own map frame as well. However for
+<strong>some weird stupid reason</strong> it needs this map -&gt; lidar_1_link as well.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── map
+│   ├── lidar_1_link
+</code></pre></div></div>
+      <h3 id="motivation">
+        
+        
+          <a href="#motivation" class="anchor-heading" aria-labelledby="motivation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Motivation
+        
+        
+      </h3>
+    
+
+<ul>
+  <li>odom frame is just our <strong>initial robot pose</strong> which is instantiated the moment we start
+  the robot</li>
+  <li>base_footprint frame is necessary to map where the robot would lie w.r.t the ground plane
+    <ul>
+      <li>Since our robot moves only in 2D, it would always stick to the ground plane</li>
+    </ul>
+  </li>
+  <li>base_link is the body frame of the robot. Since we move in 2D base_link = base_footprint
+    <ul>
+      <li>Since base_link = base_footprint, we use a static transform of 0 rotation and 0 translation</li>
+    </ul>
+  </li>
+  <li>odom -&gt; base_footprint has to be updated by whichever node is publishing odometry information</li>
+  <li>Since we are currently using LIDAR odometry, the base_link = lidar_1_link and is therefore
+  another 0 rotation and 0 translation transform</li>
+</ul>
+      <h3 id="interfacing-with-slam_toolbox">
+        
+        
+          <a href="#interfacing-with-slam_toolbox" class="anchor-heading" aria-labelledby="interfacing-with-slam_toolbox"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Interfacing with slam_toolbox
+        
+        
+      </h3>
+    
+
+<p>The slam_toolbox utilizes the above existing TF tree and when it’s running it should look like
+below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── map
+|    ├── odom
+│       ├── base_footprint
+|           ├── base_link
+|               ├── lidar_1_link
+</code></pre></div></div>
+
+<ul>
+  <li>As we move the robot around, the odom -&gt; lidar_1_link transform will get continually updated
+even without the slam_toolbox.</li>
+  <li>However, it’s the job of the slam_toolbox to correct the map -&gt; lidar_1_link frame and thereby
+  also correct the odom frame.</li>
+  <li>A simple explanation is present in the starting part of this <a href="https://www.youtube.com/watch?v=ZaiA3hWaRzE&amp;t=1033s&amp;ab_channel=ArticulatedRobotics">video</a> and a small vizualization is shown below:</li>
+</ul>
+
+<p><img src="/images/slam_toolbox/tf2_slam_toolbox.png" alt="" /></p>
+      <h2 id="config-files-and-launching-slam-toolbox">
+        
+        
+          <a href="#config-files-and-launching-slam-toolbox" class="anchor-heading" aria-labelledby="config-files-and-launching-slam-toolbox"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Config Files and Launching SLAM toolbox
+        
+        
+      </h2>
+    
+
+<p><a href="https://github.com/DockDockGo/slam_toolbox_launch" class="btn fs-3 mb-4 mb-md-0">Github Repo of Package</a></p>
+
+<p>This package only contains launch and config files which call the slam_toolbox executables.
+Note. presently the slam_toolbox is installed as binaries from the apt repository</p>
+      <h3 id="which-launch-file-to-use">
+        
+        
+          <a href="#which-launch-file-to-use" class="anchor-heading" aria-labelledby="which-launch-file-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which launch file to use?
+        
+        
+      </h3>
+    
+
+<ol>
+  <li>The online_sync file would be preferred as it allows for better loop closure</li>
+  <li>The async is less computationally intensive as it does not process every frame that it receives</li>
+</ol>
+      <h3 id="config-file-nitty-gritties">
+        
+        
+          <a href="#config-file-nitty-gritties" class="anchor-heading" aria-labelledby="config-file-nitty-gritties"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Config file nitty-gritties
+        
+        
+      </h3>
+    
+
+<p>The config file has a few parameters which must be set right. As per the TF tree we developed
+in <a href="https://github.com/DockDockGo/slam_toolbox_tf2">slam_toolbox_tf2</a> and <a href="https://github.com/DockDockGo/repub_velo">repub_velo</a> repositories, we configure the slam_tooblox to look at specific topics as shown below:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">slam_toolbox</span><span class="pi">:</span>
+  <span class="na">ros__parameters</span><span class="pi">:</span>
+
+    <span class="c1"># Plugin params</span>
+    <span class="na">solver_plugin</span><span class="pi">:</span> <span class="s">solver_plugins::CeresSolver</span>
+    <span class="na">ceres_linear_solver</span><span class="pi">:</span> <span class="s">SPARSE_NORMAL_CHOLESKY</span>
+    <span class="na">ceres_preconditioner</span><span class="pi">:</span> <span class="s">SCHUR_JACOBI</span>
+    <span class="na">ceres_trust_strategy</span><span class="pi">:</span> <span class="s">LEVENBERG_MARQUARDT</span>
+    <span class="na">ceres_dogleg_type</span><span class="pi">:</span> <span class="s">TRADITIONAL_DOGLEG</span>
+    <span class="na">ceres_loss_function</span><span class="pi">:</span> <span class="s">None</span>
+
+    <span class="c1"># ROS Parameters</span>
+    <span class="na">odom_frame</span><span class="pi">:</span> <span class="s">odom</span>
+    <span class="na">map_frame</span><span class="pi">:</span> <span class="s">map</span>
+    <span class="na">base_frame</span><span class="pi">:</span> <span class="s">base_footprint</span>
+    <span class="na">scan_topic</span><span class="pi">:</span> <span class="s">/scan_new</span>
+    <span class="na">mode</span><span class="pi">:</span> <span class="s">mapping</span> <span class="c1">#localization</span>
+</code></pre></div></div>
+
+<p>The mode here is set to mapping, but as shown it can also be set to localization. However,
+in localization mode, a pre-existing map and the path to that map should be configured in the
+same config file (not shown in here, since I’m yet to do localization myself).</p>
+      <h2 id="republishing-velodyne-topic">
+        
+        
+          <a href="#republishing-velodyne-topic" class="anchor-heading" aria-labelledby="republishing-velodyne-topic"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Republishing Velodyne Topic
+        
+        
+      </h2>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            <p class="text-small text-grey-dk-100 mb-0"></p>
+
+            
+              <div class="d-flex mt-2">
+                
+                
+              </div>
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
