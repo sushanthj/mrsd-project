@@ -30,3 +30,11 @@ Note. **Remember you need to save a serialized map as well to use for localizati
 ```bash
 ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "filename: 'full_map_serial'"
 ```
+
+## Installing the rf2o_laser_odometry
+
+This package acts weird when trying to build it at the root folder of the workspace.
+
+It throws error **"catkin_pkg not found"**
+
+**The Solution :** Just navigate to the package folder itself and build there  
