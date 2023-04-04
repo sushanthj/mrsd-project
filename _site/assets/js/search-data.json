@@ -408,95 +408,101 @@
     "relUrl": "/docs/SLAM_Toolbox/running.html#map-saver-timeout"
   },"68": {
     "doc": "Running SLAM Toolbox",
+    "title": "Installing the rf2o_laser_odometry",
+    "content": "This package acts weird when trying to build it at the root folder of the workspace. It throws error “catkin_pkg not found” . The Solution : Just navigate to the package folder itself and build there . ",
+    "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry",
+    "relUrl": "/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry"
+  },"69": {
+    "doc": "Running SLAM Toolbox",
     "title": "Running SLAM Toolbox",
-    "content": ". | Debugging . | Map saver timeout | . | . ",
+    "content": ". | Debugging . | Map saver timeout | Installing the rf2o_laser_odometry | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html",
     "relUrl": "/docs/SLAM_Toolbox/running.html"
-  },"69": {
+  },"70": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Nodes to Start",
     "content": ". | velodyne | laser odometry | slam_toolbox_launch | slam_toobox_tf2 | repub_velo | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#nodes-to-start",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#nodes-to-start"
-  },"70": {
+  },"71": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Sensors, Frames, and Pipeline",
     "content": "The SLAM toolbox is super picky in that it needs TF2 frames and sensor data published in specific topics to even start running. This document highlights some of the pipelining required to make slam toolbox run. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline"
-  },"71": {
+  },"72": {
     "doc": "Setup for SLAM Toolbox",
     "title": "TF2 Transforms",
     "content": "Github Repo of Package . The SLAM toolbox needs few specific transformations with the TF tree looking like: . However, the above picture was taken from simulation where multiple links were shown. We will only worry about the following frames: . ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . The below frames I’m guessing is necessary only during initialization of slam_toolbox node. This is becasue the slam_toolbox is meant to publish it’s own map frame as well. However for some weird stupid reason it needs this map -&gt; lidar_1_link as well. ├── map │ ├── lidar_1_link . Motivation . | odom frame is just our initial robot pose which is instantiated the moment we start the robot | base_footprint frame is necessary to map where the robot would lie w.r.t the ground plane . | Since our robot moves only in 2D, it would always stick to the ground plane | . | base_link is the body frame of the robot. Since we move in 2D base_link = base_footprint . | Since base_link = base_footprint, we use a static transform of 0 rotation and 0 translation | . | odom -&gt; base_footprint has to be updated by whichever node is publishing odometry information | Since we are currently using LIDAR odometry, the base_link = lidar_1_link and is therefore another 0 rotation and 0 translation transform | . Interfacing with slam_toolbox . The slam_toolbox utilizes the above existing TF tree and when it’s running it should look like below: . ├── map | ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . | As we move the robot around, the odom -&gt; lidar_1_link transform will get continually updated even without the slam_toolbox. | However, it’s the job of the slam_toolbox to correct the map -&gt; lidar_1_link frame and thereby also correct the odom frame. | A simple explanation is present in the starting part of this video and a small vizualization is shown below: | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#tf2-transforms",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#tf2-transforms"
-  },"72": {
+  },"73": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Config Files and Launching SLAM toolbox",
     "content": "Github Repo of Package . This package only contains launch and config files which call the slam_toolbox executables. Note. presently the slam_toolbox is installed as binaries from the apt repository . Which launch file to use? . | The online_sync file would be preferred as it allows for better loop closure | The async is less computationally intensive as it does not process every frame that it receives | . Config file nitty-gritties . The config file has a few parameters which must be set right. As per the TF tree we developed in slam_toolbox_tf2 and repub_velo repositories, we configure the slam_tooblox to look at specific topics as shown below: . slam_toolbox: ros__parameters: # Plugin params solver_plugin: solver_plugins::CeresSolver ceres_linear_solver: SPARSE_NORMAL_CHOLESKY ceres_preconditioner: SCHUR_JACOBI ceres_trust_strategy: LEVENBERG_MARQUARDT ceres_dogleg_type: TRADITIONAL_DOGLEG ceres_loss_function: None # ROS Parameters odom_frame: odom map_frame: map base_frame: base_footprint scan_topic: /scan_new mode: mapping #localization . The mode here is set to mapping, but as shown it can also be set to localization. However, in localization mode, a pre-existing map and the path to that map should be configured in the same config file (not shown in here, since I’m yet to do localization myself). ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#config-files-and-launching-slam-toolbox",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#config-files-and-launching-slam-toolbox"
-  },"73": {
+  },"74": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Republishing Velodyne Topic",
     "content": " ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic"
-  },"74": {
+  },"75": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Setup for SLAM Toolbox",
     "content": ". | Nodes to Start | Sensors, Frames, and Pipeline . | TF2 Transforms . | Motivation | Interfacing with slam_toolbox | . | Config Files and Launching SLAM toolbox . | Which launch file to use? | Config file nitty-gritties | . | Republishing Velodyne Topic | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html",
     "relUrl": "/docs/SLAM_Toolbox/setup.html"
-  },"75": {
+  },"76": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"76": {
+  },"77": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"77": {
+  },"78": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"78": {
+  },"79": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"79": {
+  },"80": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"80": {
+  },"81": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"81": {
+  },"82": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"82": {
+  },"83": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"83": {
+  },"84": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",

@@ -147,6 +147,7 @@
 <ol id="markdown-toc">
   <li><a href="#debugging" id="markdown-toc-debugging">Debugging</a>    <ol>
       <li><a href="#map-saver-timeout" id="markdown-toc-map-saver-timeout">Map saver timeout</a></li>
+      <li><a href="#installing-the-rf2o_laser_odometry" id="markdown-toc-installing-the-rf2o_laser_odometry">Installing the rf2o_laser_odometry</a></li>
     </ol>
   </li>
 </ol>
@@ -179,6 +180,20 @@ we can run the following command:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph <span class="s2">"filename: 'full_map_serial'"</span>
 </code></pre></div></div>
+      <h2 id="installing-the-rf2o_laser_odometry">
+        
+        
+          <a href="#installing-the-rf2o_laser_odometry" class="anchor-heading" aria-labelledby="installing-the-rf2o_laser_odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installing the rf2o_laser_odometry
+        
+        
+      </h2>
+    
+
+<p>This package acts weird when trying to build it at the root folder of the workspace.</p>
+
+<p>It throws error <strong>“catkin_pkg not found”</strong></p>
+
+<p><strong>The Solution :</strong> Just navigate to the package folder itself and build there</p>
 
         
 
