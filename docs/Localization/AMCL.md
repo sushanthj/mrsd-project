@@ -34,3 +34,8 @@ To understand what's needed to run AMCL let's take a look at the launch file in 
   ```bash
   ros2 launch neo_nav2_bringup rviz_launch.py
   ```
+
+## Next steps:
+
+1. Do localization using SLAM toolbox
+2. Document neo_localization
