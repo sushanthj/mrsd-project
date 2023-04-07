@@ -90,7 +90,7 @@ even without the slam_toolbox.
 
 ![](/images/slam_toolbox/tf2_slam_toolbox.png)
 
-## Config Files and Launching SLAM toolbox
+## Launching SLAM toolbox with Config Files
 
 [Github Repo of Package](https://github.com/DockDockGo/slam_toolbox_launch){: .btn .fs-3 .mb-4 .mb-md-0 }
 
@@ -132,5 +132,4 @@ in localization mode, a pre-existing map and the path to that map should be conf
 same config file (not shown in here, since I'm yet to do localization myself).
 
 ## Republishing Velodyne Topic
-
 

@@ -14,6 +14,8 @@ nav_order: 2
 {:toc}
 </details>
 
+![](/images/Simulation/slam_in_sim.gif)
+
 # Building Environment From a Floorplan
 
 Gazebo provides a [**'Building Editor'**](https://classic.gazebosim.org/tutorials?cat=build_world&tut=building_editor)

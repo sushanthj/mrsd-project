@@ -38,3 +38,19 @@ This package acts weird when trying to build it at the root folder of the worksp
 It throws error **"catkin_pkg not found"**
 
 **The Solution :** Just navigate to the package folder itself and build there  
+
+# Appendix
+
+## robot_localization vs AMCL in the context of ROS2
+
+robot_localization is somewhat poorly named - at this point it is mostly an Extended Kalman Filter (EKF), usually it is used to merge multiple sources of odometry information (most commonly, IMU and wheel odometry, although it also provides some tools for GPS). Thus, robot_localization is used to create the odom->base_link transform.
+
+AMCL is actually localization software - it provides the map->odom transform using a particle filter to determine where the robot is in within a map (usually using a planar laser scanner and the odometry information).
+
+Therefore, these two can actually work together - by combining multiple sources of odometry information you can minimize the odometry drift that occurs in your odom->base_link estimation. Then AMCL can be used to correct for that drift by keeping the robot properly localized within the map.
+
+## Installing RQT Graph
+
+```bash
+sudo apt install ros-humble-rqt-graph
+```
