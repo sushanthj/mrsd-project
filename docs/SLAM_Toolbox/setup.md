@@ -133,3 +133,16 @@ same config file (not shown in here, since I'm yet to do localization myself).
 
 ## Republishing Velodyne Topic
 
+The slam toolbox will be looking for "/scan_new" topic. Additionally, this /scan_new should
+be associated with "lidar_1_link" tf frame.
+
+To achieve the above requirements, we republish the /scan topic using a simple repub node
+called **repub_velo**. 
+
+
+
+## Odometry to Update odom->base_footprint Transform
+
+### 2D Lidar Odometry
+
+### 3D Lidar Odometry

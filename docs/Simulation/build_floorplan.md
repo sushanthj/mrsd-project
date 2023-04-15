@@ -314,6 +314,22 @@ This internally uses the slam_toolbox in online sync mode
 6. Move back to workspace to build ```cd /root/neobotix_workspace```
 7. ```colcon build --symlink-install```
 
+### Choosing the Map
+
+Initially we chose a map by running:
+
+```bash
+export MY_ROBOT=mp_400
+export MAP_NAME=neo_workshop
+```
+
+But, if we want to do mapping on a custom gazebo map we'll need to do the following:
+
+1. Use world_files folder to copy the trial_world.world (our custom world we created) into the ~/neobotix_workspace/src/neo_simulation2/worlds folder
+2. Use world_files folder to copy the entire folder mfi_floor_trial1 into ~/neobotix_workspace/src/neo_simulation2/models folder
+3. Change export MAP_NAME=trial_world
+4. Continue process below to launch mapping
+
 ### Run Steps
 
 - ```ros2 launch neo_simulation2 simulation.launch.py```
@@ -348,8 +364,6 @@ This internally uses the slam_toolbox in online sync mode
 10. Watch [this youtube video](https://www.youtube.com/watch?v=rZOxPGCn4QM&ab_channel=TheConstruct) -->
 
 
-
-
 ## Manual Mapping Package
 
 Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper
@@ -364,6 +378,22 @@ is probably not an issue
 - ``` cd ..```
 - ```colcon build --symlink-install```
 - source necessary files ```source install/setup.bash```
+
+### Choosing the Map
+
+Initially we chose a map by running:
+
+```bash
+export MY_ROBOT=mp_400
+export MAP_NAME=neo_workshop
+```
+
+But, if we want to do mapping on a custom gazebo map we'll need to do the following:
+
+1. Use world_files folder to copy the trial_world.world (our custom world we created) into the ~/neobotix_workspace/src/neo_simulation2/worlds folder
+2. Use world_files folder to copy the entire folder mfi_floor_trial1 into ~/neobotix_workspace/src/neo_simulation2/models folder
+3. Change export MAP_NAME=trial_world
+4. Continue process below to launch mapping
 
 ### Run Steps
 

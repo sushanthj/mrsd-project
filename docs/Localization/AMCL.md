@@ -39,3 +39,4 @@ To understand what's needed to run AMCL let's take a look at the launch file in 
 
 1. Do localization using SLAM toolbox
 2. Document neo_localization
+3. Build Velodyne from source and try!
