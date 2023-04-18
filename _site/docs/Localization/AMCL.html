@@ -146,7 +146,16 @@
   </summary>
 <ol id="markdown-toc">
   <li><a href="#requirements-to-run-amcl" id="markdown-toc-requirements-to-run-amcl">Requirements to run AMCL</a></li>
-  <li><a href="#overview" id="markdown-toc-overview">Overview</a>    <ol>
+  <li><a href="#overview-quickly-setup-amcl" id="markdown-toc-overview-quickly-setup-amcl">Overview (Quickly setup AMCL)</a>    <ol>
+      <li><a href="#which-package-to-use-for-localization-in-general-better-way-to-run-amcl" id="markdown-toc-which-package-to-use-for-localization-in-general-better-way-to-run-amcl">Which package to use for localization in general? (Better way to run AMCL)</a>        <ol>
+          <li><a href="#running-amcl" id="markdown-toc-running-amcl">Running AMCL</a>            <ol>
+              <li><a href="#modified-param-file" id="markdown-toc-modified-param-file">Modified param File</a></li>
+              <li><a href="#modified-launch-file" id="markdown-toc-modified-launch-file">Modified Launch File</a></li>
+            </ol>
+          </li>
+          <li><a href="#running-localization_neo" id="markdown-toc-running-localization_neo">Running localization_neo</a></li>
+        </ol>
+      </li>
       <li><a href="#next-steps" id="markdown-toc-next-steps">Next steps:</a></li>
     </ol>
   </li>
@@ -163,10 +172,10 @@
     
 
 <p>To understand what’s needed to run AMCL let’s take a look at the launch file in Nav2</p>
-      <h1 id="overview">
+      <h1 id="overview-quickly-setup-amcl">
         
         
-          <a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+          <a href="#overview-quickly-setup-amcl" class="anchor-heading" aria-labelledby="overview-quickly-setup-amcl"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview (Quickly setup AMCL)
         
         
       </h1>
@@ -175,7 +184,7 @@
 <ol>
   <li>Start Odometry, VLP, and all_static_tf nodes</li>
   <li>Run AMCL
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ros2 launch nav2_bringup localization_launch.py map:<span class="o">=</span>/root/neobotix_workspace/src/neo_simulation2/maps/neo_workshop.yaml params_file:<span class="o">=</span>/root/neobotix_workspace/src/slam_toolbox_launch/config/nav2_params.yaml initial_pose_x:<span class="o">=</span><span class="nt">-100</span> initial_pose_y:<span class="o">=</span><span class="nt">-100</span> initial_pose_z:<span class="o">=</span>0 use_sim_time:<span class="o">=</span><span class="nb">true</span>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ros2 launch nav2_bringup localization_launch.py map:<span class="o">=</span>/root/neobotix_workspace/src/neo_simulation2/maps/neo_workshop.yaml params_file:<span class="o">=</span>&lt;path_to&gt;params.yaml use_sim_time:<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>    </div>
   </li>
   <li>Give AMCL an init pose (All these localization methods need a prior!)
@@ -187,6 +196,181 @@
 </code></pre></div>    </div>
   </li>
 </ol>
+      <h2 id="which-package-to-use-for-localization-in-general-better-way-to-run-amcl">
+        
+        
+          <a href="#which-package-to-use-for-localization-in-general-better-way-to-run-amcl" class="anchor-heading" aria-labelledby="which-package-to-use-for-localization-in-general-better-way-to-run-amcl"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which package to use for localization in general? (Better way to run AMCL)
+        
+        
+      </h2>
+    
+
+<p>Above we use the nav2’s package directly to launch amcl. However, we can also use neobotix’s
+package which does essentially the same thing.</p>
+
+<p>This package is <strong>neo_nav2_bringup</strong>. However, the launch files for this are at <strong>neo_simulation2</strong>.</p>
+      <h3 id="running-amcl">
+        
+        
+          <a href="#running-amcl" class="anchor-heading" aria-labelledby="running-amcl"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running AMCL
+        
+        
+      </h3>
+    
+
+<ul>
+  <li>modify the param file which we will use for AMCL (located in <code class="language-plaintext highlighter-rouge">/src/neo_nav2_bringup/config/navigation.yaml</code>)</li>
+  <li>modify navigation.launch.py in neo_simulation2 to launch AMCL</li>
+  <li>run <code class="language-plaintext highlighter-rouge">ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_simulation2/maps/neo_workshop.yaml</code></li>
+  <li>Give init pose and launch rviz as shown above</li>
+  <li>Configure the ParticleCloud topic in rviz by modifying the arrow max_len to 2 and min_lin to 0.5</li>
+</ul>
+      <h4 id="modified-param-file">
+        
+        
+          <a href="#modified-param-file" class="anchor-heading" aria-labelledby="modified-param-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Modified param File
+        
+        
+      </h4>
+    
+<p>The param file mentioned above <code class="language-plaintext highlighter-rouge">navigation.yaml</code> needs to be modified to run AMCL
+and is shown below:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">amcl</span><span class="pi">:</span>
+  <span class="na">ros__parameters</span><span class="pi">:</span>
+    <span class="na">alpha1</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">alpha2</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">alpha3</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">alpha4</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">alpha5</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">base_frame_id</span><span class="pi">:</span> <span class="s2">"</span><span class="s">base_footprint"</span>
+    <span class="na">beam_skip_distance</span><span class="pi">:</span> <span class="m">0.5</span>
+    <span class="na">beam_skip_error_threshold</span><span class="pi">:</span> <span class="m">0.9</span>
+    <span class="na">beam_skip_threshold</span><span class="pi">:</span> <span class="m">0.3</span>
+    <span class="na">do_beamskip</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">global_frame_id</span><span class="pi">:</span> <span class="s2">"</span><span class="s">map"</span>
+    <span class="na">lambda_short</span><span class="pi">:</span> <span class="m">0.1</span>
+    <span class="na">laser_likelihood_max_dist</span><span class="pi">:</span> <span class="m">2.0</span>
+    <span class="na">laser_max_range</span><span class="pi">:</span> <span class="m">100.0</span>
+    <span class="na">laser_min_range</span><span class="pi">:</span> <span class="s">-1.0</span>
+    <span class="na">laser_model_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">likelihood_field"</span>
+    <span class="na">max_beams</span><span class="pi">:</span> <span class="m">60</span>
+    <span class="na">max_particles</span><span class="pi">:</span> <span class="m">2000</span>
+    <span class="na">min_particles</span><span class="pi">:</span> <span class="m">500</span>
+    <span class="na">odom_frame_id</span><span class="pi">:</span> <span class="s2">"</span><span class="s">odom"</span>
+    <span class="na">pf_err</span><span class="pi">:</span> <span class="m">0.05</span>
+    <span class="na">pf_z</span><span class="pi">:</span> <span class="m">0.99</span>
+    <span class="na">recovery_alpha_fast</span><span class="pi">:</span> <span class="m">0.0</span>
+    <span class="na">recovery_alpha_slow</span><span class="pi">:</span> <span class="m">0.0</span>
+    <span class="na">resample_interval</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">robot_model_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_amcl::DifferentialMotionModel"</span>
+    <span class="na">save_pose_rate</span><span class="pi">:</span> <span class="m">0.5</span>
+    <span class="na">sigma_hit</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">tf_broadcast</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="na">transform_tolerance</span><span class="pi">:</span> <span class="m">1.0</span>
+    <span class="na">update_min_a</span><span class="pi">:</span> <span class="m">0.2</span>
+    <span class="na">update_min_d</span><span class="pi">:</span> <span class="m">0.25</span>
+    <span class="na">z_hit</span><span class="pi">:</span> <span class="m">0.5</span>
+    <span class="na">z_max</span><span class="pi">:</span> <span class="m">0.05</span>
+    <span class="na">z_rand</span><span class="pi">:</span> <span class="m">0.5</span>
+    <span class="na">z_short</span><span class="pi">:</span> <span class="m">0.05</span>
+    <span class="na">scan_topic</span><span class="pi">:</span> <span class="s">scan</span>
+</code></pre></div></div>
+      <h4 id="modified-launch-file">
+        
+        
+          <a href="#modified-launch-file" class="anchor-heading" aria-labelledby="modified-launch-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Modified Launch File
+        
+        
+      </h4>
+    
+
+<p>Set the ‘use_amcl’ param to true to use AMCL or</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Neobotix GmbH
+# Author: Pradheep Padmanabhan
+</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">ament_index_python.packages</span> <span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">launch.actions</span> <span class="kn">import</span> <span class="n">DeclareLaunchArgument</span>
+<span class="kn">from</span> <span class="nn">launch.actions</span> <span class="kn">import</span> <span class="n">IncludeLaunchDescription</span><span class="p">,</span> <span class="n">GroupAction</span>
+<span class="kn">from</span> <span class="nn">launch.launch_description_sources</span> <span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<span class="kn">from</span> <span class="nn">launch.substitutions</span> <span class="kn">import</span> <span class="n">LaunchConfiguration</span><span class="p">,</span> <span class="n">PythonExpression</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">PushRosNamespace</span>
+<span class="kn">from</span> <span class="nn">launch.conditions</span> <span class="kn">import</span> <span class="n">IfCondition</span>
+
+
+<span class="n">MY_NEO_ROBOT</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">'MY_ROBOT'</span><span class="p">]</span>
+<span class="n">MY_NEO_ENVIRONMENT</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="s">'MAP_NAME'</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="n">use_multi_robots</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s">'use_multi_robots'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'False'</span><span class="p">)</span>
+    <span class="n">use_amcl</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s">'use_amcl'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'False'</span><span class="p">)</span>
+    <span class="n">use_sim_time</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s">'use_sim_time'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'True'</span><span class="p">)</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s">'namespace'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">''</span><span class="p">)</span>
+    <span class="n">use_namespace</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s">'use_namespace'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'False'</span><span class="p">)</span>
+    <span class="n">map_dir</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span>
+        <span class="s">'map'</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s">'neo_simulation2'</span><span class="p">),</span>
+            <span class="s">'maps'</span><span class="p">,</span>
+            <span class="n">MY_NEO_ENVIRONMENT</span><span class="o">+</span><span class="s">'.yaml'</span><span class="p">))</span>
+
+    <span class="n">param_file_name</span> <span class="o">=</span> <span class="s">'navigation.yaml'</span>
+    <span class="n">param_dir</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span>
+        <span class="s">'params_file'</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s">'neo_simulation2'</span><span class="p">),</span>
+            <span class="s">'configs/'</span><span class="o">+</span><span class="n">MY_NEO_ROBOT</span><span class="p">,</span>
+            <span class="n">param_file_name</span><span class="p">))</span>
+
+    <span class="n">nav2_launch_file_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s">'neo_nav2_bringup'</span><span class="p">),</span> <span class="s">'launch'</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+            <span class="n">PythonLaunchDescriptionSource</span><span class="p">([</span><span class="n">nav2_launch_file_dir</span><span class="p">,</span> <span class="s">'/localization_neo.launch.py'</span><span class="p">]),</span>
+            <span class="n">condition</span><span class="o">=</span><span class="n">IfCondition</span><span class="p">(</span><span class="n">PythonExpression</span><span class="p">([</span><span class="s">'not '</span><span class="p">,</span> <span class="n">use_amcl</span><span class="p">])),</span>
+            <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span>
+                <span class="s">'map'</span><span class="p">:</span> <span class="n">map_dir</span><span class="p">,</span>
+                <span class="s">'use_sim_time'</span><span class="p">:</span> <span class="n">use_sim_time</span><span class="p">,</span>
+                <span class="s">'use_multi_robots'</span><span class="p">:</span> <span class="n">use_multi_robots</span><span class="p">,</span>
+                <span class="s">'params_file'</span><span class="p">:</span> <span class="n">param_dir</span><span class="p">,</span>
+                <span class="s">'namespace'</span><span class="p">:</span> <span class="n">namespace</span><span class="p">}.</span><span class="n">items</span><span class="p">(),</span>
+        <span class="p">),</span>
+        <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+            <span class="n">PythonLaunchDescriptionSource</span><span class="p">([</span><span class="n">nav2_launch_file_dir</span><span class="p">,</span> <span class="s">'/localization_amcl.launch.py'</span><span class="p">]),</span>
+            <span class="n">condition</span><span class="o">=</span><span class="n">IfCondition</span><span class="p">(</span><span class="n">use_amcl</span><span class="p">),</span>
+            <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span>
+                <span class="s">'map'</span><span class="p">:</span> <span class="n">map_dir</span><span class="p">,</span>
+                <span class="s">'use_sim_time'</span><span class="p">:</span> <span class="n">use_sim_time</span><span class="p">,</span>
+                <span class="s">'use_multi_robots'</span><span class="p">:</span> <span class="n">use_multi_robots</span><span class="p">,</span>
+                <span class="s">'params_file'</span><span class="p">:</span> <span class="n">param_dir</span><span class="p">,</span>
+                <span class="s">'namespace'</span><span class="p">:</span> <span class="n">namespace</span><span class="p">}.</span><span class="n">items</span><span class="p">(),</span>
+        <span class="p">),</span>
+
+        <span class="c1"># IncludeLaunchDescription(
+</span>        <span class="c1">#     PythonLaunchDescriptionSource([nav2_launch_file_dir, '/navigation_neo.launch.py']),
+</span>        <span class="c1">#     launch_arguments={'namespace': namespace,
+</span>        <span class="c1">#                       'use_sim_time': use_sim_time,
+</span>        <span class="c1">#                       'params_file': param_dir}.items()),
+</span>        <span class="p">])</span>
+
+</code></pre></div></div>
+      <h3 id="running-localization_neo">
+        
+        
+          <a href="#running-localization_neo" class="anchor-heading" aria-labelledby="running-localization_neo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running localization_neo
+        
+        
+      </h3>
+    
+
+<ul>
+  <li>The procedure for this is to use the same launch file shown above</li>
+  <li>However, we don’t need to modify the config file</li>
+  <li>Only ensure the <code class="language-plaintext highlighter-rouge">use_amcl</code> flag is set to false in launch file</li>
+</ul>
       <h2 id="next-steps">
         
         
