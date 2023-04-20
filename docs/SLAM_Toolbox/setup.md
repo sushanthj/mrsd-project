@@ -22,6 +22,7 @@ nav_order: 2
 - slam_toolbox_launch
 - slam_toobox_tf2
 - repub_velo
+- tracking camera's odometry (realsense)
 
 # Sensors, Frames, and Pipeline
 
@@ -151,7 +152,7 @@ sensitive to noise).
 If you want to use **two or more sensors at a time**, then we will need to use
 **Robot Localization** which is an EKF method of fusing odometry data
 
-### 2D Lidar Odometry (rf20 laser odometry)
+### A. 2D Lidar Odometry (rf20 laser odometry)
 
 [Our (slightly modified) Repo](https://github.com/DockDockGo/rf2o_laser_odometry){: .btn .fs-3 .mb-4 .mb-md-0 }
 
@@ -180,7 +181,7 @@ The node which publishes odometry data also publishes the transformation between
 
 These frames are necessary for the slam_toolbox or any other downstream node.
 
-### 3D Lidar Odometry
+### B. 3D Lidar Odometry
 
 ![](/images/slam_toolbox/kiss_icp.png)
 
@@ -189,3 +190,14 @@ Here we will use Kiss ICP since it runs well in ros2 with easy setup.
 Refer to [This link](https://github.com/PRBonn/kiss-icp) to learn more about Kiss ICP.
 
 To build Kiss ICP, take a look at [This link](https://github.com/PRBonn/kiss-icp/tree/main/ros)
+
+
+### C. Visual Odometry (Tracking Camera)
+
+We use the RealSense T265 Tracking Camera by building the ros2 drivers.
+
+[ROS2 Wrapper for Intel](https://github.com/IntelRealSense/realsense-ros)
+
+Run the ```rs_intra_process_demo_launch.py``` in ```/realsense-ros/realsense2_camera/launch```
+folder. This will publish something like ```/camera/odometry/sample``` topic which is the
+trakcing camera's odometry topic

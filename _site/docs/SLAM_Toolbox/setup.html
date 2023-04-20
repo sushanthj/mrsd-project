@@ -159,13 +159,14 @@
       </li>
       <li><a href="#republishing-velodyne-topic" id="markdown-toc-republishing-velodyne-topic">Republishing Velodyne Topic</a></li>
       <li><a href="#odometry-to-update-odom-base_footprint-transform" id="markdown-toc-odometry-to-update-odom-base_footprint-transform">Odometry to Update odom-&gt;base_footprint Transform</a>        <ol>
-          <li><a href="#2d-lidar-odometry-rf20-laser-odometry" id="markdown-toc-2d-lidar-odometry-rf20-laser-odometry">2D Lidar Odometry (rf20 laser odometry)</a>            <ol>
+          <li><a href="#a-2d-lidar-odometry-rf20-laser-odometry" id="markdown-toc-a-2d-lidar-odometry-rf20-laser-odometry">A. 2D Lidar Odometry (rf20 laser odometry)</a>            <ol>
               <li><a href="#source-notes" id="markdown-toc-source-notes">Source Notes</a></li>
               <li><a href="#motivation-for-usage" id="markdown-toc-motivation-for-usage">Motivation for Usage</a></li>
               <li><a href="#tf2-bindings" id="markdown-toc-tf2-bindings">TF2 bindings</a></li>
             </ol>
           </li>
-          <li><a href="#3d-lidar-odometry" id="markdown-toc-3d-lidar-odometry">3D Lidar Odometry</a></li>
+          <li><a href="#b-3d-lidar-odometry" id="markdown-toc-b-3d-lidar-odometry">B. 3D Lidar Odometry</a></li>
+          <li><a href="#c-visual-odometry-tracking-camera" id="markdown-toc-c-visual-odometry-tracking-camera">C. Visual Odometry (Tracking Camera)</a></li>
         </ol>
       </li>
     </ol>
@@ -188,6 +189,7 @@
   <li>slam_toolbox_launch</li>
   <li>slam_toobox_tf2</li>
   <li>repub_velo</li>
+  <li>tracking camera’s odometry (realsense)</li>
 </ul>
       <h1 id="sensors-frames-and-pipeline">
         
@@ -377,10 +379,10 @@ sensitive to noise).</p>
 
 <p>If you want to use <strong>two or more sensors at a time</strong>, then we will need to use
 <strong>Robot Localization</strong> which is an EKF method of fusing odometry data</p>
-      <h3 id="2d-lidar-odometry-rf20-laser-odometry">
+      <h3 id="a-2d-lidar-odometry-rf20-laser-odometry">
         
         
-          <a href="#2d-lidar-odometry-rf20-laser-odometry" class="anchor-heading" aria-labelledby="2d-lidar-odometry-rf20-laser-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2D Lidar Odometry (rf20 laser odometry)
+          <a href="#a-2d-lidar-odometry-rf20-laser-odometry" class="anchor-heading" aria-labelledby="a-2d-lidar-odometry-rf20-laser-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A. 2D Lidar Odometry (rf20 laser odometry)
         
         
       </h3>
@@ -432,10 +434,10 @@ LIDAR odometry to give accurate odometry results. Hence, this package is used to
 </ul>
 
 <p>These frames are necessary for the slam_toolbox or any other downstream node.</p>
-      <h3 id="3d-lidar-odometry">
+      <h3 id="b-3d-lidar-odometry">
         
         
-          <a href="#3d-lidar-odometry" class="anchor-heading" aria-labelledby="3d-lidar-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3D Lidar Odometry
+          <a href="#b-3d-lidar-odometry" class="anchor-heading" aria-labelledby="b-3d-lidar-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> B. 3D Lidar Odometry
         
         
       </h3>
@@ -448,6 +450,22 @@ LIDAR odometry to give accurate odometry results. Hence, this package is used to
 <p>Refer to <a href="https://github.com/PRBonn/kiss-icp">This link</a> to learn more about Kiss ICP.</p>
 
 <p>To build Kiss ICP, take a look at <a href="https://github.com/PRBonn/kiss-icp/tree/main/ros">This link</a></p>
+      <h3 id="c-visual-odometry-tracking-camera">
+        
+        
+          <a href="#c-visual-odometry-tracking-camera" class="anchor-heading" aria-labelledby="c-visual-odometry-tracking-camera"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> C. Visual Odometry (Tracking Camera)
+        
+        
+      </h3>
+    
+
+<p>We use the RealSense T265 Tracking Camera by building the ros2 drivers.</p>
+
+<p><a href="https://github.com/IntelRealSense/realsense-ros">ROS2 Wrapper for Intel</a></p>
+
+<p>Run the <code class="language-plaintext highlighter-rouge">rs_intra_process_demo_launch.py</code> in <code class="language-plaintext highlighter-rouge">/realsense-ros/realsense2_camera/launch</code>
+folder. This will publish something like <code class="language-plaintext highlighter-rouge">/camera/odometry/sample</code> topic which is the
+trakcing camera’s odometry topic</p>
 
         
 
