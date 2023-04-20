@@ -159,7 +159,12 @@
       </li>
       <li><a href="#republishing-velodyne-topic" id="markdown-toc-republishing-velodyne-topic">Republishing Velodyne Topic</a></li>
       <li><a href="#odometry-to-update-odom-base_footprint-transform" id="markdown-toc-odometry-to-update-odom-base_footprint-transform">Odometry to Update odom-&gt;base_footprint Transform</a>        <ol>
-          <li><a href="#2d-lidar-odometry" id="markdown-toc-2d-lidar-odometry">2D Lidar Odometry</a></li>
+          <li><a href="#2d-lidar-odometry-rf20-laser-odometry" id="markdown-toc-2d-lidar-odometry-rf20-laser-odometry">2D Lidar Odometry (rf20 laser odometry)</a>            <ol>
+              <li><a href="#source-notes" id="markdown-toc-source-notes">Source Notes</a></li>
+              <li><a href="#motivation-for-usage" id="markdown-toc-motivation-for-usage">Motivation for Usage</a></li>
+              <li><a href="#tf2-bindings" id="markdown-toc-tf2-bindings">TF2 bindings</a></li>
+            </ol>
+          </li>
           <li><a href="#3d-lidar-odometry" id="markdown-toc-3d-lidar-odometry">3D Lidar Odometry</a></li>
         </ol>
       </li>
@@ -363,14 +368,70 @@ called <strong>repub_velo</strong>.</p>
         
       </h2>
     
-      <h3 id="2d-lidar-odometry">
+
+<p>Whichever node is publishing odometry, generally also publishes the odom-&gt;base_footpring tf2 update.</p>
+
+<p>Hence, we choose one of the two methods of odometry at our disposal. (In future updates, wheel
+odometry will be used instead of laser-based odometry since it is more accurate and less
+sensitive to noise).</p>
+
+<p>If you want to use <strong>two or more sensors at a time</strong>, then we will need to use
+<strong>Robot Localization</strong> which is an EKF method of fusing odometry data</p>
+      <h3 id="2d-lidar-odometry-rf20-laser-odometry">
         
         
-          <a href="#2d-lidar-odometry" class="anchor-heading" aria-labelledby="2d-lidar-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2D Lidar Odometry
+          <a href="#2d-lidar-odometry-rf20-laser-odometry" class="anchor-heading" aria-labelledby="2d-lidar-odometry-rf20-laser-odometry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2D Lidar Odometry (rf20 laser odometry)
         
         
       </h3>
     
+
+<p><a href="https://github.com/DockDockGo/rf2o_laser_odometry" class="btn fs-3 mb-4 mb-md-0">Our (slightly modified) Repo</a></p>
+      <h4 id="source-notes">
+        
+        
+          <a href="#source-notes" class="anchor-heading" aria-labelledby="source-notes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Source Notes
+        
+        
+      </h4>
+    
+<p>Estimation of 2D odometry based on planar laser scans. Useful for mobile robots with innacurate base odometry.</p>
+
+<p>RF2O is a fast and precise method to estimate the planar motion of a lidar from consecutive range scans. For every scanned point we formulate the range flow constraint equation in terms of the sensor velocity, and minimize a robust function of the resulting geometric constraints to obtain the motion estimate. Conversely to traditional approaches, this method does not search for correspondences but performs dense scan alignment based on the scan gradients, in the fashion of dense 3D visual odometry.</p>
+
+<p>Its very low computational cost (0.9 milliseconds on a single CPU core) together whit its high precission, makes RF2O a suitable method for those robotic applications that require planar odometry.</p>
+
+<p>For full description of the algorithm, please refer to: <strong>Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA 2016</strong> Available at: http://mapir.isa.uma.es/work/rf2o</p>
+      <h4 id="motivation-for-usage">
+        
+        
+          <a href="#motivation-for-usage" class="anchor-heading" aria-labelledby="motivation-for-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Motivation for Usage
+        
+        
+      </h4>
+    
+
+<p>The IMU’s available to us at TeamH are the UM7 and the Phidget Spatial 3/3/3. While the phidget
+has issues in interfacing with ROS, the UM7 data is jittery.</p>
+
+<p>Additionally, the lack of wheel odometry during development, means that we can only rely on
+LIDAR odometry to give accurate odometry results. Hence, this package is used to publish odometry data</p>
+      <h4 id="tf2-bindings">
+        
+        
+          <a href="#tf2-bindings" class="anchor-heading" aria-labelledby="tf2-bindings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TF2 bindings
+        
+        
+      </h4>
+    
+
+<p>The node which publishes odometry data also publishes the transformation between two frames:</p>
+<ul>
+  <li>odom</li>
+  <li>base_footprint</li>
+</ul>
+
+<p>These frames are necessary for the slam_toolbox or any other downstream node.</p>
       <h3 id="3d-lidar-odometry">
         
         
@@ -378,6 +439,15 @@ called <strong>repub_velo</strong>.</p>
         
         
       </h3>
+    
+
+<p><img src="/images/slam_toolbox/kiss_icp.png" alt="" /></p>
+
+<p>Here we will use Kiss ICP since it runs well in ros2 with easy setup.</p>
+
+<p>Refer to <a href="https://github.com/PRBonn/kiss-icp">This link</a> to learn more about Kiss ICP.</p>
+
+<p>To build Kiss ICP, take a look at <a href="https://github.com/PRBonn/kiss-icp/tree/main/ros">This link</a></p>
 
         
 
