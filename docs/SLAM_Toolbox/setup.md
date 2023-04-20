@@ -191,6 +191,8 @@ Refer to [This link](https://github.com/PRBonn/kiss-icp) to learn more about Kis
 
 To build Kiss ICP, take a look at [This link](https://github.com/PRBonn/kiss-icp/tree/main/ros)
 
+#### **NOTE: You may need to reduce the max_scan_length to 20 and set deskew=False in basic_config.yaml file**
+
 
 ### C. Visual Odometry (Tracking Camera)
 
