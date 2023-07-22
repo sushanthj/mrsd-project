@@ -82,3 +82,47 @@ Clone the required packages
 - ![](/images/miscellaneous/vlp_ifconfig.png)
 
 Now, restart your velodyne driver.
+
+
+# Getting GUI acces on your docker
+
+I follow this template for any docker file to allwo for GUI access
+
+```bash
+# Map host's display socket to docker
+DOCKER_ARGS+=("-v /tmp/.X11-unix:/tmp/.X11-unix")
+DOCKER_ARGS+=("-v $HOME/.Xauthority:/home/admin/.Xauthority:rw")
+DOCKER_ARGS+=("-e DISPLAY")
+DOCKER_ARGS+=("-e NVIDIA_VISIBLE_DEVICES=all")
+DOCKER_ARGS+=("-e NVIDIA_DRIVER_CAPABILITIES=all")
+DOCKER_ARGS+=("-e FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml")
+
+# Run container from image
+# print_info "Running humblesim"
+docker run -it --rm \
+    --privileged \
+    --network host \
+    ${DOCKER_ARGS[@]} \
+    --runtime nvidia \
+    ############# Only change this portion according to your needs ##############
+    -v /home/sush/mfi/robot-setup-tool/world_files:/home/admin/worlds \
+    -v /dev/*:/dev/* \
+    --name "humble_sim_docker" \
+    $@ \
+    sushanthj/humble_sim_mapping_built:latest \
+    #############################################################################
+    /bin/bash
+```
+
+## Error Handling after above case
+
+Now, after running the above command maybe within a shell script, you might encounter some
+weird errors which are display related.
+
+Eg. ```glfw error 65544: X11: Failed to open display :1.0
+failed to initialize GLFW```
+
+Now, all such errors can be fixed by giving the docker container access to the GUI by doing
+
+```xhost +local:docker```
+

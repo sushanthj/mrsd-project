@@ -259,6 +259,59 @@ access of the time, we do the following:</p>
 </ul>
 
 <p>Now, restart your velodyne driver.</p>
+      <h1 id="getting-gui-acces-on-your-docker">
+        
+        
+          <a href="#getting-gui-acces-on-your-docker" class="anchor-heading" aria-labelledby="getting-gui-acces-on-your-docker"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Getting GUI acces on your docker
+        
+        
+      </h1>
+    
+
+<p>I follow this template for any docker file to allwo for GUI access</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Map host's display socket to docker</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-v /tmp/.X11-unix:/tmp/.X11-unix"</span><span class="o">)</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-v </span><span class="nv">$HOME</span><span class="s2">/.Xauthority:/home/admin/.Xauthority:rw"</span><span class="o">)</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-e DISPLAY"</span><span class="o">)</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-e NVIDIA_VISIBLE_DEVICES=all"</span><span class="o">)</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-e NVIDIA_DRIVER_CAPABILITIES=all"</span><span class="o">)</span>
+DOCKER_ARGS+<span class="o">=(</span><span class="s2">"-e FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml"</span><span class="o">)</span>
+
+<span class="c"># Run container from image</span>
+<span class="c"># print_info "Running humblesim"</span>
+docker run <span class="nt">-it</span> <span class="nt">--rm</span> <span class="se">\</span>
+    <span class="nt">--privileged</span> <span class="se">\</span>
+    <span class="nt">--network</span> host <span class="se">\</span>
+    <span class="k">${</span><span class="nv">DOCKER_ARGS</span><span class="p">[@]</span><span class="k">}</span> <span class="se">\</span>
+    <span class="nt">--runtime</span> nvidia <span class="se">\</span>
+    <span class="c">############# Only change this portion according to your needs ##############</span>
+    <span class="nt">-v</span> /home/sush/mfi/robot-setup-tool/world_files:/home/admin/worlds <span class="se">\</span>
+    <span class="nt">-v</span> /dev/<span class="k">*</span>:/dev/<span class="k">*</span> <span class="se">\</span>
+    <span class="nt">--name</span> <span class="s2">"humble_sim_docker"</span> <span class="se">\</span>
+    <span class="nv">$@</span> <span class="se">\</span>
+    sushanthj/humble_sim_mapping_built:latest <span class="se">\</span>
+    <span class="c">#############################################################################</span>
+    /bin/bash
+</code></pre></div></div>
+      <h2 id="error-handling-after-above-case">
+        
+        
+          <a href="#error-handling-after-above-case" class="anchor-heading" aria-labelledby="error-handling-after-above-case"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Error Handling after above case
+        
+        
+      </h2>
+    
+
+<p>Now, after running the above command maybe within a shell script, you might encounter some
+weird errors which are display related.</p>
+
+<p>Eg. <code class="language-plaintext highlighter-rouge">glfw error 65544: X11: Failed to open display :1.0
+failed to initialize GLFW</code></p>
+
+<p>Now, all such errors can be fixed by giving the docker container access to the GUI by doing</p>
+
+<p><code class="language-plaintext highlighter-rouge">xhost +local:docker</code></p>
 
         
 
