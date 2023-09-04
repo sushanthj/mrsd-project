@@ -126,3 +126,12 @@ Now, all such errors can be fixed by giving the docker container access to the G
 
 ```xhost +local:docker```
 
+## Changing File Ownership
+
+This occasionally is a problem when using docker which treats files as sudo. When moving files out of docker
+The normal user will not be able to access files created inside the docker because of sudo permissions
+
+Easy Fix 
+- Find the username of the current ubuntu system you are using (eg. mine is always sush)
+- ```sudo chown sush trial.txt```
+- This will change the ownership back to the default user
