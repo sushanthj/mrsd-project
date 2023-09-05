@@ -144,509 +144,599 @@
     "relUrl": "/docs/Simulation#building-the-simulation-environment-in-gazebo"
   },"24": {
     "doc": "Simulation Development",
+    "title": "Running the Neobotix simulation",
+    "content": "The neo_simulation2 package uses ros2 Humble and will not run on the foxy docker which the team will be using for most of the development. Therefore, a separate docker container was setup to run this simulation natively. This Repository for Reference . ",
+    "url": "http://localhost:4000/docs/Simulation#running-the-neobotix-simulation",
+    "relUrl": "/docs/Simulation#running-the-neobotix-simulation"
+  },"25": {
+    "doc": "Simulation Development",
+    "title": "References Used in Building This",
+    "content": ". | Neobotix Documentation | SLAM_toolbox | . ",
+    "url": "http://localhost:4000/docs/Simulation#references-used-in-building-this",
+    "relUrl": "/docs/Simulation#references-used-in-building-this"
+  },"26": {
+    "doc": "Simulation Development",
     "title": "Simulation Development",
     "content": " ",
     "url": "http://localhost:4000/docs/Simulation",
     "relUrl": "/docs/Simulation"
-  },"25": {
+  },"27": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "Before you Begin",
+    "content": "Please use This Repository for Reference . Also, a base setup has already been done on a docker container which can be pulled as docker pull sushanthj/humble_sim_mapping_built:latest . The docker is not complete, but all files that need to be added to the docker container can be found in this location or is also present here . ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#before-you-begin",
+    "relUrl": "/docs/Simulation/adding_lidar.html#before-you-begin"
+  },"28": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "Understanding the Neobotix Simulation Codebase",
+    "content": "If you look into the neo_simulation2 repository, you’ll see that the information needed to build the simulation is slightly spread apart. When working with simulation we need three types of files: . | .sdf which holds information on objects in the simulation like chairs, tables | .world files which describe the floorplan and the layout also in SDF format | .dae files which are meshes used for visualization | .urdf I’m not fully sure how sdf and urdf are different. But for this tutorial, I’m going to be using them interchangebly | . Note. Both the SDF (model files) and the .world are xml files. Further, the SDF files are more specifically URDF files (which have .urdf extension) but is inherently written in xml . In neo_simulation2 pacakge these files are a bit spread apart, but each of them are used in the simulation. | The LIDAR meshes used are present in neo_simulation2/components/sensors | The robot’s meshes is present in neo_simulation2/robots/mp_400/meshes | The robot’s SDF file (urdf) is present in neo_simulation2/robots/mp_400 with .urdf extension | The .world file which we choose by doing export MAP_NAME=svd_demo is saved in neo_simulation2/worlds | . Those above files and paths are the only things you will need to worry about when modifying the simulation. ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#understanding-the-neobotix-simulation-codebase",
+    "relUrl": "/docs/Simulation/adding_lidar.html#understanding-the-neobotix-simulation-codebase"
+  },"29": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "How to add any sensors to an extisting robot’s URDF?",
+    "content": "This was the first question I asked myself after figuring out the folder structure. Sadly, there isn’t any great online resource whcih gives a birds eye view of what needs to be done. To add any sensor and get sensor readings in ROS, we will need to create a plugin in gazebo for that sensor. That’s the first thing you need to know. Check this out to understand what types of plugins exist. Note that there are also third party plugins like velodyne which are not mentioned here too. ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#how-to-add-any-sensors-to-an-extisting-robots-urdf",
+    "relUrl": "/docs/Simulation/adding_lidar.html#how-to-add-any-sensors-to-an-extisting-robots-urdf"
+  },"30": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "The hard way",
+    "content": "Firstly, let’s look at the hard way of adding a lidar, i.e. creating our own plugin. There’s a great tutorial by gazebo which I followed for this step. A summary of the above tutorial is we write a velodyne.world file which will store all the information on the geometry, a ray sensor, joints, and links all in one .world file. Then, we’ll add 3D meshes and noise to the sensor and finally upload it to the gazebo repo. We will be using such a model which was already uploaded with the correct meshes (.dae files) and the .world files already in place. This can be downloaded as a package into any ros workspace from Here . The package called velodyne_hdl32 will have the following files: . Hence, by skipping a few steps in the looong tutorial, we will finally start from This Page . The tutorial will consist of creating and modifying two files . | velodyne.world | velodyne_plugin.cc | . The Plugin . The plugin is not our focus here. The boilerplate of a plugin for this example is: . #ifndef _VELODYNE_PLUGIN_HH_ #define _VELODYNE_PLUGIN_HH_ #include &lt;gazebo/gazebo.hh&gt; #include &lt;gazebo/physics/physics.hh&gt; namespace gazebo { /// \\brief A plugin to control a Velodyne sensor. class VelodynePlugin : public ModelPlugin { /// \\brief Constructor public: VelodynePlugin() {} /// \\brief The load function is called by Gazebo when the plugin is /// inserted into simulation /// \\param[in] _model A pointer to the model that this plugin is /// attached to. /// \\param[in] _sdf A pointer to the plugin's SDF element. public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) { // Just output a message for now std::cerr &lt;&lt; \"\\nThe velodyne plugin is attach to model[\" &lt;&lt; _model-&gt;GetName() &lt;&lt; \"]\\n\"; } }; // Tell Gazebo about this plugin, so that Gazebo can call Load on this plugin. GZ_REGISTER_MODEL_PLUGIN(VelodynePlugin) } #endif . The plugin will undergo modifications to give it an API and make it configurable, but in the end we will be running cmake on this plugin.cc file and creating a libvelodyne_plugin.so file. This .so file is what interests us the most and is what will be used in any urdf or .world file which we will be modifying . The .world file (can be .urdf also) . &lt;?xml version=\"1.0\" ?&gt; &lt;sdf version=\"1.5\"&gt; &lt;world name=\"default\"&gt; &lt;!-- A global light source --&gt; &lt;include&gt; &lt;uri&gt;model://sun&lt;/uri&gt; &lt;/include&gt; &lt;!-- A ground plane --&gt; &lt;include&gt; &lt;uri&gt;model://ground_plane&lt;/uri&gt; &lt;/include&gt; &lt;!-- A testing model that includes the Velodyne sensor model --&gt; &lt;model name=\"my_velodyne\"&gt; &lt;include&gt; &lt;uri&gt;model://velodyne_hdl32&lt;/uri&gt; &lt;/include&gt; &lt;!-- Attach the plugin to this model --&gt; &lt;plugin name=\"velodyne_control\" filename=\"libvelodyne_plugin.so\"/&gt; &lt;/model&gt; &lt;/world&gt; &lt;/sdf&gt; . Here we see how the \"libvelodyne_plugin.so\" file is useful. We will be directly callling the plugin using that reference in the above .world file. ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#the-hard-way",
+    "relUrl": "/docs/Simulation/adding_lidar.html#the-hard-way"
+  },"31": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "The Easier Way : Using pre-built plugins",
+    "content": "Neobotix Example . To understand this, let’s see how the neobotix repo has implemented a 2D lidar. The mp_400.urdf file contains everything below. Sensor plugin shown below . &lt;gazebo reference=\"lidar_1_link\"&gt; &lt;sensor name=\"lidar_1_sensor\" type=\"ray\"&gt; &lt;always_on&gt;true&lt;/always_on&gt; &lt;pose&gt;0 0 0 0 0 0&lt;/pose&gt; &lt;visualize&gt;true&lt;/visualize&gt; &lt;update_rate&gt;10&lt;/update_rate&gt; &lt;ray&gt; &lt;scan&gt; &lt;horizontal&gt; &lt;samples&gt;720&lt;/samples&gt; &lt;resolution&gt;1&lt;/resolution&gt; &lt;min_angle&gt;-1.48&lt;/min_angle&gt; &lt;max_angle&gt;1.48&lt;/max_angle&gt; &lt;/horizontal&gt; &lt;/scan&gt; &lt;range&gt; &lt;min&gt;0.10&lt;/min&gt; &lt;max&gt;30.0&lt;/max&gt; &lt;resolution&gt;0.05&lt;/resolution&gt; &lt;/range&gt; &lt;noise&gt; &lt;type&gt;gaussian&lt;/type&gt; &lt;!-- Noise parameters based on published spec for Hokuyo laser achieving \"+-30mm\" accuracy at range &lt; 10m. A mean of 0.0m and stddev of 0.01m will put 99.7% of samples within 0.03m of the true reading. --&gt; &lt;mean&gt;0.0&lt;/mean&gt; &lt;stddev&gt;0.01&lt;/stddev&gt; &lt;/noise&gt; &lt;/ray&gt; &lt;plugin filename=\"libgazebo_ros_ray_sensor.so\" name=\"lidar_1\"&gt; &lt;ros&gt; &lt;!-- &lt;namespace&gt; &lt;/namespace&gt; --&gt; &lt;argument&gt;~/out:=scan&lt;/argument&gt; &lt;/ros&gt; &lt;!-- Set output to sensor_msgs/LaserScan to get same output type as gazebo_ros_laser --&gt; &lt;output_type&gt;sensor_msgs/LaserScan&lt;/output_type&gt; &lt;frame_name&gt;lidar_1_link&lt;/frame_name&gt; &lt;/plugin&gt; &lt;/sensor&gt; &lt;/gazebo&gt; . Links and joints for sensor . &lt;!--+++++++++++++++++++laserscanner_link++++++++++++++++++++++++--&gt; &lt;joint name=\"laser_1_joint\" type=\"fixed\"&gt; &lt;axis xyz=\"0 1 0\"/&gt; &lt;origin rpy=\"0 3.14 3.14\" xyz=\"0.230 0 0.110\"/&gt; &lt;parent link=\"base_link\"/&gt; &lt;child link=\"lidar_1_link\"/&gt; &lt;/joint&gt; &lt;link name=\"lidar_1_link\" type=\"laser\"&gt; &lt;inertial&gt; &lt;mass value=\"0.001\"/&gt; &lt;origin rpy=\"0 0 0\" xyz=\"0 0 0\"/&gt; &lt;inertia ixx=\"0.0001\" ixy=\"0\" ixz=\"0\" iyy=\"0.000001\" iyz=\"0\" izz=\"0.0001\"/&gt; &lt;/inertial&gt; &lt;visual&gt; &lt;origin rpy=\"1.57 0 0\" xyz=\"-0.0 0 -0.06\"/&gt; &lt;geometry&gt; &lt;mesh filename=\"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae\" scale=\"0.001 0.001 0.001\"/&gt; &lt;/geometry&gt; &lt;/visual&gt; &lt;collision&gt; &lt;origin rpy=\"1.57 0 0\" xyz=\"-0.0 0 -0.06\"/&gt; &lt;geometry&gt; &lt;mesh filename=\"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae\" scale=\"0.001 0.001 0.001\"/&gt; &lt;/geometry&gt; &lt;/collision&gt; &lt;/link&gt; . ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#the-easier-way--using-pre-built-plugins",
+    "relUrl": "/docs/Simulation/adding_lidar.html#the-easier-way--using-pre-built-plugins"
+  },"32": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "TODO",
+    "content": "Using pre-built lidar geometry and pre-built sensor plugin . pre_built lidar . pre_built_plugin . | ROS Block Sensor Example for 3D lidar outputs PointCloud msg type | 3rd party velodyne plugin outputs PointCloud2 topic | Aux ref 1 | Aux ref 2 | . ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html#todo",
+    "relUrl": "/docs/Simulation/adding_lidar.html#todo"
+  },"33": {
+    "doc": "Adding Lidar in Simulation",
+    "title": "Adding Lidar in Simulation",
+    "content": ". | Before you Begin | Understanding the Neobotix Simulation Codebase | How to add any sensors to an extisting robot’s URDF? . | The hard way . | The Plugin | The .world file (can be .urdf also) | . | The Easier Way : Using pre-built plugins . | Neobotix Example | . | . | TODO | . ",
+    "url": "http://localhost:4000/docs/Simulation/adding_lidar.html",
+    "relUrl": "/docs/Simulation/adding_lidar.html"
+  },"34": {
     "doc": "Basics",
     "title": "Basics of Setting up with ROS2",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/basics.html#basics-of-setting-up-with-ros2",
     "relUrl": "/docs/ros/basics.html#basics-of-setting-up-with-ros2"
-  },"26": {
+  },"35": {
     "doc": "Basics",
     "title": "Changing Between ROS versions (ROS1 and ROS2)",
     "content": "Ensure the environment variables are set correctly: . printenv | grep -i ROS . Change any environment variables to the right path if required. Note. The variable ROS_LOCALHOST_ONLY should be set to ROS_LOCALHOST_ONLY=1 for Foxy and ROS_LOCALHOST_ONLY=0 for Noetic (I think) . ",
     "url": "http://localhost:4000/docs/ros/basics.html#changing-between-ros-versions-ros1-and-ros2",
     "relUrl": "/docs/ros/basics.html#changing-between-ros-versions-ros1-and-ros2"
-  },"27": {
+  },"36": {
     "doc": "Basics",
     "title": "Create a Workspace and Package",
     "content": ". | Create WS mkdir -p ~/ros2_ws/src cd ~/ros2_ws . | Now, go into the src directory to clone some example packages cd src git clone https://github.com/ros2/examples src/examples -b foxy . | Building the workspace (and packages inside) colcon build --symlink-install . The –symlink-install allows us to make changes to backend by updated non-compiled files like python files . | In the root directory of our workspace (i.e. inside ros2_ws) source the environment (this will also source the workspace internally) . install/setup.bash . | Add sources to .bashrc echo \"source /usr/share/colcon_cd/function/colcon_cd.sh\" &gt;&gt; ~/.bashrc echo \"export _colcon_cd_root=/opt/ros/foxy/\" &gt;&gt; ~/.bashrc echo \"source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash\" &gt;&gt; ~/.bashrc . | . ",
     "url": "http://localhost:4000/docs/ros/basics.html#create-a-workspace-and-package",
     "relUrl": "/docs/ros/basics.html#create-a-workspace-and-package"
-  },"28": {
+  },"37": {
     "doc": "Basics",
     "title": "Adding more packages",
     "content": "This is simple once we have a workspace setup. To add another new package into existing workspace just do: . | Go to your ros2_ws/src folder | Add any new repo (ros package) to this src folder git clone https://github.com/ros/ros_tutorials.git -b foxy-devel . | Resolve Dependencies: . | cd .. | rosdep install -i --from-path src --rosdistro foxy -y | . | Build the workspace again (remember you should NOT be in src folder when doing this) | . ",
     "url": "http://localhost:4000/docs/ros/basics.html#adding-more-packages",
     "relUrl": "/docs/ros/basics.html#adding-more-packages"
-  },"29": {
+  },"38": {
     "doc": "Basics",
     "title": "Creating your own package",
     "content": "Previously, we added existing packages to our /src/ folder. Now, let’s build a package from scratch. We can do so in two ways: . | Copy paste an existing package and then make changes to the package.xml and CMakeLists.txt (if you choose to use Cmake) | Copy paste an existing package and then make changes to the package.xml, setup.py, setup.cfg and another folder with same name as package (with an __init__ file) (if you choose to use Python) | Use ros2 pkg create to make our lives easier | . Let’s use step 3 and with Python for simplicity: . | cd ~/ros2_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ros2_ws | colcon build or colcon build --packages-select my_package | Source again . install/setup.bash or source install/local_setup.bash (I prefer the latter) | . Running the node is then just ros2 run my_package my_node . Note: You could also configure the package.xml and setup.py present inside each node. But everything will work without this also . ",
     "url": "http://localhost:4000/docs/ros/basics.html#creating-your-own-package",
     "relUrl": "/docs/ros/basics.html#creating-your-own-package"
-  },"30": {
+  },"39": {
     "doc": "Basics",
     "title": "Learning about TF2",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/basics.html#learning-about-tf2",
     "relUrl": "/docs/ros/basics.html#learning-about-tf2"
-  },"31": {
+  },"40": {
     "doc": "Basics",
     "title": "Better way to create a test node",
     "content": "ros2 pkg create --build-type ament_python --node_name learning_tf2 tf2_trial . In the above statement, tf2_trial = package_name, learning_tf2 = node name. ",
     "url": "http://localhost:4000/docs/ros/basics.html#better-way-to-create-a-test-node",
     "relUrl": "/docs/ros/basics.html#better-way-to-create-a-test-node"
-  },"32": {
+  },"41": {
     "doc": "Basics",
     "title": "Basics",
     "content": ". | Basics of Setting up with ROS2 . | Changing Between ROS versions (ROS1 and ROS2) | Create a Workspace and Package | Adding more packages | Creating your own package | . | Learning about TF2 . | Better way to create a test node | . | . ",
     "url": "http://localhost:4000/docs/ros/basics.html",
     "relUrl": "/docs/ros/basics.html"
-  },"33": {
+  },"42": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Building Environment From a Floorplan",
     "content": "Gazebo provides a ‘Building Editor’ to make floorplans in 2D and autogenerate walls, doors and windows. We will then use a floorplan (eg. from MFI Lego Testbed) as a reference (import using the button shown above): . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan",
     "relUrl": "/docs/Simulation/build_floorplan.html#building-environment-from-a-floorplan"
-  },"34": {
+  },"43": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Editing the Environment",
     "content": ". | We build walls everywhere required (click on the ‘Wall’ button and then click on workspace to begin drawing) | Add doors accordingly where walls are not present | Windows can be placed on any walls | . After placing the initial walls, double clicking on the walls gives us the option to edit the size and position of these walls . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#editing-the-environment",
     "relUrl": "/docs/Simulation/build_floorplan.html#editing-the-environment"
-  },"35": {
+  },"44": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Saving the Floorplan",
     "content": "You can do File and Save As to save the floorplan. This will save three files: . | MODEL_NAME (given by user) eg. mfi_floor_trial1 . | model.config | model.sdf | world.sdf | . | . Additionally, if you ever download a model from git clone https://github.com/osrf/gazebo_models then the following files will be present for: . | model_1 : A directory for model_1 . | model.config : Meta-data about model_1 | model.sdf : SDF description of the model | model.sdf.erb : Ruby embedded SDF model description | meshes : A directory for all COLLADA and STL files | materials : A directory which should only contain the textures and scripts subdirectories | textures : A directory for image files (jpg, png, etc). | scripts : A directory for OGRE material scripts | plugins: A directory for plugin source and header files | . | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#saving-the-floorplan",
     "relUrl": "/docs/Simulation/build_floorplan.html#saving-the-floorplan"
-  },"36": {
+  },"45": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Example model.sdf (simulator description format)",
     "content": "&lt;?xml version='1.0'?&gt; &lt;sdf version='1.7'&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;0.011095 -0.309692 0 0 -0 0&lt;/pose&gt; &lt;link name='Wall_10'&gt; &lt;collision name='Wall_10_Collision'&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;/collision&gt; &lt;visual name='Wall_10_Visual'&gt; &lt;pose&gt;0 0 0.5 0 -0 0&lt;/pose&gt; &lt;geometry&gt; &lt;box&gt; &lt;size&gt;1.9 0.05 1&lt;/size&gt; &lt;/box&gt; &lt;/geometry&gt; &lt;material&gt; &lt;script&gt; &lt;uri&gt;file://media/materials/scripts/gazebo.material&lt;/uri&gt; &lt;name&gt;Gazebo/Grey&lt;/name&gt; &lt;/script&gt; &lt;ambient&gt;1 1 1 1&lt;/ambient&gt; &lt;/material&gt; &lt;meta&gt; &lt;layer&gt;0&lt;/layer&gt; &lt;/meta&gt; &lt;/visual&gt; &lt;pose&gt;-6.0041 -1.14431 0 0 -0 3.14159&lt;/pose&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;/sdf&gt; . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format",
     "relUrl": "/docs/Simulation/build_floorplan.html#example-modelsdf-simulator-description-format"
-  },"37": {
+  },"46": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Creating world files from the model we designed above",
     "content": "Now that we have a model in the mfi_floor_trial1 folder, let’s change the folder structure a little bit. ├── worlds ├── models │ ├── mfi_floor_trial1 | ├── model.config | ├── model.sdf | ├── world.sdf . Now, open gazebo and load the above model mfi_floor_trial1. Then follow the below steps: . | Add any new objects onto this model (like sofa, chair, trashcan) | save this as trial_world.world file in the worlds folder. | . The final folder structure should look like below: . ├── worlds | ├── trial_world.world ├── models │ ├── mfi_floor_trial1 | ├── model.config | ├── model.sdf | ├── world.sdf . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#creating-world-files-from-the-model-we-designed-above",
     "relUrl": "/docs/Simulation/build_floorplan.html#creating-world-files-from-the-model-we-designed-above"
-  },"38": {
+  },"47": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Adding models to existing neobotix world files",
     "content": ". ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#adding-models-to-existing-neobotix-world-files",
     "relUrl": "/docs/Simulation/build_floorplan.html#adding-models-to-existing-neobotix-world-files"
-  },"39": {
+  },"48": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Barebones view of neobotix_workshop.world",
     "content": "This world file is provided by neobotix here. We will use this world file as our template and add models (walls, tables, trashcan and sofa) to this world as required. Process Overview . | The world file you created in the saving floorplan section called world.sdf will contain the info on walls and tables which we will need to use | The neobotix world file “neo_workshop.world” looks like this: | We need to modify it to the below format | . &lt;sdf version='1.6'&gt; &lt;world name='default'&gt; &lt;light name='sun' type='directional'&gt; &lt;/light&gt; &lt;gravity&gt;0 0 -9.8&lt;/gravity&gt; &lt;magnetic_field&gt;6e-06 2.3e-05 -4.2e-05&lt;/magnetic_field&gt; &lt;atmosphere type='adiabatic'/&gt; &lt;physics name='default_physics' default='0' type='ode'&gt; &lt;/physics&gt; &lt;scene&gt; &lt;/scene&gt; &lt;wind/&gt; &lt;spherical_coordinates&gt; &lt;/spherical_coordinates&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;1.22275 -0.717257 0 0 -0 0&lt;/pose&gt; &lt;link name='Wall_10'&gt; &lt;/link&gt; &lt;link name='Wall_14'&gt; &lt;/link&gt; &lt;link name='Wall_16'&gt; &lt;/link&gt; &lt;link name='Wall_20'&gt; &lt;/link&gt; &lt;link name='Wall_21'&gt; &lt;/link&gt; &lt;link name='Wall_4'&gt; &lt;/link&gt; &lt;link name='Wall_5'&gt; &lt;/link&gt; &lt;link name='Wall_6'&gt; &lt;/link&gt; &lt;link name='Wall_7'&gt; &lt;/link&gt; &lt;link name='Wall_8'&gt; &lt;/link&gt; &lt;link name='Wall_9'&gt; &lt;/link&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;model name='table'&gt; &lt;/model&gt; &lt;model name='table_0'&gt; &lt;/model&gt; &lt;state world_name='default'&gt; &lt;sim_time&gt;12155 846000000&lt;/sim_time&gt; &lt;real_time&gt;151 139215044&lt;/real_time&gt; &lt;wall_time&gt;1592070340 176042788&lt;/wall_time&gt; &lt;iterations&gt;15065&lt;/iterations&gt; &lt;model name='mfi_floor_trial1'&gt; &lt;pose&gt;1.22275 -0.717257 0 0 -0 0&lt;/pose&gt; &lt;scale&gt;1 1 1&lt;/scale&gt; &lt;link name='Wall_10'&gt; &lt;/link&gt; &lt;link name='Wall_14'&gt; &lt;/link&gt; &lt;link name='Wall_16'&gt; &lt;/link&gt; &lt;link name='Wall_20'&gt; &lt;/link&gt; &lt;link name='Wall_21'&gt; &lt;/link&gt; &lt;link name='Wall_4'&gt; &lt;/link&gt; &lt;link name='Wall_5'&gt; &lt;/link&gt; &lt;link name='Wall_6'&gt; &lt;/link&gt; &lt;link name='Wall_7'&gt; &lt;/link&gt; &lt;link name='Wall_8'&gt; &lt;/link&gt; &lt;link name='Wall_9'&gt; &lt;/link&gt; &lt;/model&gt; &lt;model name='table'&gt; &lt;/model&gt; &lt;model name='table_0'&gt; &lt;/model&gt; &lt;light name='sun'&gt; &lt;pose&gt;0 0 10 0 -0 0&lt;/pose&gt; &lt;/light&gt; &lt;/state&gt; &lt;gui fullscreen='0'&gt; &lt;camera name='user_camera'&gt; &lt;pose frame=''&gt;-1.29545 -2.55987 1.20273 0 0.241796 -2.66221&lt;/pose&gt; &lt;view_controller&gt;orbit&lt;/view_controller&gt; &lt;projection_type&gt;perspective&lt;/projection_type&gt; &lt;/camera&gt; &lt;/gui&gt; &lt;audio&gt; &lt;device&gt;default&lt;/device&gt; &lt;/audio&gt; &lt;model name='neobotix_ground_plane'&gt; &lt;static&gt;1&lt;/static&gt; &lt;/model&gt; &lt;/world&gt; &lt;/sdf&gt; . | After modifying the neo_workshop.world file, we can see that there’s a line in the above file called &lt;model name='mfi_floor_trial1'&gt; which refers to the model we saved in the “Saving the floorplan” section (we saved the model as mfi_floor_trial1 folder). We simply need to copy this folder to the models folder in the neo_simulation2 workspace. | Run the neobotix simulation as shown in the next section | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#barebones-view-of-neobotix_workshopworld",
     "relUrl": "/docs/Simulation/build_floorplan.html#barebones-view-of-neobotix_workshopworld"
-  },"40": {
+  },"49": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Running the Neobotix simulation",
     "content": "The neo_simulation2 package uses ros2 Humble and will not run on the foxy docker which the team will be using for most of the development. Therefore, a separate docker container was setup to run this simulation natively. The instructions to run this are present in this repository . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#running-the-neobotix-simulation",
     "relUrl": "/docs/Simulation/build_floorplan.html#running-the-neobotix-simulation"
-  },"41": {
+  },"50": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Running SLAM in Simulation",
     "content": "The Neobotix mapping package uses the slam_toolbox in synchronous mode and shows better results in loop-closure in comparison to the Manual mapping package which uses async mode. A comparison of the two is shown below (final .pgm outputs): . | async mode | sync mode | . | | | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#running-slam-in-simulation",
     "relUrl": "/docs/Simulation/build_floorplan.html#running-slam-in-simulation"
-  },"42": {
+  },"51": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Neobotix Mapping Package",
     "content": "This internally uses the slam_toolbox in online sync mode . Build Steps . | Setup the docker environment (should be done when setting up Neobotix simulation above) | To skip some steps in the above repo, you can pull a pre-built image docker pull sushanthj/humble_sim_mapping_built | go to the neobotix workspace on the docker environemnt cd /root/neobotix_workspace/src | If the neo_mp_400-2 package has not been installed, do so manually using git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git | A config file in neo_mp_400-2 package has an error. slam_toolbox: ros__parameters: # Plugin params solver_plugin: solver_plugins::CeresSolver ceres_linear_solver: SPARSE_NORMAL_CHOLESKY ceres_preconditioner: SCHUR_JACOBI ceres_trust_strategy: LEVENBERG_MARQUARDT ceres_dogleg_type: TRADITIONAL_DOGLEG ceres_loss_function: None # ROS Parameters odom_frame: odom map_frame: map base_frame: base_footprint scan_topic: /lidar_1/scan_filtered mode: mapping #localization . Change the scan_topic to scan_topic: /scan. This /scan topic is what will be used by slam_toolbox to build the map . | Move back to workspace to build cd /root/neobotix_workspace | colcon build --symlink-install | . Choosing the Map . Initially we chose a map by running: . export MY_ROBOT=mp_400 export MAP_NAME=neo_workshop . But, if we want to do mapping on a custom gazebo map we’ll need to do the following: . | Use world_files folder to copy the trial_world.world (our custom world we created) into the ~/neobotix_workspace/src/neo_simulation2/worlds folder | Use world_files folder to copy the entire folder mfi_floor_trial1 into ~/neobotix_workspace/src/neo_simulation2/models folder | Change export MAP_NAME=trial_world | Continue process below to launch mapping | . Run Steps . | ros2 launch neo_simulation2 simulation.launch.py | The above script should launch simulation which starts publishing topics called ‘/scan’ and some odometry topics | Note. the above topics should match the topics slam_toolbox requires, this is present in this file | Now that we have simulation running, we can launch the slam toolbox by launching the package we created (i.e. sush_mapping, sorry about the name) . | ros2 launch neo_mp_400-2 mapping.launch.py parameters:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/mapping.yaml | . | The SLAM toolbox might throw some errors in XML-Parser errors, these can be ignored | Now, to vizualise the map being generated, launch rviz ros2 run rviz2 rviz2 | Once in rviz, click Add in the botton left corner and in the first pane itself (by display type), there is a Map option. Select that. | Now, the map still won’t load until you choose the right topic. | Select Topic = map | Select Update Topic = /map_updates | . | Then move around the robot (using teleop) and you should see the map being generated as shown below | Now, we run map_saver package to save the map created by the SLAM toolbox as a .pgm file . | ros2 run nav2_map_server map_saver_cli -f /root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/trial_map | . | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#neobotix-mapping-package",
     "relUrl": "/docs/Simulation/build_floorplan.html#neobotix-mapping-package"
-  },"43": {
+  },"52": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Manual Mapping Package",
     "content": "Note. Since this mapping setup works, the XML parser error seen in the above neobotix mapper is probably not an issue . Build Steps . | cd /root/neobotix_workspace/src | git clone --branch $ROS_DISTRO https://github.com/neobotix/neo_mp_400-2.git | cd neo_mp_400-2 | cd .. | Copy the package which will launch the slam_toolbox cp /home/admin/worlds/sush_mapping . | cd .. | colcon build --symlink-install | source necessary files source install/setup.bash | . Choosing the Map . Initially we chose a map by running: . export MY_ROBOT=mp_400 export MAP_NAME=neo_workshop . But, if we want to do mapping on a custom gazebo map we’ll need to do the following: . | Use world_files folder to copy the trial_world.world (our custom world we created) into the ~/neobotix_workspace/src/neo_simulation2/worlds folder | Use world_files folder to copy the entire folder mfi_floor_trial1 into ~/neobotix_workspace/src/neo_simulation2/models folder | Change export MAP_NAME=trial_world | Continue process below to launch mapping | . Run Steps . | ros2 launch neo_simulation2 simulation.launch.py | The above script should launch simulation which starts publishing topics called ‘/scan’ and some odometry topics | Note. the above topics should match the topics slam_toolbox requires, this is present in this file | Now that we have simulation running, we can launch the slam toolbox by launching the package we created (i.e. sush_mapping, sorry about the name) | ros2 launch sush_mapping online_async_launch.py | The SLAM toolbox might throw some errors in XML-Parser errors, these can be ignored | Now, to vizualise the map being generated, launch rviz ros2 run rviz2 rviz2 | Once in rviz, click Add in the botton left corner and in the first pane itself (by display type), there is a Map option. Select that. | Now, the map still won’t load until you choose the right topic. | Select Topic = map | Select Update Topic = /map_updates | . | Then move around the robot (using teleop) and you should see the map being generated as shown below | Now, we run map_saver package to save the map created by the SLAM toolbox as a .pgm file . | ros2 run nav2_map_server map_saver_cli -f /root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map | . | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#manual-mapping-package",
     "relUrl": "/docs/Simulation/build_floorplan.html#manual-mapping-package"
-  },"44": {
+  },"53": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Final Results",
     "content": "Complete Simulation Video . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#final-results",
     "relUrl": "/docs/Simulation/build_floorplan.html#final-results"
-  },"45": {
+  },"54": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Miscellaneous",
     "content": ". | Check if a particular package is installed: ros2 pkg list | grep slam | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html#miscellaneous",
     "relUrl": "/docs/Simulation/build_floorplan.html#miscellaneous"
-  },"46": {
+  },"55": {
     "doc": "Gazebo Environment and Mapping",
     "title": "Gazebo Environment and Mapping",
     "content": ". | Building Environment From a Floorplan . | Editing the Environment | Saving the Floorplan | Example model.sdf (simulator description format) | . | Creating world files from the model we designed above | Adding models to existing neobotix world files . | Barebones view of neobotix_workshop.world . | Process Overview | . | . | Running the Neobotix simulation | Running SLAM in Simulation . | Neobotix Mapping Package . | Build Steps | Choosing the Map | Run Steps | . | Manual Mapping Package . | Build Steps | Choosing the Map | Run Steps | . | Final Results | Miscellaneous | . | . ",
     "url": "http://localhost:4000/docs/Simulation/build_floorplan.html",
     "relUrl": "/docs/Simulation/build_floorplan.html"
-  },"47": {
+  },"56": {
     "doc": "Docker and Dockerhub",
     "title": "Create Docker Image from Active Container",
     "content": ". | run docker ps -a to display the active containers and note the name of container of interest (eg. mfi_container) | docker commit mfi_container | Now if you run docker images, you will see a new image which has no name. Let’s give it a name | Name the new image using the Image ID of the unnamed container. Do docker tag 03423523 humble_sim_built | Now if you run docker images, you should see your new image | . ",
     "url": "http://localhost:4000/docs/software_bringup/docker_image_management.html#create-docker-image-from-active-container",
     "relUrl": "/docs/software_bringup/docker_image_management.html#create-docker-image-from-active-container"
-  },"48": {
+  },"57": {
     "doc": "Docker and Dockerhub",
     "title": "Upload Image to DockerHub",
     "content": ". | Tag your image of interest with your dockerhub username: docker tag 03423523 sushanthj/humble_sim_built | docker push sushanthj/humble_sim_built | . ",
     "url": "http://localhost:4000/docs/software_bringup/docker_image_management.html#upload-image-to-dockerhub",
     "relUrl": "/docs/software_bringup/docker_image_management.html#upload-image-to-dockerhub"
-  },"49": {
+  },"58": {
     "doc": "Docker and Dockerhub",
     "title": "Download Docker Image",
     "content": "docker pull sushanthj/humble_sim_built . ",
     "url": "http://localhost:4000/docs/software_bringup/docker_image_management.html#download-docker-image",
     "relUrl": "/docs/software_bringup/docker_image_management.html#download-docker-image"
-  },"50": {
+  },"59": {
     "doc": "Docker and Dockerhub",
     "title": "Docker and Dockerhub",
     "content": ". | Create Docker Image from Active Container | Upload Image to DockerHub | Download Docker Image | . ",
     "url": "http://localhost:4000/docs/software_bringup/docker_image_management.html",
     "relUrl": "/docs/software_bringup/docker_image_management.html"
-  },"51": {
+  },"60": {
     "doc": "Frame Design",
     "title": "8020 Frame",
     "content": "We are using an Autonomous Mobile Robot (AMR) to transport LEGO bricks as part of MFI’s Lego Testbed. We will be procuring the Neobotix MP400 AMR. After the sensors and motors lab, I began designing a modular frame which can house various sensors, power supply systems and on-board compute. ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#8020-frame",
     "relUrl": "/docs/Mechanical/frame.html#8020-frame"
-  },"52": {
+  },"61": {
     "doc": "Frame Design",
     "title": "Frame Design",
     "content": ". The Frame is designed to be modular, i.e. it can be mounted on any mobile platform for testing. Addi- tionally, the frame is also designed to allow for minimal tolerance stack-up on the sensor mountings. | Flat plate joints for the bottom links ensure perpendicularity between columns and beams. | Base-sheet mounting holes are precision machined. Additionally the laser cut base-sheets imposes strict constraints on position of sensors and consequently the accuracy of the calculated transforma- tion matrices would improve. | matching mounting points on top and bottom base-sheets ensures frame links are joined accurately. | floating corner connectors allow fixing the level-2 sheet at a flexible height. | . The CAD Files are available on drive for reference. Design Tools . The 8020 Dynamic Library is useful to quickly prototype on building the frame using the 8020 library. ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#frame-design",
     "relUrl": "/docs/Mechanical/frame.html#frame-design"
-  },"53": {
+  },"62": {
     "doc": "Frame Design",
     "title": "Base Sheet",
     "content": ". | The base sheet mounting holes will be laser-cut and additionally the origin of the base sheet was kept aligned to the robot’s origin throughout the design stage. | Mounts for the RealSense camera were designed to be 3D printed | Four camera mounting positions were provided to allow for future additions. | LIDAR was placed acoording to the figure below (to ensure the rays don’t get blocked by the 8020 frame in front) | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#base-sheet",
     "relUrl": "/docs/Mechanical/frame.html#base-sheet"
-  },"54": {
+  },"63": {
     "doc": "Frame Design",
     "title": "RealSense Mount",
     "content": ". ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#realsense-mount",
     "relUrl": "/docs/Mechanical/frame.html#realsense-mount"
-  },"55": {
+  },"64": {
     "doc": "Frame Design",
     "title": "Final Machining and Results",
     "content": "The mounting holes on the 8020 frame were precision CNC cut using a Haas 5 axis CNC. At time of writing, this is the only 5 axis CNC available at CMU. (We don’t need 5 axis, but this was a super fancy machine!) . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#final-machining-and-results",
     "relUrl": "/docs/Mechanical/frame.html#final-machining-and-results"
-  },"56": {
+  },"65": {
     "doc": "Frame Design",
     "title": "Finished Product",
     "content": ". ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html#finished-product",
     "relUrl": "/docs/Mechanical/frame.html#finished-product"
-  },"57": {
+  },"66": {
     "doc": "Frame Design",
     "title": "Frame Design",
     "content": ". | 8020 Frame . | Frame Design . | Design Tools | . | Base Sheet | RealSense Mount | . | Final Machining and Results . | Finished Product | . | . ",
     "url": "http://localhost:4000/docs/Mechanical/frame.html",
     "relUrl": "/docs/Mechanical/frame.html"
-  },"58": {
+  },"67": {
     "doc": "Home",
     "title": "Team Dock Dock Go!",
     "content": "Explaining the steps taken to setup and build the systems necessary for an autonomous mobile robot capable of transporting LEGOs for MFI’s Testbed . ",
     "url": "http://localhost:4000/#team-dock-dock-go",
     "relUrl": "/#team-dock-dock-go"
-  },"59": {
+  },"68": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "http://localhost:4000/",
     "relUrl": "/"
-  },"60": {
+  },"69": {
     "doc": "Miscellaneous yet Useful",
     "title": "ROS2",
     "content": " ",
     "url": "http://localhost:4000/miscellaneous#ros2",
     "relUrl": "/miscellaneous#ros2"
-  },"61": {
+  },"70": {
     "doc": "Miscellaneous yet Useful",
     "title": "Time Handling",
     "content": "ROS2 removed the ros.time.now option which we used to use previously. Now, to get access of the time, we do the following: . t.header.stamp = self.get_clock().now().to_msg() . This was taken from this example . def handle_turtle_pose(self, msg): t = TransformStamped() # Read message content and assign it to # corresponding tf variables t.header.stamp = self.get_clock().now().to_msg() t.header.frame_id = 'world' t.child_frame_id = self.turtlename . ",
     "url": "http://localhost:4000/miscellaneous#time-handling",
     "relUrl": "/miscellaneous#time-handling"
-  },"62": {
+  },"71": {
     "doc": "Miscellaneous yet Useful",
     "title": "Installing RQT Graph",
     "content": "sudo apt install ros-humble-rqt-graph . ",
     "url": "http://localhost:4000/miscellaneous#installing-rqt-graph",
     "relUrl": "/miscellaneous#installing-rqt-graph"
-  },"63": {
+  },"72": {
     "doc": "Miscellaneous yet Useful",
     "title": "Get package directory in launch files",
     "content": "This is typically useful to get the path of packages in ROS workspaces . Get share directory . from ament_index_python.packages import get_package_share_directory def generate_launch_description(): return LaunchDescription([ launch_ros.actions.Node( package='robot_localization', executable='ukf_node', name='ukf_filter_node', output='screen', parameters=[os.path.join(get_package_share_directory(\"robot_localization\"), 'params', 'ukf.yaml')], ), ]) . Get package directory . ",
     "url": "http://localhost:4000/miscellaneous#get-package-directory-in-launch-files",
     "relUrl": "/miscellaneous#get-package-directory-in-launch-files"
-  },"64": {
+  },"73": {
     "doc": "Miscellaneous yet Useful",
     "title": "Installing Realsense Driver for Tracking camera and D435i",
     "content": "Clone the required packages . | Build the package realsense2_camera_msgs without any modifications first | If there’s a dependency issue, install rosdeps rosdep install --from-paths src --ignore-src -r -y source /opt/ros/foxy/setup.bash . | . ",
     "url": "http://localhost:4000/miscellaneous#installing-realsense-driver-for-tracking-camera-and-d435i",
     "relUrl": "/miscellaneous#installing-realsense-driver-for-tracking-camera-and-d435i"
-  },"65": {
+  },"74": {
     "doc": "Miscellaneous yet Useful",
     "title": "Velodyne",
     "content": ". | To run the velodyne driver first connect the VLP ethernet to your computer | Then open 192.168.1.201 on a browser. Scroll down and note the IP address the VLP is set . | usually it’s set to 192.168.1.71 | . | Go to your wired connection settings and add set it as shown below | | . Now, restart your velodyne driver. ",
     "url": "http://localhost:4000/miscellaneous#velodyne",
     "relUrl": "/miscellaneous#velodyne"
-  },"66": {
+  },"75": {
     "doc": "Miscellaneous yet Useful",
     "title": "Getting GUI acces on your docker",
     "content": "I follow this template for any docker file to allwo for GUI access . # Map host's display socket to docker DOCKER_ARGS+=(\"-v /tmp/.X11-unix:/tmp/.X11-unix\") DOCKER_ARGS+=(\"-v $HOME/.Xauthority:/home/admin/.Xauthority:rw\") DOCKER_ARGS+=(\"-e DISPLAY\") DOCKER_ARGS+=(\"-e NVIDIA_VISIBLE_DEVICES=all\") DOCKER_ARGS+=(\"-e NVIDIA_DRIVER_CAPABILITIES=all\") DOCKER_ARGS+=(\"-e FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml\") # Run container from image # print_info \"Running humblesim\" docker run -it --rm \\ --privileged \\ --network host \\ ${DOCKER_ARGS[@]} \\ --runtime nvidia \\ ############# Only change this portion according to your needs ############## -v /home/sush/mfi/robot-setup-tool/world_files:/home/admin/worlds \\ -v /dev/*:/dev/* \\ --name \"humble_sim_docker\" \\ $@ \\ sushanthj/humble_sim_mapping_built:latest \\ ############################################################################# /bin/bash . ",
     "url": "http://localhost:4000/miscellaneous#getting-gui-acces-on-your-docker",
     "relUrl": "/miscellaneous#getting-gui-acces-on-your-docker"
-  },"67": {
+  },"76": {
     "doc": "Miscellaneous yet Useful",
     "title": "Error Handling after above case",
     "content": "Now, after running the above command maybe within a shell script, you might encounter some weird errors which are display related. Eg. glfw error 65544: X11: Failed to open display :1.0 failed to initialize GLFW . Now, all such errors can be fixed by giving the docker container access to the GUI by doing . xhost +local:docker . ",
     "url": "http://localhost:4000/miscellaneous#error-handling-after-above-case",
     "relUrl": "/miscellaneous#error-handling-after-above-case"
-  },"68": {
+  },"77": {
     "doc": "Miscellaneous yet Useful",
     "title": "Miscellaneous yet Useful",
     "content": " ",
     "url": "http://localhost:4000/miscellaneous",
     "relUrl": "/miscellaneous"
-  },"69": {
+  },"78": {
     "doc": "Understand Model and World Files",
     "title": "What is an SDF file? What’s the difference between SDF and URDF?",
     "content": "SDF is an XML format that describes objects and environments for robot simulators, visualization, and control. Now it was developed originally for Gazebo, but URDF is the type of file format that ROS supports. One post said My understanding can be boiled down to this: URDF specifies a robot, but SDF also specifies a world for the robot to live in, which is a much larger set of things. Based on this premise, SDF is designed to represent a superset of everything that can be represented in URDF. ",
     "url": "http://localhost:4000/docs/Simulation/model_basics.html#what-is-an-sdf-file-whats-the-difference-between-sdf-and-urdf",
     "relUrl": "/docs/Simulation/model_basics.html#what-is-an-sdf-file-whats-the-difference-between-sdf-and-urdf"
-  },"70": {
+  },"79": {
     "doc": "Understand Model and World Files",
     "title": "If URDF is better then?",
     "content": " ",
     "url": "http://localhost:4000/docs/Simulation/model_basics.html#if-urdf-is-better-then",
     "relUrl": "/docs/Simulation/model_basics.html#if-urdf-is-better-then"
-  },"71": {
+  },"80": {
     "doc": "Understand Model and World Files",
     "title": "Understand Model and World Files",
     "content": ". | What is an SDF file? What’s the difference between SDF and URDF? | If URDF is better then? | . ",
     "url": "http://localhost:4000/docs/Simulation/model_basics.html",
     "relUrl": "/docs/Simulation/model_basics.html"
-  },"72": {
+  },"81": {
+    "doc": "Navigating in Simulation",
+    "title": "Before you Begin",
+    "content": "A lot of this setup has already been done on a docker container which can be pulled as docker pull sushanthj/humble_sim_mapping_built:latest . Further information is available on This Repository for Reference . ",
+    "url": "http://localhost:4000/docs/Simulation/navigation.html#before-you-begin",
+    "relUrl": "/docs/Simulation/navigation.html#before-you-begin"
+  },"82": {
     "doc": "Navigating in Simulation",
     "title": "Start by Fixing neo_simulation2’s local planner",
     "content": "Neobotix’s neo_simulation2 has a local planner defined as controller in this folder . The same is shown below. All the changes described will need to be replicated in the neo_simulation2 package folder which you would have cloned . controller_server: ros__parameters: # controller server parameters (see Controller Server for more info) use_sim_time: True controller_frequency: 50.0 min_x_velocity_threshold: 0.001 min_y_velocity_threshold: 0.5 min_theta_velocity_threshold: 0.001 controller_plugins: [\"FollowPath\"] goal_checker_plugins: [\"general_goal_checker\"] progress_checker_plugin: \"progress_checker\" progress_checker: plugin: \"nav2_controller::SimpleProgressChecker\" required_movement_radius: 0.5 movement_time_allowance: 100.0 general_goal_checker: plugin: \"nav2_controller::SimpleGoalChecker\" xy_goal_tolerance: 0.05 yaw_goal_tolerance: 0.05 stateful: True # RegulatedPurePursuitController Parameters FollowPath: plugin: \"nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController\" desired_linear_vel: 0.5 max_linear_accel: 0.2 max_linear_decel: 0.2 lookahead_dist: 0.6 min_lookahead_dist: 0.3 #0.3 max_lookahead_dist: 0.9 #0.9 lookahead_time: 1.5 #1.5 rotate_to_heading_angular_vel: 0.6 transform_tolerance: 0.1 use_velocity_scaled_lookahead_dist: false min_approach_linear_velocity: 0.01 use_approach_linear_velocity_scaling: true max_allowed_time_to_collision: 1.0 use_regulated_linear_velocity_scaling: true use_cost_regulated_linear_velocity_scaling: false regulated_linear_scaling_min_radius: 0.9 regulated_linear_scaling_min_speed: 0.25 use_rotate_to_heading: true rotate_to_heading_min_angle: 0.785 max_angular_accel: 0.6 allow_reversing: false local_costmap: local_costmap: ros__parameters: update_frequency: 10.0 publish_frequency: 1.0 global_frame: odom robot_base_frame: base_link footprint_padding: 0. footprint: \"[ [0.30,0.30],[-0.30,0.30],[-0.30,-0.3],[0.30,-0.3] ]\" use_sim_time: True rolling_window: true width: 5 height: 5 resolution: 0.02 # robot_radius: 0.22 plugins: [\"obstacle_layer\", \"inflation_layer\"] inflation_layer: plugin: \"nav2_costmap_2d::InflationLayer\" cost_scaling_factor: 5.0 inflation_radius: 0.8 obstacle_layer: plugin: \"nav2_costmap_2d::ObstacleLayer\" enabled: True observation_sources: scan scan: topic: /scan obstacle_max_range: 5.0 max_obstacle_height: 2.0 obstacle_min_range: 0.0 raytrace_max_range: 8.0 raytrace_min_range: 0.0 clearing: True marking: True data_type: \"LaserScan\" always_send_full_costmap: True global_costmap: global_costmap: ros__parameters: update_frequency: 1.0 publish_frequency: 1.0 global_frame: map robot_base_frame: base_link footprint_padding: 0.0 footprint: \"[ [0.30,0.30],[-0.30,0.30],[-0.30,-0.3],[0.30,-0.3] ]\" use_sim_time: True resolution: 0.05 plugins: [\"static_layer\", \"obstacle_layer\", \"inflation_layer\"] obstacle_layer: plugin: \"nav2_costmap_2d::ObstacleLayer\" enabled: True observation_sources: scan scan: topic: /scan obstacle_max_range: 5.0 max_obstacle_height: 2.0 obstacle_min_range: 0.0 raytrace_max_range: 8.0 raytrace_min_range: 0.0 clearing: True marking: True data_type: \"LaserScan\" static_layer: plugin: \"nav2_costmap_2d::StaticLayer\" map_subscribe_transient_local: True enabled: True inflation_layer: plugin: \"nav2_costmap_2d::InflationLayer\" cost_scaling_factor: 4.5 inflation_radius: 0.8 always_send_full_costmap: True . However the above planner is weird and does not work well. Hence we can replace it with the planner found Here in mp700 package . The same is shown below: . controller_server: ros__parameters: # controller server parameters (see Controller Server for more info) controller_plugins: [\"FollowPath\"] controller_frequency: 100.0 controller_plugin_types: [\"neo_local_planner::NeoLocalPlanner\"] goal_checker_plugins: [\"general_goal_checker\"] progress_checker_plugin: \"progress_checker\" progress_checker: plugin: \"nav2_controller::SimpleProgressChecker\" required_movement_radius: 0.5 movement_time_allowance: 100.0 general_goal_checker: plugin: \"nav2_controller::SimpleGoalChecker\" xy_goal_tolerance: 0.05 yaw_goal_tolerance: 0.05 stateful: True FollowPath: plugin: \"neo_local_planner::NeoLocalPlanner\" acc_lim_x : 0.25 acc_lim_y : 0.25 acc_lim_theta : 0.8 max_vel_x : 0.8 min_vel_x : -0.2 max_vel_y : 0.5 min_vel_y : -0.5 max_rot_vel : 0.8 min_rot_vel : -0.8 max_trans_vel : 0.8 min_trans_vel : 0.1 yaw_goal_tolerance : 0.005 xy_goal_tolerance : 0.01 goal_tune_time : 0.5 lookahead_time : 0.4 lookahead_dist : 1.0 start_yaw_error : 0.5 pos_x_gain : 1.0 pos_y_gain : 1.0 static_yaw_gain : 3.0 cost_x_gain : 0.1 cost_y_gain : 0.1 cost_y_lookahead_dist : 0.0 cost_y_lookahead_time : 0.3 cost_yaw_gain : 2.0 low_pass_gain : 0.2 max_cost : 0.95 max_curve_vel : 0.4 max_goal_dist : 0.5 max_backup_dist : 0.0 min_stop_dist : 0.2 differential_drive : false allow_reversing: false # plugin: \"nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController\" # desired_linear_vel: 0.5 # max_linear_accel: 0.8 # max_linear_decel: 0.8 # lookahead_dist: 0.6 # min_lookahead_dist: 0.3 #0.3 # max_lookahead_dist: 0.9 #0.9 # lookahead_time: 1.5 #1.5 # rotate_to_heading_angular_vel: 0.9 # transform_tolerance: 0.1 # use_velocity_scaled_lookahead_dist: false # min_approach_linear_velocity: 0.01 # use_approach_linear_velocity_scaling: true # max_allowed_time_to_collision: 1.0 # use_regulated_linear_velocity_scaling: true # use_cost_regulated_linear_velocity_scaling: false # regulated_linear_scaling_min_radius: 0.9 # regulated_linear_scaling_min_speed: 0.25 # use_rotate_to_heading: false # rotate_to_heading_min_angle: 0.785 # max_angular_accel: 1.0 # allow_reversing: true local_costmap: local_costmap: ros__parameters: update_frequency: 10.0 publish_frequency: 1.0 global_frame: odom robot_base_frame: base_footprint footprint_padding: 0. footprint: \"[ [0.45,0.4],[-0.45,0.4],[-0.45,-0.4],[0.45,-0.4] ]\" use_sim_time: True rolling_window: true width: 5 height: 5 resolution: 0.02 # robot_radius: 0.22 plugins: [\"obstacle_layer\", \"inflation_layer\"] inflation_layer: plugin: \"nav2_costmap_2d::InflationLayer\" cost_scaling_factor: 4.0 inflation_radius: 1.0 obstacle_layer: plugin: \"nav2_costmap_2d::ObstacleLayer\" enabled: True observation_sources: scan scan1 scan: topic: /scan max_obstacle_height: 2.0 clearing: True marking: True data_type: \"LaserScan\" scan1: topic: /scan2 max_obstacle_height: 2.0 clearing: True marking: True data_type: \"LaserScan\" always_send_full_costmap: True global_costmap: global_costmap: ros__parameters: update_frequency: 0.4 publish_frequency: 1.0 global_frame: map robot_base_frame: base_footprint footprint_padding: 0. footprint: \"[ [0.45,0.4],[-0.45,0.4],[-0.45,-0.4],[0.45,-0.4] ]\" use_sim_time: True # robot_radius: 0.22 resolution: 0.05 track_unknown_space: true plugins: [\"static_layer\", \"obstacle_layer\", \"inflation_layer\"] obstacle_layer: plugin: \"nav2_costmap_2d::ObstacleLayer\" enabled: True observation_sources: scan scan1 scan: topic: /scan max_obstacle_height: 2.0 clearing: True marking: True data_type: \"LaserScan\" scan1: topic: /scan2 max_obstacle_height: 2.0 clearing: True marking: True data_type: \"LaserScan\" static_layer: plugin: \"nav2_costmap_2d::StaticLayer\" map_subscribe_transient_local: True inflation_layer: plugin: \"nav2_costmap_2d::InflationLayer\" cost_scaling_factor: 4.0 inflation_radius: 1.0 always_send_full_costmap: True . ",
     "url": "http://localhost:4000/docs/Simulation/navigation.html#start-by-fixing-neo_simulation2s-local-planner",
     "relUrl": "/docs/Simulation/navigation.html#start-by-fixing-neo_simulation2s-local-planner"
-  },"73": {
+  },"83": {
     "doc": "Navigating in Simulation",
     "title": "Running Navigation",
     "content": "We will open three tmux panes and run the following command (in same order and in quick succession) . | ros2 launch neo_simulation2 simulation.launch.py | ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml | ros2 launch neo_nav2_bringup rviz_launch.py | . ",
     "url": "http://localhost:4000/docs/Simulation/navigation.html#running-navigation",
     "relUrl": "/docs/Simulation/navigation.html#running-navigation"
-  },"74": {
+  },"84": {
     "doc": "Navigating in Simulation",
     "title": "Expected Output",
     "content": ". ",
     "url": "http://localhost:4000/docs/Simulation/navigation.html#expected-output",
     "relUrl": "/docs/Simulation/navigation.html#expected-output"
-  },"75": {
+  },"85": {
     "doc": "Navigating in Simulation",
     "title": "Navigating in Simulation",
-    "content": ". | Start by Fixing neo_simulation2’s local planner | Running Navigation | Expected Output | . ",
+    "content": ". | Before you Begin | Start by Fixing neo_simulation2’s local planner | Running Navigation | Expected Output | . ",
     "url": "http://localhost:4000/docs/Simulation/navigation.html",
     "relUrl": "/docs/Simulation/navigation.html"
-  },"76": {
+  },"86": {
     "doc": "ROS Learnings",
     "title": "ROS Learnings",
     "content": " ",
     "url": "http://localhost:4000/docs/ros",
     "relUrl": "/docs/ros"
-  },"77": {
+  },"87": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Xavier AGX Setup",
     "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
-  },"78": {
+  },"88": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Links for above steps",
     "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
-  },"79": {
+  },"89": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS Setup for Desktop using Dockerfile",
     "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile"
-  },"80": {
+  },"90": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Why use Docker?",
     "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
-  },"81": {
+  },"91": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Steps to create Docker Image",
     "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image"
-  },"82": {
+  },"92": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)",
     "content": "Reference . #!/bin/bash sudo apt update &amp;&amp; sudo apt install locales sudo locale-gen en_US en_US.UTF-8 sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 export LANG=en_US.UTF-8 sudo apt install software-properties-common sudo add-apt-repository universe sudo apt update &amp;&amp; sudo apt install curl sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null sudo apt update sudo apt upgrade sudo apt install ros-foxy-desktop python3-argcomplete . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"
-  },"83": {
+  },"93": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Checking if it’s installed",
     "content": "printenv | grep -i ROS should return ROS_DISTRO and PYTHON_VERSION and others.. ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#checking-if-its-installed",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#checking-if-its-installed"
-  },"84": {
+  },"94": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Add ros to .bashrc",
     "content": ". | Navigate to ~/.bashrc | Add the following to the last line: source /opt/ros/foxy/setup.bash | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc"
-  },"85": {
+  },"95": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS2 on the Jetson and Desktop",
     "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup for Desktop using Dockerfile . | Why use Docker? | Steps to create Docker Image | . | Setup ROS2 globally on any Ubuntu Device (including Xavier AGX) . | Checking if it’s installed | . | Add ros to .bashrc | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
     "relUrl": "/docs/software_bringup/ros_setup_2.html"
-  },"86": {
+  },"96": {
     "doc": "Running SLAM Toolbox",
     "title": "Debugging",
     "content": " ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#debugging",
     "relUrl": "/docs/SLAM_Toolbox/running.html#debugging"
-  },"87": {
+  },"97": {
     "doc": "Running SLAM Toolbox",
     "title": "Map saver timeout",
     "content": "This happens when the map is large and needs more time to save. Default is 5s but to override we can run the following command: . ros2 run nav2_map_server map_saver_cli -f full_map_one --ros-args -p save_map_timeout:=10000 . Note. Remember you need to save a serialized map as well to use for localization later! . ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph \"filename: 'full_map_serial'\" . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#map-saver-timeout",
     "relUrl": "/docs/SLAM_Toolbox/running.html#map-saver-timeout"
-  },"88": {
+  },"98": {
     "doc": "Running SLAM Toolbox",
     "title": "Installing the rf2o_laser_odometry",
     "content": "This package acts weird when trying to build it at the root folder of the workspace. It throws error “catkin_pkg not found” . The Solution : Just navigate to the package folder itself and build there . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry",
     "relUrl": "/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry"
-  },"89": {
+  },"99": {
     "doc": "Running SLAM Toolbox",
     "title": "Appendix",
     "content": " ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#appendix",
     "relUrl": "/docs/SLAM_Toolbox/running.html#appendix"
-  },"90": {
+  },"100": {
     "doc": "Running SLAM Toolbox",
     "title": "robot_localization vs AMCL in the context of ROS2",
     "content": "robot_localization is somewhat poorly named - at this point it is mostly an Extended Kalman Filter (EKF), usually it is used to merge multiple sources of odometry information (most commonly, IMU and wheel odometry, although it also provides some tools for GPS). Thus, robot_localization is used to create the odom-&gt;base_link transform. AMCL is actually localization software - it provides the map-&gt;odom transform using a particle filter to determine where the robot is in within a map (usually using a planar laser scanner and the odometry information). Therefore, these two can actually work together - by combining multiple sources of odometry information you can minimize the odometry drift that occurs in your odom-&gt;base_link estimation. Then AMCL can be used to correct for that drift by keeping the robot properly localized within the map. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#robot_localization-vs-amcl-in-the-context-of-ros2",
     "relUrl": "/docs/SLAM_Toolbox/running.html#robot_localization-vs-amcl-in-the-context-of-ros2"
-  },"91": {
+  },"101": {
     "doc": "Running SLAM Toolbox",
     "title": "Installing RQT Graph",
     "content": "sudo apt install ros-humble-rqt-graph . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#installing-rqt-graph",
     "relUrl": "/docs/SLAM_Toolbox/running.html#installing-rqt-graph"
-  },"92": {
+  },"102": {
     "doc": "Running SLAM Toolbox",
     "title": "Running SLAM Toolbox",
     "content": ". | Debugging . | Map saver timeout | Installing the rf2o_laser_odometry | . | Appendix . | robot_localization vs AMCL in the context of ROS2 | Installing RQT Graph | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html",
     "relUrl": "/docs/SLAM_Toolbox/running.html"
-  },"93": {
+  },"103": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Nodes to Start",
     "content": ". | velodyne | laser odometry | slam_toolbox_launch | slam_toobox_tf2 | repub_velo | tracking camera’s odometry (realsense) | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#nodes-to-start",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#nodes-to-start"
-  },"94": {
+  },"104": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Sensors, Frames, and Pipeline",
     "content": "The SLAM toolbox is super picky in that it needs TF2 frames and sensor data published in specific topics to even start running. This document highlights some of the pipelining required to make slam toolbox run. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline"
-  },"95": {
+  },"105": {
     "doc": "Setup for SLAM Toolbox",
     "title": "TF2 Transforms",
     "content": "Github Repo of Package . The SLAM toolbox needs few specific transformations with the TF tree looking like: . However, the above picture was taken from simulation where multiple links were shown. We will only worry about the following frames: . ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . The below frames I’m guessing is necessary only during initialization of slam_toolbox node. This is becasue the slam_toolbox is meant to publish it’s own map frame as well. However for some weird stupid reason it needs this map -&gt; lidar_1_link as well. ├── map │ ├── lidar_1_link . Motivation . | odom frame is just our initial robot pose which is instantiated the moment we start the robot | base_footprint frame is necessary to map where the robot would lie w.r.t the ground plane . | Since our robot moves only in 2D, it would always stick to the ground plane | . | base_link is the body frame of the robot. Since we move in 2D base_link = base_footprint . | Since base_link = base_footprint, we use a static transform of 0 rotation and 0 translation | . | odom -&gt; base_footprint has to be updated by whichever node is publishing odometry information | Since we are currently using LIDAR odometry, the base_link = lidar_1_link and is therefore another 0 rotation and 0 translation transform | . Interfacing with slam_toolbox . The slam_toolbox utilizes the above existing TF tree and when it’s running it should look like below: . ├── map | ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . | As we move the robot around, the odom -&gt; lidar_1_link transform will get continually updated even without the slam_toolbox. | However, it’s the job of the slam_toolbox to correct the map -&gt; lidar_1_link frame and thereby also correct the odom frame. | A simple explanation is present in the starting part of this video and a small vizualization is shown below: | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#tf2-transforms",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#tf2-transforms"
-  },"96": {
+  },"106": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Launching SLAM toolbox with Config Files",
     "content": "Github Repo of Package . This package only contains launch and config files which call the slam_toolbox executables. Note. presently the slam_toolbox is installed as binaries from the apt repository . Which launch file to use? . | The online_sync file would be preferred as it allows for better loop closure | The async is less computationally intensive as it does not process every frame that it receives | . Config file nitty-gritties . The config file has a few parameters which must be set right. As per the TF tree we developed in slam_toolbox_tf2 and repub_velo repositories, we configure the slam_tooblox to look at specific topics as shown below: . slam_toolbox: ros__parameters: # Plugin params solver_plugin: solver_plugins::CeresSolver ceres_linear_solver: SPARSE_NORMAL_CHOLESKY ceres_preconditioner: SCHUR_JACOBI ceres_trust_strategy: LEVENBERG_MARQUARDT ceres_dogleg_type: TRADITIONAL_DOGLEG ceres_loss_function: None # ROS Parameters odom_frame: odom map_frame: map base_frame: base_footprint scan_topic: /scan_new mode: mapping #localization . The mode here is set to mapping, but as shown it can also be set to localization. However, in localization mode, a pre-existing map and the path to that map should be configured in the same config file (not shown in here, since I’m yet to do localization myself). ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#launching-slam-toolbox-with-config-files",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#launching-slam-toolbox-with-config-files"
-  },"97": {
+  },"107": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Republishing Velodyne Topic",
     "content": "The slam toolbox will be looking for “/scan_new” topic. Additionally, this /scan_new should be associated with “lidar_1_link” tf frame. To achieve the above requirements, we republish the /scan topic using a simple repub node called repub_velo. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic"
-  },"98": {
+  },"108": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Odometry to Update odom-&gt;base_footprint Transform",
     "content": "Whichever node is publishing odometry, generally also publishes the odom-&gt;base_footpring tf2 update. Hence, we choose one of the two methods of odometry at our disposal. (In future updates, wheel odometry will be used instead of laser-based odometry since it is more accurate and less sensitive to noise). If you want to use two or more sensors at a time, then we will need to use Robot Localization which is an EKF method of fusing odometry data . A. 2D Lidar Odometry (rf20 laser odometry) . Our (slightly modified) Repo . Source Notes . Estimation of 2D odometry based on planar laser scans. Useful for mobile robots with innacurate base odometry. RF2O is a fast and precise method to estimate the planar motion of a lidar from consecutive range scans. For every scanned point we formulate the range flow constraint equation in terms of the sensor velocity, and minimize a robust function of the resulting geometric constraints to obtain the motion estimate. Conversely to traditional approaches, this method does not search for correspondences but performs dense scan alignment based on the scan gradients, in the fashion of dense 3D visual odometry. Its very low computational cost (0.9 milliseconds on a single CPU core) together whit its high precission, makes RF2O a suitable method for those robotic applications that require planar odometry. For full description of the algorithm, please refer to: Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA 2016 Available at: http://mapir.isa.uma.es/work/rf2o . Motivation for Usage . The IMU’s available to us at TeamH are the UM7 and the Phidget Spatial 3/3/3. While the phidget has issues in interfacing with ROS, the UM7 data is jittery. Additionally, the lack of wheel odometry during development, means that we can only rely on LIDAR odometry to give accurate odometry results. Hence, this package is used to publish odometry data . TF2 bindings . The node which publishes odometry data also publishes the transformation between two frames: . | odom | base_footprint | . These frames are necessary for the slam_toolbox or any other downstream node. B. 3D Lidar Odometry . Here we will use Kiss ICP since it runs well in ros2 with easy setup. Refer to This link to learn more about Kiss ICP. To build Kiss ICP, take a look at This link . NOTE: You may need to reduce the max_scan_length to 20 and set deskew=False in basic_config.yaml file . C. Visual Odometry (Tracking Camera) . We use the RealSense T265 Tracking Camera by building the ros2 drivers. ROS2 Wrapper for Intel . Run the rs_intra_process_demo_launch.py in /realsense-ros/realsense2_camera/launch folder. This will publish something like /camera/odometry/sample topic which is the trakcing camera’s odometry topic . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#odometry-to-update-odom-base_footprint-transform",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#odometry-to-update-odom-base_footprint-transform"
-  },"99": {
+  },"109": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Setup for SLAM Toolbox",
     "content": ". | Nodes to Start | Sensors, Frames, and Pipeline . | TF2 Transforms . | Motivation | Interfacing with slam_toolbox | . | Launching SLAM toolbox with Config Files . | Which launch file to use? | Config file nitty-gritties | . | Republishing Velodyne Topic | Odometry to Update odom-&gt;base_footprint Transform . | A. 2D Lidar Odometry (rf20 laser odometry) . | Source Notes | Motivation for Usage | TF2 bindings | . | B. 3D Lidar Odometry . | NOTE: You may need to reduce the max_scan_length to 20 and set deskew=False in basic_config.yaml file | . | C. Visual Odometry (Tracking Camera) | . | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html",
     "relUrl": "/docs/SLAM_Toolbox/setup.html"
-  },"100": {
+  },"110": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"101": {
+  },"111": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"102": {
+  },"112": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"103": {
+  },"113": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"104": {
+  },"114": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"105": {
+  },"115": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"106": {
+  },"116": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"107": {
+  },"117": {
+    "doc": "Creating Custom World for SVD",
+    "title": "Before you Begin",
+    "content": "Please use This Repository for Reference . Also, a base setup has already been done on a docker container which can be pulled as docker pull sushanthj/humble_sim_mapping_built:latest . The docker is not complete, but all files that need to be added to the docker container can be found in this location or is also present here . ",
+    "url": "http://localhost:4000/docs/Simulation/svd_demo.html#before-you-begin",
+    "relUrl": "/docs/Simulation/svd_demo.html#before-you-begin"
+  },"118": {
+    "doc": "Creating Custom World for SVD",
+    "title": "Folder Structure and New Files Added",
+    "content": "The workspace presenent in root/neobotix_workspace in the docker conatiner mentioned above will look like the following: . As you can see, we have expanded only the neo_simulation2 package. To add the custom world we built onto the simulation we will need to make the following changes: . | Find where this folder is located | Copy all the contents of the to_copy_sdfs folder (excluding svd_demo.world or any world files) to the /root/neobotix_workspace/src/neo_simulation2/models folder. This is where the simulator will look for all the sdf files in the world | Copy the svd_demo.world present (or any other world file you created) to /root/neobotix_workspace/src/neo_simulation2/worlds | Run export MY_ROBOT=mp_400 | Run export MAP_NAME=svd_demo | Run colcon build --symlink-install | . ",
+    "url": "http://localhost:4000/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added",
+    "relUrl": "/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added"
+  },"119": {
+    "doc": "Creating Custom World for SVD",
+    "title": "Testing",
+    "content": "Trying out the above changes can be done as shown in the prior sections by running either: . | ros2 launch neo_simulation2 simulation.launch.py | ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml | ros2 launch neo_nav2_bringup rviz_launch.py | . ",
+    "url": "http://localhost:4000/docs/Simulation/svd_demo.html#testing",
+    "relUrl": "/docs/Simulation/svd_demo.html#testing"
+  },"120": {
+    "doc": "Creating Custom World for SVD",
+    "title": "Sample Output in New World File",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/Simulation/svd_demo.html#sample-output-in-new-world-file",
+    "relUrl": "/docs/Simulation/svd_demo.html#sample-output-in-new-world-file"
+  },"121": {
+    "doc": "Creating Custom World for SVD",
+    "title": "Creating Custom World for SVD",
+    "content": ". | Before you Begin | Folder Structure and New Files Added | Testing | Sample Output in New World File | . ",
+    "url": "http://localhost:4000/docs/Simulation/svd_demo.html",
+    "relUrl": "/docs/Simulation/svd_demo.html"
+  },"122": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"108": {
+  },"123": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",

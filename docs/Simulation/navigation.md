@@ -14,6 +14,14 @@ nav_order: 5
 {:toc}
 </details>
 
+# Before you Begin
+
+A lot of this setup has already been done on a docker container which can be pulled
+as ```docker pull sushanthj/humble_sim_mapping_built:latest```
+
+Further information is available on [This Repository for Reference](https://github.com/DockDockGo/robot-setup-tool)
+
+
 # Start by Fixing neo_simulation2's local planner
 
 Neobotix's neo_simulation2 has a local planner defined as **controller** in
