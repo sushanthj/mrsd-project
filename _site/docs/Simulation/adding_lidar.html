@@ -154,12 +154,21 @@
         </ol>
       </li>
       <li><a href="#the-easier-way--using-pre-built-plugins" id="markdown-toc-the-easier-way--using-pre-built-plugins">The Easier Way : Using pre-built plugins</a>        <ol>
-          <li><a href="#neobotix-example" id="markdown-toc-neobotix-example">Neobotix Example</a></li>
+          <li><a href="#neobotix-example" id="markdown-toc-neobotix-example">Neobotix Example</a>            <ol>
+              <li><a href="#sensor-plugin" id="markdown-toc-sensor-plugin">Sensor plugin</a></li>
+              <li><a href="#links-and-joints-for-sensor" id="markdown-toc-links-and-joints-for-sensor">Links and joints for sensor</a></li>
+            </ol>
+          </li>
+          <li><a href="#using-pre-built-lidar-geometry-and-pre-built-sensor-plugin" id="markdown-toc-using-pre-built-lidar-geometry-and-pre-built-sensor-plugin">Using pre-built lidar geometry and pre-built sensor plugin</a>            <ol>
+              <li><a href="#sensor-plugin-1" id="markdown-toc-sensor-plugin-1">Sensor Plugin</a></li>
+              <li><a href="#links-and-joints-for-sensor-1" id="markdown-toc-links-and-joints-for-sensor-1">Links and joints for sensor</a></li>
+            </ol>
+          </li>
         </ol>
       </li>
     </ol>
   </li>
-  <li><a href="#todo" id="markdown-toc-todo">TODO</a></li>
+  <li><a href="#references" id="markdown-toc-references">References</a></li>
 </ol>
 
 </details>
@@ -375,8 +384,14 @@ callling the plugin using that reference in the above .world file.</p>
 
 <p>To understand this, let’s see how the neobotix repo has implemented a 2D lidar. The mp_400.urdf
 file contains everything below.</p>
-
-<p>Sensor plugin shown below</p>
+      <h4 id="sensor-plugin">
+        
+        
+          <a href="#sensor-plugin" class="anchor-heading" aria-labelledby="sensor-plugin"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sensor plugin
+        
+        
+      </h4>
+    
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;gazebo</span> <span class="na">reference=</span><span class="s">"lidar_1_link"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">"lidar_1_sensor"</span> <span class="na">type=</span><span class="s">"ray"</span><span class="nt">&gt;</span>
@@ -420,8 +435,14 @@ file contains everything below.</p>
     <span class="nt">&lt;/sensor&gt;</span>
   <span class="nt">&lt;/gazebo&gt;</span>
 </code></pre></div></div>
-
-<p>Links and joints for sensor</p>
+      <h4 id="links-and-joints-for-sensor">
+        
+        
+          <a href="#links-and-joints-for-sensor" class="anchor-heading" aria-labelledby="links-and-joints-for-sensor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Links and joints for sensor
+        
+        
+      </h4>
+    
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--+++++++++++++++++++laserscanner_link++++++++++++++++++++++++--&gt;</span>
   <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">"laser_1_joint"</span> <span class="na">type=</span><span class="s">"fixed"</span><span class="nt">&gt;</span>
@@ -450,24 +471,134 @@ file contains everything below.</p>
     <span class="nt">&lt;/collision&gt;</span>
   <span class="nt">&lt;/link&gt;</span>
 </code></pre></div></div>
-      <h1 id="todo">
+      <h3 id="using-pre-built-lidar-geometry-and-pre-built-sensor-plugin">
         
         
-          <a href="#todo" class="anchor-heading" aria-labelledby="todo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TODO
+          <a href="#using-pre-built-lidar-geometry-and-pre-built-sensor-plugin" class="anchor-heading" aria-labelledby="using-pre-built-lidar-geometry-and-pre-built-sensor-plugin"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Using pre-built lidar geometry and pre-built sensor plugin
+        
+        
+      </h3>
+    
+
+<p>To do this we can either:</p>
+<ol>
+  <li>Create a new mesh model of a lidar we want to use</li>
+  <li>Use a pre-built mesh model like <a href="https://app.gazebosim.org/OpenRobotics/fuel/models/Lidar%203d%20v1">pre_built lidar</a></li>
+  <li>Be lazy and use the model for 2D LIDAR for the 3D Lidar too :)</li>
+</ol>
+
+<p>We’ll go with the 3rd option here since we don’t care about the visualization of the 3D lidar
+but only the output of it.</p>
+
+<p>Similar to the Neobotix example, we’ll split this work into a sensor plugin and links/joints:</p>
+      <h4 id="sensor-plugin-1">
+        
+        
+          <a href="#sensor-plugin-1" class="anchor-heading" aria-labelledby="sensor-plugin-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sensor Plugin
+        
+        
+      </h4>
+    
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--++++++++++++++++++++++++++++++3D_LIDAR_SENSOR_PLUGIN_ADDITION+++++++++++++++++++++++++--&gt;</span>
+  <span class="nt">&lt;gazebo</span> <span class="na">reference=</span><span class="s">"lidar_2_link"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">"sensor_ray"</span> <span class="na">type=</span><span class="s">"ray"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;always_on&gt;</span>true<span class="nt">&lt;/always_on&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0.0 0.0 0.0 0.0 0.0 0.0<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+      <span class="nt">&lt;ray&gt;</span>
+        <span class="nt">&lt;scan</span> <span class="na">display=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;horizontal&gt;</span>
+                <span class="nt">&lt;samples&gt;</span>300<span class="nt">&lt;/samples&gt;</span>
+                <span class="nt">&lt;resolution&gt;</span>1.0<span class="nt">&lt;/resolution&gt;</span>
+                <span class="nt">&lt;min_angle&gt;</span>-0.5236<span class="nt">&lt;/min_angle&gt;</span>
+                <span class="nt">&lt;max_angle&gt;</span>0.5236<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/horizontal&gt;</span>
+            <span class="nt">&lt;vertical&gt;</span>
+                <span class="nt">&lt;samples&gt;</span>100<span class="nt">&lt;/samples&gt;</span>
+                <span class="nt">&lt;resolution&gt;</span>1.0<span class="nt">&lt;/resolution&gt;</span>
+                <span class="nt">&lt;min_angle&gt;</span>-0.5236<span class="nt">&lt;/min_angle&gt;</span>
+                <span class="nt">&lt;max_angle&gt;</span>0.5236<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/vertical&gt;</span>
+        <span class="nt">&lt;/scan&gt;</span>
+        <span class="nt">&lt;range&gt;</span>
+            <span class="nt">&lt;min&gt;</span>0.05<span class="nt">&lt;/min&gt;</span>
+            <span class="nt">&lt;max&gt;</span>50.0<span class="nt">&lt;/max&gt;</span>
+            <span class="nt">&lt;resolution&gt;</span>0.05<span class="nt">&lt;/resolution&gt;</span>
+        <span class="nt">&lt;/range&gt;</span>
+        <span class="nt">&lt;noise&gt;</span>
+          <span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
+          <span class="c">&lt;!-- Noise parameters TBD
+                  reading. --&gt;</span>
+          <span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
+          <span class="nt">&lt;stddev&gt;</span>0.01<span class="nt">&lt;/stddev&gt;</span>
+        <span class="nt">&lt;/noise&gt;</span>
+      <span class="nt">&lt;/ray&gt;</span>
+      <span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">"libgazebo_ros_velodyne_laser.so"</span> <span class="na">name=</span><span class="s">"lidar_2"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ros&gt;</span>
+        <span class="c">&lt;!-- &lt;namespace&gt;   &lt;/namespace&gt; --&gt;</span>
+        <span class="nt">&lt;argument&gt;</span>~/out:=velodyne_filtered<span class="nt">&lt;/argument&gt;</span>
+      <span class="nt">&lt;/ros&gt;</span>
+      <span class="c">&lt;!-- Set output to sensor_msgs/LaserScan to get same output type as gazebo_ros_laser --&gt;</span>
+      <span class="nt">&lt;frame_name&gt;</span>lidar_2_link<span class="nt">&lt;/frame_name&gt;</span>
+      <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/sensor&gt;</span>
+  <span class="nt">&lt;/gazebo&gt;</span>
+</code></pre></div></div>
+      <h4 id="links-and-joints-for-sensor-1">
+        
+        
+          <a href="#links-and-joints-for-sensor-1" class="anchor-heading" aria-labelledby="links-and-joints-for-sensor-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Links and joints for sensor
+        
+        
+      </h4>
+    
+
+<p>The link definition was arbitrarily chosen. Simple trial and error may be needed to find
+the right position</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--+++++++++++++++++++3D_LIDAR_LINK++++++++++++++++++++++++--&gt;</span>
+  <span class="c">&lt;!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar --&gt;</span>
+  <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">"lidar_1_joint"</span> <span class="na">type=</span><span class="s">"fixed"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;axis</span> <span class="na">xyz=</span><span class="s">"0 0 1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"0 3.14 3.14"</span> <span class="na">xyz=</span><span class="s">"0.230 0 0.230"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">"base_link"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">"lidar_2_link"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/joint&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">"lidar_2_link"</span> <span class="na">type=</span><span class="s">"laser"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;inertial&gt;</span>
+      <span class="nt">&lt;mass</span> <span class="na">value=</span><span class="s">"0.001"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"0 0 0"</span> <span class="na">xyz=</span><span class="s">"0 0 0"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;inertia</span> <span class="na">ixx=</span><span class="s">"0.0001"</span> <span class="na">ixy=</span><span class="s">"0"</span> <span class="na">ixz=</span><span class="s">"0"</span> <span class="na">iyy=</span><span class="s">"0.000001"</span> <span class="na">iyz=</span><span class="s">"0"</span> <span class="na">izz=</span><span class="s">"0.0001"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/inertial&gt;</span>
+    <span class="nt">&lt;visual&gt;</span>
+      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"-0.0 0 0.56"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;geometry&gt;</span>
+        <span class="nt">&lt;mesh</span> <span class="na">filename=</span><span class="s">"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae"</span> <span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/geometry&gt;</span>
+    <span class="nt">&lt;/visual&gt;</span>
+    <span class="nt">&lt;collision&gt;</span>
+      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"-0.0 0 0.56"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;geometry&gt;</span>
+        <span class="nt">&lt;mesh</span> <span class="na">filename=</span><span class="s">"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae"</span> <span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/geometry&gt;</span>
+    <span class="nt">&lt;/collision&gt;</span>
+  <span class="nt">&lt;/link&gt;</span>
+</code></pre></div></div>
+      <h1 id="references">
+        
+        
+          <a href="#references" class="anchor-heading" aria-labelledby="references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> References
         
         
       </h1>
     
 
-<p>Using pre-built lidar geometry and pre-built sensor plugin</p>
-
-<p><a href="https://app.gazebosim.org/OpenRobotics/fuel/models/Lidar%203d%20v1">pre_built lidar</a></p>
-
 <p>pre_built_plugin</p>
 <ul>
   <li><a href="http://docs.ros.org/en/electric/api/gazebo_plugins/html/group__GazeboRosBlockLaser.html">ROS Block Sensor Example for 3D lidar</a> outputs PointCloud msg type</li>
   <li><a href="https://answers.gazebosim.org//question/23928/block-laser-plugin-for-pointcloud2/">3rd party velodyne plugin</a> outputs
-PointCloud2 topic</li>
+Publishing in PointCloud2 topic</li>
   <li><a href="https://www.youtube.com/watch?v=JJDebiniDBw&amp;ab_channel=TheConstruct">Aux ref 1</a></li>
   <li><a href="https://robotics.stackexchange.com/questions/26349/parameters-for-ros-gazebo-block-laser-plugin?rq=1">Aux ref 2</a></li>
 </ul>

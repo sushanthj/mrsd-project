@@ -176,7 +176,7 @@ callling the plugin using that reference in the above .world file.
 To understand this, let's see how the neobotix repo has implemented a 2D lidar. The mp_400.urdf
 file contains everything below.
 
-Sensor plugin shown below
+#### Sensor plugin
 
 ```xml
 <gazebo reference="lidar_1_link">
@@ -222,7 +222,7 @@ Sensor plugin shown below
   </gazebo>
 ```
 
-Links and joints for sensor
+#### Links and joints for sensor
 
 ```xml
 <!--+++++++++++++++++++laserscanner_link++++++++++++++++++++++++-->
@@ -253,16 +253,109 @@ Links and joints for sensor
   </link>
 ```
 
-# TODO
+### Using pre-built lidar geometry and pre-built sensor plugin
 
-Using pre-built lidar geometry and pre-built sensor plugin
+To do this we can either:
+1. Create a new mesh model of a lidar we want to use
+2. Use a pre-built mesh model like [pre_built lidar](https://app.gazebosim.org/OpenRobotics/fuel/models/Lidar%203d%20v1)
+3. Be lazy and use the model for 2D LIDAR for the 3D Lidar too :)
 
-[pre_built lidar](https://app.gazebosim.org/OpenRobotics/fuel/models/Lidar%203d%20v1)
+
+We'll go with the 3rd option here since we don't care about the visualization of the 3D lidar
+but only the output of it.
+
+Similar to the Neobotix example, we'll split this work into a sensor plugin and links/joints:
+
+#### Sensor Plugin
+
+```xml
+<!--++++++++++++++++++++++++++++++3D_LIDAR_SENSOR_PLUGIN_ADDITION+++++++++++++++++++++++++-->
+  <gazebo reference="lidar_2_link">
+    <sensor name="sensor_ray" type="ray">
+      <always_on>true</always_on>
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <visualize>true</visualize>
+      <ray>
+        <scan display="true">
+            <horizontal>
+                <samples>300</samples>
+                <resolution>1.0</resolution>
+                <min_angle>-0.5236</min_angle>
+                <max_angle>0.5236</max_angle>
+            </horizontal>
+            <vertical>
+                <samples>100</samples>
+                <resolution>1.0</resolution>
+                <min_angle>-0.5236</min_angle>
+                <max_angle>0.5236</max_angle>
+            </vertical>
+        </scan>
+        <range>
+            <min>0.05</min>
+            <max>50.0</max>
+            <resolution>0.05</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters TBD
+                  reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin filename="libgazebo_ros_velodyne_laser.so" name="lidar_2">
+      <ros>
+        <!-- <namespace>   </namespace> -->
+        <argument>~/out:=velodyne_filtered</argument>
+      </ros>
+      <!-- Set output to sensor_msgs/LaserScan to get same output type as gazebo_ros_laser -->
+      <frame_name>lidar_2_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+```
+
+#### Links and joints for sensor
+
+The link definition was arbitrarily chosen. Simple trial and error may be needed to find
+the right position
+
+```xml
+<!--+++++++++++++++++++3D_LIDAR_LINK++++++++++++++++++++++++-->
+  <!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar -->
+  <joint name="lidar_1_joint" type="fixed">
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 3.14 3.14" xyz="0.230 0 0.230"/>
+    <parent link="base_link"/>
+    <child link="lidar_2_link"/>
+  </joint>
+  <link name="lidar_2_link" type="laser">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 0" xyz="-0.0 0 0.56"/>
+      <geometry>
+        <mesh filename="package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.57 0 0" xyz="-0.0 0 0.56"/>
+      <geometry>
+        <mesh filename="package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+```
+
+# References
 
 pre_built_plugin
 - [ROS Block Sensor Example for 3D lidar](http://docs.ros.org/en/electric/api/gazebo_plugins/html/group__GazeboRosBlockLaser.html) outputs PointCloud msg type
 - [3rd party velodyne plugin](https://answers.gazebosim.org//question/23928/block-laser-plugin-for-pointcloud2/) outputs
-PointCloud2 topic
+Publishing in PointCloud2 topic
 - [Aux ref 1](https://www.youtube.com/watch?v=JJDebiniDBw&ab_channel=TheConstruct)
 - [Aux ref 2](https://robotics.stackexchange.com/questions/26349/parameters-for-ros-gazebo-block-laser-plugin?rq=1)
 

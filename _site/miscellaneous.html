@@ -312,6 +312,24 @@ failed to initialize GLFW</code></p>
 <p>Now, all such errors can be fixed by giving the docker container access to the GUI by doing</p>
 
 <p><code class="language-plaintext highlighter-rouge">xhost +local:docker</code></p>
+      <h2 id="changing-file-ownership">
+        
+        
+          <a href="#changing-file-ownership" class="anchor-heading" aria-labelledby="changing-file-ownership"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Changing File Ownership
+        
+        
+      </h2>
+    
+
+<p>This occasionally is a problem when using docker which treats files as sudo. When moving files out of docker
+The normal user will not be able to access files created inside the docker because of sudo permissions</p>
+
+<p>Easy Fix</p>
+<ul>
+  <li>Find the username of the current ubuntu system you are using (eg. mine is always sush)</li>
+  <li><code class="language-plaintext highlighter-rouge">sudo chown sush trial.txt</code></li>
+  <li>This will change the ownership back to the default user</li>
+</ul>
 
         
 
