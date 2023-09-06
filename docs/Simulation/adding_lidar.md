@@ -374,6 +374,14 @@ Run the following commands
 6. rviz2
 7. In rviz2 set the frame to lidar_2_link
 
+![](/images/Simulation/adding_lidar/rviz_viz.png)
+
+![](/images/Simulation/adding_lidar/gazebo.png)
+
+As you can see, the lidar model and the actual point from which rays are eminating is
+different. However, this should not affect the pointcloud received. If any changes in
+lidar position needs to be made the URDF will need to be altrered.
+
 # References
 
 pre_built_plugin
