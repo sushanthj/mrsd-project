@@ -173,8 +173,9 @@ callling the plugin using that reference in the above .world file.
 
 ### Neobotix Example
 
-To understand this, let's see how the neobotix repo has implemented a 2D lidar. The mp_400.urdf
-file contains everything below.
+If we look at the URDF for the robot present in ```/root/neobotix_workspace/src/neo_simulation2/robots/mp_400/mp_400.urdf```
+the urdf file will reference the 2D lidar. Mainly, the following parts in the urdf are
+noteworthy:
 
 #### Sensor plugin
 
