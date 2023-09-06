@@ -263,7 +263,16 @@ To do this we can either:
 
 
 We'll go with the 3rd option here since we don't care about the visualization of the 3D lidar
-but only the output of it.
+but only the output of it. However, we'll be using the specific 3D velodyne plugin. The changes
+necessary to install this is as follows:
+
+- Before using the pre-built plugin, install it using
+  ```bash
+  sudo apt update
+  sudo apt install ros-humble-velodyne-gazebo-plugins
+  ```
+- Change the launch file of neo_simulation2 (or use the modified launch file present 
+  [here](https://github.com/DockDockGo/robot-setup-tool/blob/ros2/world_files/todo_copy_to_docker/to_copy_lidar/simulation.launch.py)). This new launch file only calls the modified URDF.
 
 Similar to the Neobotix example, we'll split this work into a sensor plugin and links/joints:
 
@@ -279,21 +288,23 @@ Similar to the Neobotix example, we'll split this work into a sensor plugin and 
       <ray>
         <scan display="true">
             <horizontal>
-                <samples>300</samples>
-                <resolution>1.0</resolution>
-                <min_angle>-0.5236</min_angle>
-                <max_angle>0.5236</max_angle>
-            </horizontal>
-            <vertical>
                 <samples>100</samples>
                 <resolution>1.0</resolution>
+                <min_angle>-3.14</min_angle>
+                <max_angle>3.14</max_angle>
+            </horizontal>
+            <vertical>
+                <samples>16</samples>
+                <resolution>1.0</resolution>
+                <!-- These min and max angle values may need to be changed according to lidar -->
                 <min_angle>-0.5236</min_angle>
                 <max_angle>0.5236</max_angle>
             </vertical>
         </scan>
         <range>
             <min>0.05</min>
-            <max>50.0</max>
+            <!-- Range is controlled by the below max value -->
+            <max>2.0</max>
             <resolution>0.05</resolution>
         </range>
         <noise>
@@ -322,11 +333,11 @@ The link definition was arbitrarily chosen. Simple trial and error may be needed
 the right position
 
 ```xml
-<!--+++++++++++++++++++3D_LIDAR_LINK++++++++++++++++++++++++-->
-  <!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar -->
+<!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar -->
   <joint name="lidar_1_joint" type="fixed">
     <axis xyz="0 0 1"/>
-    <origin rpy="0 3.14 3.14" xyz="0.230 0 0.230"/>
+    <!-- Note: lidar height must be changed by the below xyz (z dictating the height) -->
+    <origin rpy="0 3.14 3.14" xyz="0.230 0 0.610"/>
     <parent link="base_link"/>
     <child link="lidar_2_link"/>
   </joint>
@@ -337,19 +348,31 @@ the right position
       <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
     </inertial>
     <visual>
-      <origin rpy="1.57 0 0" xyz="-0.0 0 0.56"/>
+      <origin rpy="1.57 0 0" xyz="0.0 0 -0.36"/>
       <geometry>
         <mesh filename="package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="1.57 0 0" xyz="-0.0 0 0.56"/>
+      <origin rpy="1.57 0 0" xyz="0.0 0 -0.36"/>
       <geometry>
         <mesh filename="package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
 ```
+
+### Visualizing the Added LIDAR
+
+Run the following commands
+
+1. colcon build --symlink-install
+2. source install/setup.bash
+3. export MY_ROBOT=mp_400
+4. export MAP_NAME=neo_workshop
+5. ros2 launch neo_simulation2 simulation.launch.py
+6. rviz2
+7. In rviz2 set the frame to lidar_2_link
 
 # References
 

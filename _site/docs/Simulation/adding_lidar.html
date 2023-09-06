@@ -164,6 +164,7 @@
               <li><a href="#links-and-joints-for-sensor-1" id="markdown-toc-links-and-joints-for-sensor-1">Links and joints for sensor</a></li>
             </ol>
           </li>
+          <li><a href="#visualizing-the-added-lidar" id="markdown-toc-visualizing-the-added-lidar">Visualizing the Added LIDAR</a></li>
         </ol>
       </li>
     </ol>
@@ -489,7 +490,18 @@ noteworthy:</p>
 </ol>
 
 <p>We’ll go with the 3rd option here since we don’t care about the visualization of the 3D lidar
-but only the output of it.</p>
+but only the output of it. However, we’ll be using the specific 3D velodyne plugin. The changes
+necessary to install this is as follows:</p>
+
+<ul>
+  <li>Before using the pre-built plugin, install it using
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install </span>ros-humble-velodyne-gazebo-plugins
+</code></pre></div>    </div>
+  </li>
+  <li>Change the launch file of neo_simulation2 (or use the modified launch file present 
+<a href="https://github.com/DockDockGo/robot-setup-tool/blob/ros2/world_files/todo_copy_to_docker/to_copy_lidar/simulation.launch.py">here</a>). This new launch file only calls the modified URDF.</li>
+</ul>
 
 <p>Similar to the Neobotix example, we’ll split this work into a sensor plugin and links/joints:</p>
       <h4 id="sensor-plugin-1">
@@ -510,21 +522,23 @@ but only the output of it.</p>
       <span class="nt">&lt;ray&gt;</span>
         <span class="nt">&lt;scan</span> <span class="na">display=</span><span class="s">"true"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;horizontal&gt;</span>
-                <span class="nt">&lt;samples&gt;</span>300<span class="nt">&lt;/samples&gt;</span>
-                <span class="nt">&lt;resolution&gt;</span>1.0<span class="nt">&lt;/resolution&gt;</span>
-                <span class="nt">&lt;min_angle&gt;</span>-0.5236<span class="nt">&lt;/min_angle&gt;</span>
-                <span class="nt">&lt;max_angle&gt;</span>0.5236<span class="nt">&lt;/max_angle&gt;</span>
-            <span class="nt">&lt;/horizontal&gt;</span>
-            <span class="nt">&lt;vertical&gt;</span>
                 <span class="nt">&lt;samples&gt;</span>100<span class="nt">&lt;/samples&gt;</span>
                 <span class="nt">&lt;resolution&gt;</span>1.0<span class="nt">&lt;/resolution&gt;</span>
+                <span class="nt">&lt;min_angle&gt;</span>-3.14<span class="nt">&lt;/min_angle&gt;</span>
+                <span class="nt">&lt;max_angle&gt;</span>3.14<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/horizontal&gt;</span>
+            <span class="nt">&lt;vertical&gt;</span>
+                <span class="nt">&lt;samples&gt;</span>16<span class="nt">&lt;/samples&gt;</span>
+                <span class="nt">&lt;resolution&gt;</span>1.0<span class="nt">&lt;/resolution&gt;</span>
+                <span class="c">&lt;!-- These min and max angle values may need to be changed according to lidar --&gt;</span>
                 <span class="nt">&lt;min_angle&gt;</span>-0.5236<span class="nt">&lt;/min_angle&gt;</span>
                 <span class="nt">&lt;max_angle&gt;</span>0.5236<span class="nt">&lt;/max_angle&gt;</span>
             <span class="nt">&lt;/vertical&gt;</span>
         <span class="nt">&lt;/scan&gt;</span>
         <span class="nt">&lt;range&gt;</span>
             <span class="nt">&lt;min&gt;</span>0.05<span class="nt">&lt;/min&gt;</span>
-            <span class="nt">&lt;max&gt;</span>50.0<span class="nt">&lt;/max&gt;</span>
+            <span class="c">&lt;!-- Range is controlled by the below max value --&gt;</span>
+            <span class="nt">&lt;max&gt;</span>2.0<span class="nt">&lt;/max&gt;</span>
             <span class="nt">&lt;resolution&gt;</span>0.05<span class="nt">&lt;/resolution&gt;</span>
         <span class="nt">&lt;/range&gt;</span>
         <span class="nt">&lt;noise&gt;</span>
@@ -558,11 +572,11 @@ but only the output of it.</p>
 <p>The link definition was arbitrarily chosen. Simple trial and error may be needed to find
 the right position</p>
 
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--+++++++++++++++++++3D_LIDAR_LINK++++++++++++++++++++++++--&gt;</span>
-  <span class="c">&lt;!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar --&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Note: lidar_1_link = 2D lidar, lidar_2_link = 3D lidar --&gt;</span>
   <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">"lidar_1_joint"</span> <span class="na">type=</span><span class="s">"fixed"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;axis</span> <span class="na">xyz=</span><span class="s">"0 0 1"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"0 3.14 3.14"</span> <span class="na">xyz=</span><span class="s">"0.230 0 0.230"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- Note: lidar height must be changed by the below xyz (z dictating the height) --&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"0 3.14 3.14"</span> <span class="na">xyz=</span><span class="s">"0.230 0 0.610"</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;parent</span> <span class="na">link=</span><span class="s">"base_link"</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;child</span> <span class="na">link=</span><span class="s">"lidar_2_link"</span><span class="nt">/&gt;</span>
   <span class="nt">&lt;/joint&gt;</span>
@@ -573,19 +587,39 @@ the right position</p>
       <span class="nt">&lt;inertia</span> <span class="na">ixx=</span><span class="s">"0.0001"</span> <span class="na">ixy=</span><span class="s">"0"</span> <span class="na">ixz=</span><span class="s">"0"</span> <span class="na">iyy=</span><span class="s">"0.000001"</span> <span class="na">iyz=</span><span class="s">"0"</span> <span class="na">izz=</span><span class="s">"0.0001"</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;/inertial&gt;</span>
     <span class="nt">&lt;visual&gt;</span>
-      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"-0.0 0 0.56"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"0.0 0 -0.36"</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;geometry&gt;</span>
         <span class="nt">&lt;mesh</span> <span class="na">filename=</span><span class="s">"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae"</span> <span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;/geometry&gt;</span>
     <span class="nt">&lt;/visual&gt;</span>
     <span class="nt">&lt;collision&gt;</span>
-      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"-0.0 0 0.56"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;origin</span> <span class="na">rpy=</span><span class="s">"1.57 0 0"</span> <span class="na">xyz=</span><span class="s">"0.0 0 -0.36"</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;geometry&gt;</span>
         <span class="nt">&lt;mesh</span> <span class="na">filename=</span><span class="s">"package://neo_simulation2/components/sensors/SICK-MICROSCAN3.dae"</span> <span class="na">scale=</span><span class="s">"0.001 0.001 0.001"</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;/geometry&gt;</span>
     <span class="nt">&lt;/collision&gt;</span>
   <span class="nt">&lt;/link&gt;</span>
 </code></pre></div></div>
+      <h3 id="visualizing-the-added-lidar">
+        
+        
+          <a href="#visualizing-the-added-lidar" class="anchor-heading" aria-labelledby="visualizing-the-added-lidar"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Visualizing the Added LIDAR
+        
+        
+      </h3>
+    
+
+<p>Run the following commands</p>
+
+<ol>
+  <li>colcon build –symlink-install</li>
+  <li>source install/setup.bash</li>
+  <li>export MY_ROBOT=mp_400</li>
+  <li>export MAP_NAME=neo_workshop</li>
+  <li>ros2 launch neo_simulation2 simulation.launch.py</li>
+  <li>rviz2</li>
+  <li>In rviz2 set the frame to lidar_2_link</li>
+</ol>
       <h1 id="references">
         
         
