@@ -60,6 +60,10 @@ prototype on building the frame using the 8020 library.
 
 ![](/images/Mechanical/Frame/4_mod.png)
 
+## 3D Models for Mounts
+
+![Please Use This Link to Download](https://drive.google.com/drive/folders/1k8uoDXNNj3c8tyo9GgG58MCTG6aO6WGX?usp=sharing)
+
 # Final Machining and Results
 
 The mounting holes on the 8020 frame were precision CNC cut using a Haas 5 axis CNC. At time
