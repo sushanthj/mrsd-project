@@ -315,9 +315,13 @@ global_costmap:
 We will open three tmux panes and run the following command (in same order and in quick
 succession)
 
-1. ros2 launch neo_simulation2 simulation.launch.py
-2. ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml
-3. ros2 launch neo_nav2_bringup rviz_launch.py
+1. colcon build --symlink-install
+2. source install/setup.bash
+3. export MY_ROBOT=mp_400
+4. export MAP_NAME=neo_workshop
+5. ros2 launch neo_simulation2 simulation.launch.py
+6. ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml
+7. ros2 launch neo_nav2_bringup rviz_launch.py
 
 
 # Expected Output

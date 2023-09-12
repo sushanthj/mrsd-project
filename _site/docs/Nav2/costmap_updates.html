@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Costmap Plugins | Team Dock Dock Go!</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Costmap Plugins" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="MRSD project Team H’s system description" />
+<meta property="og:description" content="MRSD project Team H’s system description" />
+<link rel="canonical" href="http://localhost:4000/docs/Nav2/costmap_updates.html" />
+<meta property="og:url" content="http://localhost:4000/docs/Nav2/costmap_updates.html" />
+<meta property="og:site_name" content="Team Dock Dock Go!" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Costmap Plugins" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"MRSD project Team H’s system description","headline":"Costmap Plugins","url":"http://localhost:4000/docs/Nav2/costmap_updates.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="http://localhost:4000/" class="site-title lh-tight">
+  Team Dock Dock Go!
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Nav2" class="nav-list-link">Nav2</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/Nav2/costmap_updates.html" class="nav-list-link active">Costmap Plugins</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link">Gazebo Environment and Mapping</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/model_basics.html" class="nav-list-link">Understand Model and World Files</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/navigation.html" class="nav-list-link">Navigating in Simulation</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/svd_demo.html" class="nav-list-link">Creating Custom World for SVD</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/adding_lidar.html" class="nav-list-link">Adding Lidar in Simulation</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/docker_image_management.html" class="nav-list-link">Docker and Dockerhub</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/SLAM_toolbox" class="nav-list-link">Understanding SLAM Toolbox</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/SLAM_Toolbox/running.html" class="nav-list-link">Running SLAM Toolbox</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/SLAM_Toolbox/setup.html" class="nav-list-link">Setup for SLAM Toolbox</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Localization" class="nav-list-link">Robot Localization</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Localization/AMCL.html" class="nav-list-link">AMCL</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li><li class="nav-list-item"><a href="http://localhost:4000/miscellaneous" class="nav-list-link">Miscellaneous yet Useful</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Team Dock Dock Go!" aria-label="Search Team Dock Dock Go!" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+        <nav aria-label="Auxiliary" class="aux-nav">
+          <ul class="aux-nav-list">
+            
+              <li class="aux-nav-list-item">
+                <a href="https://github.com/orgs/DockDockGo/repositories" class="site-button"
+                  
+                >
+                  Teams's GitHub
+                </a>
+              </li>
+            
+          </ul>
+        </nav>
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <ol class="breadcrumb-nav-list">
+              
+                <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/Nav2">Nav2</a></li>
+              
+              <li class="breadcrumb-nav-list-item"><span>Costmap Plugins</span></li>
+            </ol>
+          </nav>
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <details open="">
+  <summary class="text-delta">
+    Table of contents
+  </summary>
+<ol id="markdown-toc">
+  <li><a href="#setup" id="markdown-toc-setup">Setup</a></li>
+  <li><a href="#projecting-voxels-to-costmap" id="markdown-toc-projecting-voxels-to-costmap">Projecting Voxels to Costmap</a></li>
+  <li><a href="#results" id="markdown-toc-results">Results</a>    <ol>
+      <li><a href="#gazebo" id="markdown-toc-gazebo">Gazebo</a></li>
+      <li><a href="#rviz" id="markdown-toc-rviz">RVIZ</a></li>
+      <li><a href="#costmap-artifacts-yet-to-be-resolved" id="markdown-toc-costmap-artifacts-yet-to-be-resolved">Costmap Artifacts <strong>(Yet to be resolved)</strong></a></li>
+    </ol>
+  </li>
+</ol>
+
+</details>
+      <h1 id="setup">
+        
+        
+          <a href="#setup" class="anchor-heading" aria-labelledby="setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setup
+        
+        
+      </h1>
+    
+
+<ol>
+  <li>Get the latest updates from [robot_setup_tool][https://github.com/DockDockGo/robot-setup-tool/tree/ros2] repo</li>
+  <li>Launch docker (preferably use the sushantj/humble_sim_mapping_built docker image from dockerhub)</li>
+  <li>from <code class="language-plaintext highlighter-rouge">world_files/todo_copy_to_docker/to_copy_lidar/</code> copy the setup_script.sh to the docker</li>
+  <li>run the setup script: <code class="language-plaintext highlighter-rouge">bash setup_script.sh</code></li>
+</ol>
+      <h1 id="projecting-voxels-to-costmap">
+        
+        
+          <a href="#projecting-voxels-to-costmap" class="anchor-heading" aria-labelledby="projecting-voxels-to-costmap"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Projecting Voxels to Costmap
+        
+        
+      </h1>
+    
+
+<p>We use the lidar added previously in simulation and use an existing Voxel Layer plugin
+(similar to existing inflation and obstacle layers used by local planner)</p>
+
+<p>The only change required is to the navigation.yaml file located
+<a href="https://github.com/neobotix/neo_simulation2/blob/humble/configs/mp_400/navigation.yaml">here</a> in the neo_simulation2 package, which is used during nav2 bringup</p>
+
+<ul>
+  <li>Additionally, the controller was changed here (but that’s optional)</li>
+  <li>Note: the laser_scan (2D lidar) is disabled below, please enable if required</li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">controller_server</span><span class="pi">:</span>
+  <span class="na">ros__parameters</span><span class="pi">:</span>
+    <span class="c1"># controller server parameters (see Controller Server for more info)</span>
+    <span class="na">use_sim_time</span><span class="pi">:</span> <span class="s">True</span>
+    <span class="na">controller_frequency</span><span class="pi">:</span> <span class="m">50.0</span>
+    <span class="na">min_x_velocity_threshold</span><span class="pi">:</span> <span class="m">0.001</span>
+    <span class="na">min_y_velocity_threshold</span><span class="pi">:</span> <span class="m">0.5</span>
+    <span class="na">min_theta_velocity_threshold</span><span class="pi">:</span> <span class="m">0.001</span>
+    <span class="na">controller_plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">FollowPath"</span><span class="pi">]</span>
+    <span class="na">goal_checker_plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">general_goal_checker"</span><span class="pi">]</span>
+    <span class="na">progress_checker_plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">progress_checker"</span>
+    <span class="na">progress_checker</span><span class="pi">:</span>
+      <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_controller::SimpleProgressChecker"</span>
+      <span class="na">required_movement_radius</span><span class="pi">:</span> <span class="m">0.5</span>
+      <span class="na">movement_time_allowance</span><span class="pi">:</span> <span class="m">100.0</span>
+    <span class="na">general_goal_checker</span><span class="pi">:</span>
+      <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_controller::SimpleGoalChecker"</span>
+      <span class="na">xy_goal_tolerance</span><span class="pi">:</span> <span class="m">0.05</span>
+      <span class="na">yaw_goal_tolerance</span><span class="pi">:</span> <span class="m">0.05</span>
+      <span class="na">stateful</span><span class="pi">:</span> <span class="s">True</span>
+    <span class="c1"># RegulatedPurePursuitController Parameters</span>
+    <span class="na">FollowPath</span><span class="pi">:</span>
+      <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">neo_local_planner::NeoLocalPlanner"</span>
+      <span class="na">acc_lim_x </span><span class="pi">:</span> <span class="m">0.25</span>
+      <span class="na">acc_lim_y </span><span class="pi">:</span> <span class="m">0.25</span>
+      <span class="na">acc_lim_theta </span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="na">max_vel_x </span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="na">min_vel_x </span><span class="pi">:</span> <span class="s">-0.2</span>
+      <span class="na">max_vel_y </span><span class="pi">:</span> <span class="m">0.5</span>
+      <span class="na">min_vel_y </span><span class="pi">:</span> <span class="s">-0.5</span>
+      <span class="na">max_rot_vel </span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="na">min_rot_vel </span><span class="pi">:</span> <span class="s">-0.8</span>
+      <span class="na">max_trans_vel </span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="na">min_trans_vel </span><span class="pi">:</span> <span class="m">0.1</span>
+      <span class="na">yaw_goal_tolerance </span><span class="pi">:</span> <span class="m">0.005</span>
+      <span class="na">xy_goal_tolerance </span><span class="pi">:</span> <span class="m">0.01</span>
+      <span class="na">goal_tune_time </span><span class="pi">:</span> <span class="m">0.5</span>
+      <span class="na">lookahead_time </span><span class="pi">:</span> <span class="m">0.4</span>
+      <span class="na">lookahead_dist </span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">start_yaw_error </span><span class="pi">:</span> <span class="m">0.5</span>
+      <span class="na">pos_x_gain </span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">pos_y_gain </span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">static_yaw_gain </span><span class="pi">:</span> <span class="m">3.0</span>
+      <span class="na">cost_x_gain </span><span class="pi">:</span> <span class="m">0.1</span>
+      <span class="na">cost_y_gain </span><span class="pi">:</span> <span class="m">0.1</span>
+      <span class="na">cost_y_lookahead_dist </span><span class="pi">:</span> <span class="m">0.0</span>
+      <span class="na">cost_y_lookahead_time </span><span class="pi">:</span> <span class="m">0.3</span>
+      <span class="na">cost_yaw_gain </span><span class="pi">:</span> <span class="m">2.0</span>
+      <span class="na">low_pass_gain </span><span class="pi">:</span> <span class="m">0.2</span>
+      <span class="na">max_cost </span><span class="pi">:</span> <span class="m">0.95</span>
+      <span class="na">max_curve_vel </span><span class="pi">:</span> <span class="m">0.4</span>
+      <span class="na">max_goal_dist </span><span class="pi">:</span> <span class="m">0.5</span>
+      <span class="na">max_backup_dist </span><span class="pi">:</span> <span class="m">0.0</span>
+      <span class="na">min_stop_dist </span><span class="pi">:</span> <span class="m">0.2</span>
+      <span class="na">differential_drive </span><span class="pi">:</span> <span class="no">false</span>
+      <span class="na">allow_reversing</span><span class="pi">:</span> <span class="no">false</span>
+
+      <span class="c1"># plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"</span>
+      <span class="c1"># desired_linear_vel: 0.5</span>
+      <span class="c1"># max_linear_accel: 0.2</span>
+      <span class="c1"># max_linear_decel: 0.2</span>
+      <span class="c1"># lookahead_dist: 0.6</span>
+      <span class="c1"># min_lookahead_dist: 0.3 #0.3</span>
+      <span class="c1"># max_lookahead_dist: 0.9 #0.9</span>
+      <span class="c1"># lookahead_time: 1.5 #1.5</span>
+      <span class="c1"># rotate_to_heading_angular_vel: 0.6</span>
+      <span class="c1"># transform_tolerance: 0.1</span>
+      <span class="c1"># use_velocity_scaled_lookahead_dist: false</span>
+      <span class="c1"># min_approach_linear_velocity: 0.01</span>
+      <span class="c1"># use_approach_linear_velocity_scaling: true</span>
+      <span class="c1"># max_allowed_time_to_collision: 1.0</span>
+      <span class="c1"># use_regulated_linear_velocity_scaling: true</span>
+      <span class="c1"># use_cost_regulated_linear_velocity_scaling: false</span>
+      <span class="c1"># regulated_linear_scaling_min_radius:  0.9</span>
+      <span class="c1"># regulated_linear_scaling_min_speed: 0.25</span>
+      <span class="c1"># use_rotate_to_heading: true</span>
+      <span class="c1"># rotate_to_heading_min_angle: 0.785</span>
+      <span class="c1"># max_angular_accel: 0.6</span>
+      <span class="c1"># allow_reversing: false</span>
+
+<span class="na">local_costmap</span><span class="pi">:</span>
+  <span class="na">local_costmap</span><span class="pi">:</span>
+    <span class="na">ros__parameters</span><span class="pi">:</span>
+      <span class="na">update_frequency</span><span class="pi">:</span> <span class="m">10.0</span>
+      <span class="na">publish_frequency</span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">global_frame</span><span class="pi">:</span> <span class="s">odom</span>
+      <span class="na">robot_base_frame</span><span class="pi">:</span> <span class="s">base_link</span>
+      <span class="na">footprint_padding</span><span class="pi">:</span> <span class="s">0.</span>
+      <span class="na">footprint</span><span class="pi">:</span>  <span class="s2">"</span><span class="s">[</span><span class="nv"> </span><span class="s">[0.30,0.30],[-0.30,0.30],[-0.30,-0.3],[0.30,-0.3]</span><span class="nv"> </span><span class="s">]"</span>
+      <span class="na">use_sim_time</span><span class="pi">:</span> <span class="s">True</span>
+      <span class="na">rolling_window</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">width</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">height</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">resolution</span><span class="pi">:</span> <span class="m">0.02</span>
+      <span class="c1"># robot_radius: 0.22</span>
+      <span class="na">plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">voxel_layer"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">inflation_layer"</span><span class="pi">]</span> <span class="c1"># NOTE: ordering of layers is very important</span>
+      <span class="c1"># temporary: disable costmap updates from 2d_lidar by removing obstacle_layer</span>
+      <span class="c1"># plugins: ["obstacle_layer", "inflation_layer", "voxel_layer"]</span>
+      <span class="na">inflation_layer</span><span class="pi">:</span>
+        <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_costmap_2d::InflationLayer"</span>
+        <span class="na">cost_scaling_factor</span><span class="pi">:</span> <span class="m">5.0</span>
+        <span class="na">inflation_radius</span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="c1"># obstacle_layer:</span>
+      <span class="c1">#   plugin: "nav2_costmap_2d::ObstacleLayer"</span>
+      <span class="c1">#   enabled: True</span>
+      <span class="c1">#   observation_sources: scan</span>
+      <span class="c1">#   scan:</span>
+      <span class="c1">#     topic: /scan</span>
+      <span class="c1">#     obstacle_max_range: 5.0</span>
+      <span class="c1">#     max_obstacle_height: 2.0</span>
+      <span class="c1">#     obstacle_min_range: 0.0</span>
+      <span class="c1">#     raytrace_max_range: 8.0</span>
+      <span class="c1">#     raytrace_min_range: 0.0</span>
+      <span class="c1">#     clearing: True</span>
+      <span class="c1">#     marking: True</span>
+      <span class="c1">#     data_type: "LaserScan"</span>
+      <span class="na">voxel_layer</span><span class="pi">:</span>
+        <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_costmap_2d::VoxelLayer"</span>
+        <span class="na">enabled</span><span class="pi">:</span> <span class="s">True</span>
+        <span class="na">publish_voxel_map</span><span class="pi">:</span> <span class="s">True</span>
+        <span class="na">observation_sources</span><span class="pi">:</span> <span class="s">velodyne_filtered</span>
+        <span class="na">velodyne_filtered</span><span class="pi">:</span>
+          <span class="na">enabled</span><span class="pi">:</span> <span class="s">True</span>
+          <span class="na">topic</span><span class="pi">:</span> <span class="s">/velodyne_filtered</span>
+          <span class="na">data_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PointCloud2"</span>
+          <span class="na">expected_update_rate</span><span class="pi">:</span> <span class="m">10</span>  <span class="c1"># Adjust the update rate as needed</span>
+          <span class="na">min_obstacle_height</span><span class="pi">:</span> <span class="m">0.03</span>  <span class="c1"># Adjust these parameters as needed</span>
+          <span class="na">max_obstacle_height</span><span class="pi">:</span> <span class="m">5.0</span>
+          <span class="na">z_voxels</span><span class="pi">:</span> <span class="m">2</span>
+          <span class="na">z_resolution</span><span class="pi">:</span> <span class="m">0.05</span> <span class="c1"># 5cm resolution in z axis for voxels</span>
+          <span class="na">obstacle_max_range</span><span class="pi">:</span> <span class="m">5.0</span>
+          <span class="na">max_obstacle_height</span><span class="pi">:</span> <span class="m">2.0</span>
+          <span class="na">obstacle_min_range</span><span class="pi">:</span> <span class="m">0.0</span>
+          <span class="na">raytrace_max_range</span><span class="pi">:</span> <span class="m">8.0</span>
+          <span class="na">raytrace_min_range</span><span class="pi">:</span> <span class="m">0.0</span>
+          <span class="na">clearing</span><span class="pi">:</span> <span class="s">True</span>  <span class="c1"># this means that if an obstacle is not seen by sensor it will clear those cells</span>
+          <span class="na">marking</span><span class="pi">:</span> <span class="s">True</span>
+      <span class="na">always_send_full_costmap</span><span class="pi">:</span> <span class="s">True</span>
+
+<span class="na">global_costmap</span><span class="pi">:</span>
+  <span class="na">global_costmap</span><span class="pi">:</span>
+    <span class="na">ros__parameters</span><span class="pi">:</span>
+      <span class="na">update_frequency</span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">publish_frequency</span><span class="pi">:</span> <span class="m">1.0</span>
+      <span class="na">global_frame</span><span class="pi">:</span> <span class="s">map</span>
+      <span class="na">robot_base_frame</span><span class="pi">:</span> <span class="s">base_link</span>
+      <span class="na">footprint_padding</span><span class="pi">:</span> <span class="m">0.0</span>
+      <span class="na">footprint</span><span class="pi">:</span>  <span class="s2">"</span><span class="s">[</span><span class="nv"> </span><span class="s">[0.30,0.30],[-0.30,0.30],[-0.30,-0.3],[0.30,-0.3]</span><span class="nv"> </span><span class="s">]"</span>
+      <span class="na">use_sim_time</span><span class="pi">:</span> <span class="s">True</span>
+      <span class="na">resolution</span><span class="pi">:</span> <span class="m">0.05</span>
+      <span class="na">plugins</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">static_layer"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">voxel_layer"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">inflation_layer"</span><span class="pi">]</span> <span class="c1"># NOTE: ordering of layers is very important</span>
+      <span class="c1"># temporary disabling of obstacle layer</span>
+      <span class="c1"># plugins: ["static_layer", "obstacle_layer", "inflation_layer", "voxel_layer"]</span>
+      <span class="c1"># obstacle_layer:</span>
+      <span class="c1">#   plugin: "nav2_costmap_2d::ObstacleLayer"</span>
+      <span class="c1">#   enabled: True</span>
+      <span class="c1">#   observation_sources: scan</span>
+      <span class="c1">#   scan:</span>
+      <span class="c1">#     topic: /scan</span>
+      <span class="c1">#     obstacle_max_range: 5.0</span>
+      <span class="c1">#     max_obstacle_height: 2.0</span>
+      <span class="c1">#     obstacle_min_range: 0.0</span>
+      <span class="c1">#     raytrace_max_range: 8.0</span>
+      <span class="c1">#     raytrace_min_range: 0.0</span>
+      <span class="c1">#     clearing: True</span>
+      <span class="c1">#     marking: True</span>
+      <span class="c1">#     data_type: "LaserScan"</span>
+      <span class="na">static_layer</span><span class="pi">:</span>
+        <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_costmap_2d::StaticLayer"</span>
+        <span class="na">map_subscribe_transient_local</span><span class="pi">:</span> <span class="s">True</span>
+        <span class="na">enabled</span><span class="pi">:</span> <span class="s">True</span>
+      <span class="na">inflation_layer</span><span class="pi">:</span>
+        <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_costmap_2d::InflationLayer"</span>
+        <span class="na">cost_scaling_factor</span><span class="pi">:</span> <span class="m">4.5</span>
+        <span class="na">inflation_radius</span><span class="pi">:</span> <span class="m">0.8</span>
+      <span class="na">voxel_layer</span><span class="pi">:</span>
+        <span class="na">plugin</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nav2_costmap_2d::VoxelLayer"</span>
+        <span class="na">enabled</span><span class="pi">:</span> <span class="s">True</span>
+        <span class="na">publish_voxel_map</span><span class="pi">:</span> <span class="s">True</span>
+        <span class="na">observation_sources</span><span class="pi">:</span> <span class="s">velodyne_filtered</span>
+        <span class="na">velodyne_filtered</span><span class="pi">:</span>
+          <span class="na">enabled</span><span class="pi">:</span> <span class="s">True</span>
+          <span class="na">topic</span><span class="pi">:</span> <span class="s">/velodyne_filtered</span>
+          <span class="na">data_type</span><span class="pi">:</span> <span class="s2">"</span><span class="s">PointCloud2"</span>
+          <span class="na">expected_update_rate</span><span class="pi">:</span> <span class="m">0.5</span>  <span class="c1"># Adjust the update rate as needed</span>
+          <span class="na">min_obstacle_height</span><span class="pi">:</span> <span class="m">0.03</span>  <span class="c1"># Adjust these parameters as needed</span>
+          <span class="na">max_obstacle_height</span><span class="pi">:</span> <span class="m">5.0</span>
+          <span class="na">z_voxels</span><span class="pi">:</span> <span class="m">2</span>
+          <span class="na">z_resolution</span><span class="pi">:</span> <span class="m">0.05</span> <span class="c1"># 5cm resolution in z axis for voxels</span>
+          <span class="na">obstacle_max_range</span><span class="pi">:</span> <span class="m">5.0</span>
+          <span class="na">max_obstacle_height</span><span class="pi">:</span> <span class="m">2.0</span>
+          <span class="na">obstacle_min_range</span><span class="pi">:</span> <span class="m">0.0</span>
+          <span class="na">raytrace_max_range</span><span class="pi">:</span> <span class="m">8.0</span>
+          <span class="na">raytrace_min_range</span><span class="pi">:</span> <span class="m">0.0</span>
+          <span class="na">clearing</span><span class="pi">:</span> <span class="s">True</span>  <span class="c1"># this means that if an obstacle is not seen by sensor it will clear those cells</span>
+          <span class="na">marking</span><span class="pi">:</span> <span class="s">True</span>
+      <span class="na">always_send_full_costmap</span><span class="pi">:</span> <span class="s">True</span>
+
+<span class="na">map_server</span><span class="pi">:</span>
+  <span class="na">ros__parameters</span><span class="pi">:</span>
+    <span class="na">use_sim_time</span><span class="pi">:</span> <span class="s">True</span>
+    <span class="na">yaml_filename</span><span class="pi">:</span> <span class="s2">"</span><span class="s">neo_workshop.yaml"</span>
+</code></pre></div></div>
+      <h1 id="results">
+        
+        
+          <a href="#results" class="anchor-heading" aria-labelledby="results"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Results
+        
+        
+      </h1>
+    
+      <h2 id="gazebo">
+        
+        
+          <a href="#gazebo" class="anchor-heading" aria-labelledby="gazebo"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Gazebo
+        
+        
+      </h2>
+    
+<p><img src="/images/voxel_costmap_update/top_view_in_gazebo.png" alt="" /></p>
+      <h2 id="rviz">
+        
+        
+          <a href="#rviz" class="anchor-heading" aria-labelledby="rviz"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> RVIZ
+        
+        
+      </h2>
+    
+<p><img src="/images/voxel_costmap_update/top_view_in_rviz.png" alt="" /></p>
+      <h2 id="costmap-artifacts-yet-to-be-resolved">
+        
+        
+          <a href="#costmap-artifacts-yet-to-be-resolved" class="anchor-heading" aria-labelledby="costmap-artifacts-yet-to-be-resolved"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Costmap Artifacts <strong>(Yet to be resolved)</strong>
+        
+        
+      </h2>
+    
+<p><img src="/images/voxel_costmap_update/artifacts.png" alt="" /></p>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            <p class="text-small text-grey-dk-100 mb-0"></p>
+
+            
+              <div class="d-flex mt-2">
+                
+                
+              </div>
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+
