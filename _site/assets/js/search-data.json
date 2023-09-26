@@ -587,228 +587,330 @@
     "url": "http://localhost:4000/docs/Simulation/navigation.html",
     "relUrl": "/docs/Simulation/navigation.html"
   },"98": {
+    "doc": "Working on Neobotix Compute",
+    "title": "Testing Mapping using the Neobotix’s 2D LIDAR",
+    "content": ". | Set the robot namespace (ros2 domain ID) by export ROS_DOMAIN_ID=2 | Check if correct namespace by printenv ROS_DOMAIN_ID | colcon build –packages-select-regex . | ros2 launch neo_mp_400-2 bringup.launch.py | ros2 launch nwo_mp_400-2 rviz.launch.py robot_namespace:=robot2 use_namespace:=True | ros2 launch neo_mp_400-2 mapping.launch.py robot_namespace:=robot2 | . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_compute.html#testing-mapping-using-the-neobotixs-2d-lidar",
+    "relUrl": "/docs/robot_bringup/neobotix_compute.html#testing-mapping-using-the-neobotixs-2d-lidar"
+  },"99": {
+    "doc": "Working on Neobotix Compute",
+    "title": "Running Teleop",
+    "content": " ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_compute.html#running-teleop",
+    "relUrl": "/docs/robot_bringup/neobotix_compute.html#running-teleop"
+  },"100": {
+    "doc": "Working on Neobotix Compute",
+    "title": "Working on Neobotix Compute",
+    "content": ". | Testing Mapping using the Neobotix’s 2D LIDAR | Running Teleop | . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_compute.html",
+    "relUrl": "/docs/robot_bringup/neobotix_compute.html"
+  },"101": {
+    "doc": "PCL Localization Integration",
+    "title": "Setup for Localization",
+    "content": "Created by: Sushanth Jayanth Created time: September 25, 2023 11:30 AM . This instruction set assumes that you are inside the mfi_amr_ws docker image that lies inside the host machine . | Initialize the docker image and hop into it | . ros2_foxy_docker . | Once inside the docker launch multiple windows and source install/setup.bash in each of them. | For the pcl_localization package, check the localization.yaml file and ensure the right path to the .pcd file has been used. Additionally, ensure it is subscribing to the right odom topic (here rf2o is the source of odometry) | Then run the following commands in the below order: | . ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py rviz2 . Once the above nodes are running rviz will show the pcl-localization pointcloud along with the pre-made map (saved as a .pcd) . A few caveats for pcl_localization_ros2 . | We need to make sure that velodyne (LIDAR) frame is tied somewhere to the robot (here we set it as static transform). This is found in the the launch file for pcl_localization_ros2 | . def generate_launch_description(): ld = launch.LaunchDescription() lidar_tf = launch_ros.actions.Node( name='lidar_tf', package='tf2_ros', executable='static_transform_publisher', arguments=['0','0','0','0','0','0','1','robot2/base_link','velodyne'] ) . | Further, to connect the odom to the robot’s base link, we will need to do | . #include &lt;pcl_localization/pcl_localization_component.hpp&gt; PCLLocalization::PCLLocalization(const rclcpp::NodeOptions &amp; options) : rclcpp_lifecycle::LifecycleNode(\"pcl_localization\", options), broadcaster_(this) { declare_parameter(\"global_frame_id\", \"map\"); declare_parameter(\"odom_frame_id\", \"/robot2/odom\"); declare_parameter(\"base_frame_id\", \"velodyne\"); declare_parameter(\"registration_method\", \"NDT\"); . | The changes results in the following TF tree as shown below | . ",
+    "url": "http://localhost:4000/docs/robot_integration/neobotix_orin_networking.html#setup-for-localization",
+    "relUrl": "/docs/robot_integration/neobotix_orin_networking.html#setup-for-localization"
+  },"102": {
+    "doc": "PCL Localization Integration",
+    "title": "PCL Localization Integration",
+    "content": ". | Setup for Localization | . ",
+    "url": "http://localhost:4000/docs/robot_integration/neobotix_orin_networking.html",
+    "relUrl": "/docs/robot_integration/neobotix_orin_networking.html"
+  },"103": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "Orin - AMR - LIDAR Networking",
+    "content": "Created by: Sushanth Jayanth Created time: September 25, 2023 11:05 AM . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#orin---amr---lidar-networking",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#orin---amr---lidar-networking"
+  },"104": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "Starting Issue",
+    "content": "To begin, the setup looks like the following: . | Orin and LIDAR is connected over Ethernet (utilizing the Ethernet port) | Orin has internal wifi card to connect to WiFi network | The AMR’s compute is connected to WiFi to begin, but has Ethernet ports and USB ports avialable | . Hence, because the Ethernet port of the Orin is occupied with the LIDAR, we need to utilize ‘USB Networking’ to enable the Orin to share data over usb. ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#starting-issue",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#starting-issue"
+  },"105": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "Current Fix",
+    "content": "The ‘USB Networking’ has to be setup to share data as shown below. I specifically used an Ethernet cable to connect the Ethernet port on the AMR to the type-C USB port on the rearside (opposite side as HDMI/DP port) of the Orin. This required the usage of a Ethernet-to-Type-C adapter (passive device) . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#current-fix",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#current-fix"
+  },"106": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "On the Orin (Host PC)",
+    "content": ". | Open your Network Manager via the Network Icon on the Unity Panel: . | Go all the way down to the Edit Connections option and click on it. | You will appear on the Wired Tab. Each Wired connection is by default related to each Ethernet Wired NIC card you have. For example if you have 2 Wired NICs you will see 2 options here. In the image below you see one since this is a Laptop and they normally have one. Select the Wired connection you wish to edit and double click on it or select the EDIT button. | You will appear on the Wired Tab (Again). This time, go to the IPv4 Settings if you are using IPv4 or IPv6 if you are using that one. On the Method option select Share to Other Computers. Now SAVE. You are done. | . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#on-the-orin-host-pc",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#on-the-orin-host-pc"
+  },"107": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "On AMR PC (Client PC)",
+    "content": "This computer can be accessed by connecting the AMR’s Display Port to a monitor and setting the wired connection settings to what is shown below: . The Additional DNS servers may need to be changed (to the Orin’s IP), but setting it to the default shown in the image seems to work fine right now. ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#on-amr-pc-client-pc",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#on-amr-pc-client-pc"
+  },"108": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "Benefits/Drawbacks of Above Networking",
+    "content": ". | Because of no intermediate switch (only a passive adapter to convert Ethernet to type-C USB), low latency on comms | All ROS2 topics generated on the AMR are available on the Orin | Connecting the Orin to the Internet allows the AMR PC to also have network access (although via the Orin) | . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html#benefitsdrawbacks-of-above-networking",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html#benefitsdrawbacks-of-above-networking"
+  },"109": {
+    "doc": "Neobotix-Orin Networking",
+    "title": "Neobotix-Orin Networking",
+    "content": ". | Orin - AMR - LIDAR Networking | Starting Issue | Current Fix . | On the Orin (Host PC) | On AMR PC (Client PC) | . | Benefits/Drawbacks of Above Networking | . ",
+    "url": "http://localhost:4000/docs/robot_bringup/neobotix_orin_networking.html",
+    "relUrl": "/docs/robot_bringup/neobotix_orin_networking.html"
+  },"110": {
+    "doc": "Robot Bringup",
+    "title": "Working with the Actual Neobotix Robot",
+    "content": "The robot arrived last week (Sep 19th) and looks to be in great shape! . ",
+    "url": "http://localhost:4000/docs/robot_bringup#working-with-the-actual-neobotix-robot",
+    "relUrl": "/docs/robot_bringup#working-with-the-actual-neobotix-robot"
+  },"111": {
+    "doc": "Robot Bringup",
+    "title": "Highlights",
+    "content": ". | The robot has a onboard compute which can be accessed by SSH (ssh -X neobotix@192.168.0.100 or 101 depending on the robot) | Alternatively, one can use the HDMI port and the usb ports to connect the robot to a monitor and keyboard | It runs some version of Ubuntu internally | It has ROS2 Humble, Neobotix Packages built and ready to use | . ",
+    "url": "http://localhost:4000/docs/robot_bringup#highlights",
+    "relUrl": "/docs/robot_bringup#highlights"
+  },"112": {
+    "doc": "Robot Bringup",
+    "title": "Robot Bringup",
+    "content": " ",
+    "url": "http://localhost:4000/docs/robot_bringup",
+    "relUrl": "/docs/robot_bringup"
+  },"113": {
+    "doc": "Robot Software Integration",
+    "title": "Integrating Perception, Localization, Planning, Decision Making on Robot",
+    "content": " ",
+    "url": "http://localhost:4000/docs/robot_integration#integrating-perception-localization-planning-decision-making-on-robot",
+    "relUrl": "/docs/robot_integration#integrating-perception-localization-planning-decision-making-on-robot"
+  },"114": {
+    "doc": "Robot Software Integration",
+    "title": "Robot Software Integration",
+    "content": " ",
+    "url": "http://localhost:4000/docs/robot_integration",
+    "relUrl": "/docs/robot_integration"
+  },"115": {
     "doc": "ROS Learnings",
     "title": "ROS Learnings",
     "content": " ",
     "url": "http://localhost:4000/docs/ros",
     "relUrl": "/docs/ros"
-  },"99": {
+  },"116": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Xavier AGX Setup",
     "content": "Setting up the AGX involves the following steps: . | The AGX has an inbuilt eMMC which can hold the OS (the SD card probably can store data) | The Nvidia SDK manager needs to be installed | AGX can be powered (even through a min 20W charger and through the usb type-c port which is adjacent to the HDMI port) | The other type-c port can be used to connect it to the keyboard or usb-hub | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#xavier-agx-setup",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#xavier-agx-setup"
-  },"100": {
+  },"117": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Links for above steps",
     "content": ". | SDK Manager Download | SDK Manager Usage | Initial Kit Setup | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#links-for-above-steps",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#links-for-above-steps"
-  },"101": {
+  },"118": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS Setup for Desktop using Dockerfile",
     "content": "I watched a few videos online and managed to write a Dockerfile to build ros. | ROS2 on Docker from scratch | ROS2 on Docker using osrf image | . A dockerfile containing a hodge-podge of both is shown below: . FROM osrf/ros:foxy-desktop MAINTAINER Sush sush@cmu.edu # Necessary to source things SHELL [\"/bin/bash\", \"-c\"] RUN apt-get update --fix-missing &amp;&amp; \\ apt-get install -y \\ git \\ nano \\ python3-pip \\ tmux \\ python3-matplotlib \\ python3-ipdb \\ unzip \\ wget \\ zip RUN pip3 install numpy RUN pip3 install wandb # create a ws for tutorials or trial scripts # RUN mkdir /home/dev_ws # RUN cd /home/dev_ws/ &amp;&amp; git clone https://github.com/ros/ros_tutorials.git -b foxy-devel # copy all contents of current dir (mfi-amr repo files) into docker RUN mkdir /home/mfi-amr COPY . /home/mfi-amr # cleanup RUN apt-get -qy autoremove #ADD .bashrc /root/.bashrc RUN echo \"source /opt/ros/foxy/setup.bash\" &gt;&gt; ~/.bashrc # create a beginner workspace for now WORKDIR /home/dev_ws/src RUN git clone https://github.com/ros/ros_tutorials.git -b foxy-devel WORKDIR /home/dev_ws # after workspace is defined, run the RUN apt-get install python3-rosdep -y RUN rosdep update RUN rosdep install -i --from-path src --rosdistro foxy -y RUN apt install python3-colcon-common-extensions -y # source setup.bash in WORKDIR WORKDIR '/home/mfi-amr' RUN source /opt/ros/foxy/setup.bash ENTRYPOINT [\"/bin/bash\"] RUN source /opt/ros/foxy/setup.bash . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#ros-setup-for-desktop-using-dockerfile"
-  },"102": {
+  },"119": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Why use Docker?",
     "content": "A Docker image is like a class and a Docker Container is an object (or instantiation) of the image. A Docker Image contains everything needed to run a container: code, libraries, environment variables, configuration files, etc. It serves as a blueprint which can be used to create an instance, ie, a Docker Container. Once a Docker Container is created, you can tinker with it as much as you like, and it won’t affect the image from which it was built. You can find prebuilt Docker Images for many different applications on the DockerHub1, which uses a GitHub like cloud solution where you can pull images to your local computer. These prebuilt images have relevant libraries, environment variables, etc. already setup so you can simply create a Container from the Image and get started on your work. If you can’t find a suitable image for your use case on DockerHub, you can create your own Docker Image using a Dockerfile. A Dockerfile is a set of instructions to build a Docker Image. You can learn more about the syntax and standard practices of writing a Dockerfile from the documentation2. For the purposes of this guide, I will explain the commands that I used as we go. eg. OSRF (Open Source Robotics Foundation’s Docker Image for ROS2 foxy) . # This is an auto generated Dockerfile for ros:desktop # generated from docker_images_ros2/create_ros_image.Dockerfile.em FROM ros:foxy-ros-base-focal # install ros2 packages RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \\ ros-foxy-desktop=0.9.2-1* \\ &amp;&amp; rm -rf /var/lib/apt/lists/* . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#why-use-docker",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#why-use-docker"
-  },"103": {
+  },"120": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Steps to create Docker Image",
     "content": ". | Clone the Repository mfi-amr | Enter the cloned repo and run the following command docker build -t trial_ros_image . This command creates a docker image with a tag as trial-ros-image. The docker images present on a system can be found via a simple docker images command on bash | Once the above has completed, we’ll have to create a docker container from the above image. One can do this manually, but I created a bash script to make it simple #!/bin/bash cd ~/mfi/mfi-amr/ docker run \\ -it \\ --gpus all \\ --rm \\ --name mfi \\ --shm-size=8g \\ --network host \\ -e DISPLAY=$DISPLAY \\ -v /tmp/.X11-unix:/tmp/.X11-unix \\ -v /var/run/docker.sock:/var/run/docker.sock \\ -v /home/sush/mfi/mfi-amr_docker_save/:/home/workspace/ \\ -v /home/sush/mfi/mfi-amr/:/home/mfi-amr/ \\ trial_ros_image:latest . | Now, the last line of that script requests docker to build the latest image with the tag trial_ros_image | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#steps-to-create-docker-image"
-  },"104": {
+  },"121": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Setup ROS2 globally on any Ubuntu Device (including Xavier AGX)",
     "content": "Reference . #!/bin/bash sudo apt update &amp;&amp; sudo apt install locales sudo locale-gen en_US en_US.UTF-8 sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 export LANG=en_US.UTF-8 sudo apt install software-properties-common sudo add-apt-repository universe sudo apt update &amp;&amp; sudo apt install curl sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null sudo apt update sudo apt upgrade sudo apt install ros-foxy-desktop python3-argcomplete . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#setup-ros2-globally-on-any-ubuntu-device-including-xavier-agx"
-  },"105": {
+  },"122": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Checking if it’s installed",
     "content": "printenv | grep -i ROS should return ROS_DISTRO and PYTHON_VERSION and others.. ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#checking-if-its-installed",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#checking-if-its-installed"
-  },"106": {
+  },"123": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "Add ros to .bashrc",
     "content": ". | Navigate to ~/.bashrc | Add the following to the last line: source /opt/ros/foxy/setup.bash | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc",
     "relUrl": "/docs/software_bringup/ros_setup_2.html#add-ros-to-bashrc"
-  },"107": {
+  },"124": {
     "doc": "ROS2 on the Jetson and Desktop",
     "title": "ROS2 on the Jetson and Desktop",
     "content": ". | Xavier AGX Setup . | Links for above steps | . | ROS Setup for Desktop using Dockerfile . | Why use Docker? | Steps to create Docker Image | . | Setup ROS2 globally on any Ubuntu Device (including Xavier AGX) . | Checking if it’s installed | . | Add ros to .bashrc | . ",
     "url": "http://localhost:4000/docs/software_bringup/ros_setup_2.html",
     "relUrl": "/docs/software_bringup/ros_setup_2.html"
-  },"108": {
+  },"125": {
     "doc": "Running SLAM Toolbox",
     "title": "Debugging",
     "content": " ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#debugging",
     "relUrl": "/docs/SLAM_Toolbox/running.html#debugging"
-  },"109": {
+  },"126": {
     "doc": "Running SLAM Toolbox",
     "title": "Map saver timeout",
     "content": "This happens when the map is large and needs more time to save. Default is 5s but to override we can run the following command: . ros2 run nav2_map_server map_saver_cli -f full_map_one --ros-args -p save_map_timeout:=10000 . Note. Remember you need to save a serialized map as well to use for localization later! . ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph \"filename: 'full_map_serial'\" . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#map-saver-timeout",
     "relUrl": "/docs/SLAM_Toolbox/running.html#map-saver-timeout"
-  },"110": {
+  },"127": {
     "doc": "Running SLAM Toolbox",
     "title": "Installing the rf2o_laser_odometry",
     "content": "This package acts weird when trying to build it at the root folder of the workspace. It throws error “catkin_pkg not found” . The Solution : Just navigate to the package folder itself and build there . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry",
     "relUrl": "/docs/SLAM_Toolbox/running.html#installing-the-rf2o_laser_odometry"
-  },"111": {
+  },"128": {
     "doc": "Running SLAM Toolbox",
     "title": "Appendix",
     "content": " ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#appendix",
     "relUrl": "/docs/SLAM_Toolbox/running.html#appendix"
-  },"112": {
+  },"129": {
     "doc": "Running SLAM Toolbox",
     "title": "robot_localization vs AMCL in the context of ROS2",
     "content": "robot_localization is somewhat poorly named - at this point it is mostly an Extended Kalman Filter (EKF), usually it is used to merge multiple sources of odometry information (most commonly, IMU and wheel odometry, although it also provides some tools for GPS). Thus, robot_localization is used to create the odom-&gt;base_link transform. AMCL is actually localization software - it provides the map-&gt;odom transform using a particle filter to determine where the robot is in within a map (usually using a planar laser scanner and the odometry information). Therefore, these two can actually work together - by combining multiple sources of odometry information you can minimize the odometry drift that occurs in your odom-&gt;base_link estimation. Then AMCL can be used to correct for that drift by keeping the robot properly localized within the map. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#robot_localization-vs-amcl-in-the-context-of-ros2",
     "relUrl": "/docs/SLAM_Toolbox/running.html#robot_localization-vs-amcl-in-the-context-of-ros2"
-  },"113": {
+  },"130": {
     "doc": "Running SLAM Toolbox",
     "title": "Installing RQT Graph",
     "content": "sudo apt install ros-humble-rqt-graph . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html#installing-rqt-graph",
     "relUrl": "/docs/SLAM_Toolbox/running.html#installing-rqt-graph"
-  },"114": {
+  },"131": {
     "doc": "Running SLAM Toolbox",
     "title": "Running SLAM Toolbox",
     "content": ". | Debugging . | Map saver timeout | Installing the rf2o_laser_odometry | . | Appendix . | robot_localization vs AMCL in the context of ROS2 | Installing RQT Graph | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/running.html",
     "relUrl": "/docs/SLAM_Toolbox/running.html"
-  },"115": {
+  },"132": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Nodes to Start",
     "content": ". | velodyne | laser odometry | slam_toolbox_launch | slam_toobox_tf2 | repub_velo | tracking camera’s odometry (realsense) | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#nodes-to-start",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#nodes-to-start"
-  },"116": {
+  },"133": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Sensors, Frames, and Pipeline",
     "content": "The SLAM toolbox is super picky in that it needs TF2 frames and sensor data published in specific topics to even start running. This document highlights some of the pipelining required to make slam toolbox run. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#sensors-frames-and-pipeline"
-  },"117": {
+  },"134": {
     "doc": "Setup for SLAM Toolbox",
     "title": "TF2 Transforms",
     "content": "Github Repo of Package . The SLAM toolbox needs few specific transformations with the TF tree looking like: . However, the above picture was taken from simulation where multiple links were shown. We will only worry about the following frames: . ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . The below frames I’m guessing is necessary only during initialization of slam_toolbox node. This is becasue the slam_toolbox is meant to publish it’s own map frame as well. However for some weird stupid reason it needs this map -&gt; lidar_1_link as well. ├── map │ ├── lidar_1_link . Motivation . | odom frame is just our initial robot pose which is instantiated the moment we start the robot | base_footprint frame is necessary to map where the robot would lie w.r.t the ground plane . | Since our robot moves only in 2D, it would always stick to the ground plane | . | base_link is the body frame of the robot. Since we move in 2D base_link = base_footprint . | Since base_link = base_footprint, we use a static transform of 0 rotation and 0 translation | . | odom -&gt; base_footprint has to be updated by whichever node is publishing odometry information | Since we are currently using LIDAR odometry, the base_link = lidar_1_link and is therefore another 0 rotation and 0 translation transform | . Interfacing with slam_toolbox . The slam_toolbox utilizes the above existing TF tree and when it’s running it should look like below: . ├── map | ├── odom │ ├── base_footprint | ├── base_link | ├── lidar_1_link . | As we move the robot around, the odom -&gt; lidar_1_link transform will get continually updated even without the slam_toolbox. | However, it’s the job of the slam_toolbox to correct the map -&gt; lidar_1_link frame and thereby also correct the odom frame. | A simple explanation is present in the starting part of this video and a small vizualization is shown below: | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#tf2-transforms",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#tf2-transforms"
-  },"118": {
+  },"135": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Launching SLAM toolbox with Config Files",
     "content": "Github Repo of Package . This package only contains launch and config files which call the slam_toolbox executables. Note. presently the slam_toolbox is installed as binaries from the apt repository . Which launch file to use? . | The online_sync file would be preferred as it allows for better loop closure | The async is less computationally intensive as it does not process every frame that it receives | . Config file nitty-gritties . The config file has a few parameters which must be set right. As per the TF tree we developed in slam_toolbox_tf2 and repub_velo repositories, we configure the slam_tooblox to look at specific topics as shown below: . slam_toolbox: ros__parameters: # Plugin params solver_plugin: solver_plugins::CeresSolver ceres_linear_solver: SPARSE_NORMAL_CHOLESKY ceres_preconditioner: SCHUR_JACOBI ceres_trust_strategy: LEVENBERG_MARQUARDT ceres_dogleg_type: TRADITIONAL_DOGLEG ceres_loss_function: None # ROS Parameters odom_frame: odom map_frame: map base_frame: base_footprint scan_topic: /scan_new mode: mapping #localization . The mode here is set to mapping, but as shown it can also be set to localization. However, in localization mode, a pre-existing map and the path to that map should be configured in the same config file (not shown in here, since I’m yet to do localization myself). ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#launching-slam-toolbox-with-config-files",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#launching-slam-toolbox-with-config-files"
-  },"119": {
+  },"136": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Republishing Velodyne Topic",
     "content": "The slam toolbox will be looking for “/scan_new” topic. Additionally, this /scan_new should be associated with “lidar_1_link” tf frame. To achieve the above requirements, we republish the /scan topic using a simple repub node called repub_velo. ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#republishing-velodyne-topic"
-  },"120": {
+  },"137": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Odometry to Update odom-&gt;base_footprint Transform",
     "content": "Whichever node is publishing odometry, generally also publishes the odom-&gt;base_footpring tf2 update. Hence, we choose one of the two methods of odometry at our disposal. (In future updates, wheel odometry will be used instead of laser-based odometry since it is more accurate and less sensitive to noise). If you want to use two or more sensors at a time, then we will need to use Robot Localization which is an EKF method of fusing odometry data . A. 2D Lidar Odometry (rf20 laser odometry) . Our (slightly modified) Repo . Source Notes . Estimation of 2D odometry based on planar laser scans. Useful for mobile robots with innacurate base odometry. RF2O is a fast and precise method to estimate the planar motion of a lidar from consecutive range scans. For every scanned point we formulate the range flow constraint equation in terms of the sensor velocity, and minimize a robust function of the resulting geometric constraints to obtain the motion estimate. Conversely to traditional approaches, this method does not search for correspondences but performs dense scan alignment based on the scan gradients, in the fashion of dense 3D visual odometry. Its very low computational cost (0.9 milliseconds on a single CPU core) together whit its high precission, makes RF2O a suitable method for those robotic applications that require planar odometry. For full description of the algorithm, please refer to: Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA 2016 Available at: http://mapir.isa.uma.es/work/rf2o . Motivation for Usage . The IMU’s available to us at TeamH are the UM7 and the Phidget Spatial 3/3/3. While the phidget has issues in interfacing with ROS, the UM7 data is jittery. Additionally, the lack of wheel odometry during development, means that we can only rely on LIDAR odometry to give accurate odometry results. Hence, this package is used to publish odometry data . TF2 bindings . The node which publishes odometry data also publishes the transformation between two frames: . | odom | base_footprint | . These frames are necessary for the slam_toolbox or any other downstream node. B. 3D Lidar Odometry . Here we will use Kiss ICP since it runs well in ros2 with easy setup. Refer to This link to learn more about Kiss ICP. To build Kiss ICP, take a look at This link . NOTE: You may need to reduce the max_scan_length to 20 and set deskew=False in basic_config.yaml file . C. Visual Odometry (Tracking Camera) . We use the RealSense T265 Tracking Camera by building the ros2 drivers. ROS2 Wrapper for Intel . Run the rs_intra_process_demo_launch.py in /realsense-ros/realsense2_camera/launch folder. This will publish something like /camera/odometry/sample topic which is the trakcing camera’s odometry topic . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html#odometry-to-update-odom-base_footprint-transform",
     "relUrl": "/docs/SLAM_Toolbox/setup.html#odometry-to-update-odom-base_footprint-transform"
-  },"121": {
+  },"138": {
     "doc": "Setup for SLAM Toolbox",
     "title": "Setup for SLAM Toolbox",
     "content": ". | Nodes to Start | Sensors, Frames, and Pipeline . | TF2 Transforms . | Motivation | Interfacing with slam_toolbox | . | Launching SLAM toolbox with Config Files . | Which launch file to use? | Config file nitty-gritties | . | Republishing Velodyne Topic | Odometry to Update odom-&gt;base_footprint Transform . | A. 2D Lidar Odometry (rf20 laser odometry) . | Source Notes | Motivation for Usage | TF2 bindings | . | B. 3D Lidar Odometry . | NOTE: You may need to reduce the max_scan_length to 20 and set deskew=False in basic_config.yaml file | . | C. Visual Odometry (Tracking Camera) | . | . | . ",
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html",
     "relUrl": "/docs/SLAM_Toolbox/setup.html"
-  },"122": {
+  },"139": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"123": {
+  },"140": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"124": {
+  },"141": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"125": {
+  },"142": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"126": {
+  },"143": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"127": {
+  },"144": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"128": {
+  },"145": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"129": {
+  },"146": {
     "doc": "Creating Custom World for SVD",
     "title": "Before you Begin",
     "content": "Please use This Repository for Reference . Also, a base setup has already been done on a docker container which can be pulled as docker pull sushanthj/humble_sim_mapping_built:latest . The docker is not complete, but all files that need to be added to the docker container can be found in this location or is also present here . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#before-you-begin",
     "relUrl": "/docs/Simulation/svd_demo.html#before-you-begin"
-  },"130": {
+  },"147": {
     "doc": "Creating Custom World for SVD",
     "title": "Folder Structure and New Files Added",
     "content": "The workspace presenent in root/neobotix_workspace in the docker conatiner mentioned above will look like the following: . As you can see, we have expanded only the neo_simulation2 package. To add the custom world we built onto the simulation we will need to make the following changes: . | Find where this folder is located | Copy all the contents of the to_copy_sdfs folder (excluding svd_demo.world or any world files) to the /root/neobotix_workspace/src/neo_simulation2/models folder. This is where the simulator will look for all the sdf files in the world | Copy the svd_demo.world present (or any other world file you created) to /root/neobotix_workspace/src/neo_simulation2/worlds | Run export MY_ROBOT=mp_400 | Run export MAP_NAME=svd_demo | Run colcon build --symlink-install | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added",
     "relUrl": "/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added"
-  },"131": {
+  },"148": {
     "doc": "Creating Custom World for SVD",
     "title": "Testing",
     "content": "Trying out the above changes can be done as shown in the prior sections by running either: . | ros2 launch neo_simulation2 simulation.launch.py | ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml | ros2 launch neo_nav2_bringup rviz_launch.py | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#testing",
     "relUrl": "/docs/Simulation/svd_demo.html#testing"
-  },"132": {
+  },"149": {
     "doc": "Creating Custom World for SVD",
     "title": "Sample Output in New World File",
     "content": ". ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#sample-output-in-new-world-file",
     "relUrl": "/docs/Simulation/svd_demo.html#sample-output-in-new-world-file"
-  },"133": {
+  },"150": {
     "doc": "Creating Custom World for SVD",
     "title": "Creating Custom World for SVD",
     "content": ". | Before you Begin | Folder Structure and New Files Added | Testing | Sample Output in New World File | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html",
     "relUrl": "/docs/Simulation/svd_demo.html"
-  },"134": {
+  },"151": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"135": {
+  },"152": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",
