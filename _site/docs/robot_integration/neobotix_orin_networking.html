@@ -158,9 +158,6 @@
       </h1>
     
 
-<p>Created by: Sushanth Jayanth
-Created time: September 25, 2023 11:30 AM</p>
-
 <p>This instruction set assumes that you are inside the <code class="language-plaintext highlighter-rouge">mfi_amr_ws</code> docker image that lies inside the host machine</p>
 
 <ul>
@@ -219,8 +216,9 @@ PCLLocalization::PCLLocalization<span class="o">(</span>const rclcpp::NodeOption
 <span class="o">{</span>
   declare_parameter<span class="o">(</span><span class="s2">"global_frame_id"</span>, <span class="s2">"map"</span><span class="o">)</span><span class="p">;</span>
   declare_parameter<span class="o">(</span><span class="s2">"odom_frame_id"</span>, <span class="s2">"/robot2/odom"</span><span class="o">)</span><span class="p">;</span>
-  declare_parameter<span class="o">(</span><span class="s2">"base_frame_id"</span>, <span class="s2">"velodyne"</span><span class="o">)</span><span class="p">;</span>
+  declare_parameter<span class="o">(</span><span class="s2">"base_frame_id"</span>, <span class="s2">"/robot2/baselink"</span><span class="o">)</span><span class="p">;</span>
   declare_parameter<span class="o">(</span><span class="s2">"registration_method"</span>, <span class="s2">"NDT"</span><span class="o">)</span><span class="p">;</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <ul>

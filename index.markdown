@@ -8,9 +8,15 @@ permalink: /
 
 # Team Dock Dock Go!
 
-Explaining the steps taken to setup and build the systems necessary for an autonomous 
+Explaining the steps taken to setup and build the systems necessary for an autonomous
 mobile robot capable of transporting LEGOs for MFI's Testbed
 
 ![](/images/team-logo.png)
 
 ![](/images/robot-intro.gif)
+
+## SVD
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T0qUSdnG7XM?si=wJke8Ij1X7ki77Gm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## FVD (Dec. 2023)
