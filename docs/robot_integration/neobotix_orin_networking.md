@@ -16,9 +16,6 @@ nav_order: 1
 
 # Setup for Localization
 
-Created by: Sushanth Jayanth
-Created time: September 25, 2023 11:30 AM
-
 This instruction set assumes that you are inside the `mfi_amr_ws` docker image that lies inside the host machine
 
 - Initialize the docker image and hop into it
@@ -73,8 +70,9 @@ PCLLocalization::PCLLocalization(const rclcpp::NodeOptions & options)
 {
   declare_parameter("global_frame_id", "map");
   declare_parameter("odom_frame_id", "/robot2/odom");
-  declare_parameter("base_frame_id", "velodyne");
+  declare_parameter("base_frame_id", "/robot2/baselink");
   declare_parameter("registration_method", "NDT");
+}
 ```
 
 - The changes results in the following TF tree as shown below

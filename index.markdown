@@ -12,3 +12,5 @@ Explaining the steps taken to setup and build the systems necessary for an auton
 mobile robot capable of transporting LEGOs for MFI's Testbed
 
 ![](/images/team-logo.png)
+
+![](/images/robot-intro.gif)
