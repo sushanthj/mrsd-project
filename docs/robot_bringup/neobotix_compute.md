@@ -2,7 +2,7 @@
 layout: page
 title: Working on Neobotix Compute
 parent: Robot Bringup
-nav_order: 1
+nav_order: 2
 ---
 
 <details open markdown="block">
