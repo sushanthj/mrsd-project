@@ -163,6 +163,14 @@ which are on the offboard server</p>
 
 <p><img src="/images/Software_Arch/Robot_control_arch.png" alt="" /></p>
 
+<p>Run:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2 run robot_action_interfaces robot_pose_server.py
+
+ros2 run robot_motion_server robot_motion_server_node
+
+ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock <span class="s2">"{secs: 1.0}"</span>
+</code></pre></div></div>
+
         
 
         
