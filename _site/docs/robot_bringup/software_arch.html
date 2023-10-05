@@ -146,6 +146,7 @@
   </summary>
 <ol id="markdown-toc">
   <li><a href="#state-change-handling" id="markdown-toc-state-change-handling">State Change Handling</a></li>
+  <li><a href="#navigation-planner-and-localization-setup" id="markdown-toc-navigation-planner-and-localization-setup">Navigation, Planner and Localization Setup</a></li>
 </ol>
 
 </details>
@@ -164,6 +165,7 @@ which are on the offboard server</p>
 <p><img src="/images/Software_Arch/Robot_control_arch.png" alt="" /></p>
 
 <p>Run:</p>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2 launch robot_motion_server motion_servers.launch.py
 <span class="c"># or</span>
 ros2 run robot_motion_server robot_motion_server_node
@@ -176,6 +178,29 @@ ros2 action send_goal /Navigate robot_action_interfaces/action/Navigate <span cl
 
 ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock <span class="s2">"{secs: 1.0}"</span>
 </code></pre></div></div>
+      <h1 id="navigation-planner-and-localization-setup">
+        
+        
+          <a href="#navigation-planner-and-localization-setup" class="anchor-heading" aria-labelledby="navigation-planner-and-localization-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Navigation, Planner and Localization Setup
+        
+        
+      </h1>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2_foxy_docker
+
+ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py
+
+ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py
+
+ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py <span class="c"># optional</span>
+
+ros2 launch nav2_map_server_start nav2_custom_bringup.launch.py
+
+ros2 launch rviz2
+</code></pre></div></div>
+
+<p>The nav2_configs has an rviz config which should be used</p>
 
         
 
