@@ -845,102 +845,120 @@
     "url": "http://localhost:4000/docs/SLAM_Toolbox/setup.html",
     "relUrl": "/docs/SLAM_Toolbox/setup.html"
   },"141": {
-    "doc": "Localization-Planner-Offboard Comms Integration",
-    "title": "State Change Handling",
-    "content": "The nodes shown below live on the robot execpt global planner and offboard comms which are on the offboard server . Run: . ros2 launch robot_motion_server motion_servers.launch.py # or ros2 run robot_motion_server robot_motion_server_node # then ros2 run robot_action_interfaces robot_pose_server.py # then two action client calls ros2 action send_goal /Navigate robot_action_interfaces/action/Navigate \"{secs: 1.0}\" ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock \"{secs: 1.0}\" . ",
-    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#state-change-handling",
-    "relUrl": "/docs/robot_bringup/software_arch.html#state-change-handling"
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "High Level Information Flow",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#high-level-information-flow",
+    "relUrl": "/docs/robot_bringup/software_arch.html#high-level-information-flow"
   },"142": {
-    "doc": "Localization-Planner-Offboard Comms Integration",
-    "title": "Navigation, Planner and Localization Setup",
-    "content": "ros2_foxy_docker ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py # optional ros2 launch nav2_map_server_start nav2_custom_bringup.launch.py ros2 launch rviz2 . The nav2_configs has an rviz config which should be used . ",
-    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#navigation-planner-and-localization-setup",
-    "relUrl": "/docs/robot_bringup/software_arch.html#navigation-planner-and-localization-setup"
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "State Machine and Motion Action Servers",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#state-machine-and-motion-action-servers",
+    "relUrl": "/docs/robot_bringup/software_arch.html#state-machine-and-motion-action-servers"
   },"143": {
-    "doc": "Localization-Planner-Offboard Comms Integration",
-    "title": "Localization-Planner-Offboard Comms Integration",
-    "content": ". | State Change Handling | Navigation, Planner and Localization Setup | . ",
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "State Machine",
+    "content": "TBD . ",
+    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#state-machine",
+    "relUrl": "/docs/robot_bringup/software_arch.html#state-machine"
+  },"144": {
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "Motion Action Server",
+    "content": "Each node of motion action server represents one form of Navigation . | Navigation Action Server | Dock/Undock Action Server | . Run: . ros2 launch robot_motion_server motion_servers.launch.py # or ros2 run robot_motion_server robot_motion_server_node # then ros2 run robot_action_interfaces robot_pose_server.py # then two action client calls ros2 action send_goal /Navigate robot_action_interfaces/action/Navigate \"{secs: 1.0}\" ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock \"{secs: 1.0}\" . ",
+    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#motion-action-server",
+    "relUrl": "/docs/robot_bringup/software_arch.html#motion-action-server"
+  },"145": {
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "Navigation, Planner and Localization Setup to test Integration",
+    "content": "ros2_foxy_docker ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py # optional ros2 launch nav2_map_server_start nav2_custom_bringup.launch.py ros2 launch rviz2 . The nav2_configs has an rviz config which should be used . ",
+    "url": "http://localhost:4000/docs/robot_bringup/software_arch.html#navigation-planner-and-localization-setup-to-test-integration",
+    "relUrl": "/docs/robot_bringup/software_arch.html#navigation-planner-and-localization-setup-to-test-integration"
+  },"146": {
+    "doc": "High Level Navigation and Comms Integration",
+    "title": "High Level Navigation and Comms Integration",
+    "content": ". | High Level Information Flow | State Machine and Motion Action Servers . | State Machine | Motion Action Server | . | Navigation, Planner and Localization Setup to test Integration | . ",
     "url": "http://localhost:4000/docs/robot_bringup/software_arch.html",
     "relUrl": "/docs/robot_bringup/software_arch.html"
-  },"144": {
+  },"147": {
     "doc": "Systems Setup",
     "title": "Systems Setup",
     "content": " ",
     "url": "http://localhost:4000/docs/software_bringup",
     "relUrl": "/docs/software_bringup"
-  },"145": {
+  },"148": {
     "doc": "Building Subscribers and Publishers",
     "title": "Before You Begin",
     "content": " ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#before-you-begin",
     "relUrl": "/docs/ros/subscribers.html#before-you-begin"
-  },"146": {
+  },"149": {
     "doc": "Building Subscribers and Publishers",
     "title": "Bare Minimum",
     "content": "Any subscriber we build can be run from any directory if it’s a python file as shown below . python3 /home/test_subscriber.py . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#bare-minimum",
     "relUrl": "/docs/ros/subscribers.html#bare-minimum"
-  },"147": {
+  },"150": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building in a ROS Package Setup",
     "content": "Create Workspace and Clone an Existing Package . It’s good practice to develop all ros nodes, even the simplest ones within a package. To do so, we’ll need to follow the following steps: . | Create a workspace in the following manner: mkdir /home/ddg/dev_ws/src | The above step will create a basic folder structure we’ll need to add new packages | If you’re cloning an existing repository do the following (example using realsense ros2 wrappers) Reference . | cd /home/ddg/dev_ws/src | git clone https://github.com/IntelRealSense/realsense-ros.git -b ros2-development | cd ~/ddg/dev_ws | sudo apt-get install python3-rosdep -y sudo rosdep init # \"sudo rosdep init --include-eol-distros\" for Eloquent and earlier rosdep update # \"sudo rosdep update --include-eol-distros\" for Eloquent and earlier rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys=librealsense2 -y . | colcon build | source /opt/ros/$ROS_DISTRO/setup.bash | cd ~/ddg/dev_ws | . install/local_setup.bash | . | Note that in the above step, colcon build setup the install folder since a package was created \\ | If we don’t have any packages setup using colcon build, you’ll only have dev_ws/src which you created | . Now, let’s create our own package! . A typical folder structure for a ros2 package will look like . my_package/ setup.py package.xml resource/my_package . However, since we already have a workspace it should look more like . workspace_folder/ src/ package_1/ CMakeLists.txt package.xml package_2/ setup.py package.xml resource/package_2 ... package_n/ CMakeLists.txt package.xml . Creating the Package . | cd ~/ddg/dev_ws/src | ros2 pkg create --build-type ament_python &lt;package_name&gt; | cd ~/ddg/dev_ws/ | colcon build --packages-select my_package or to build all packages in workspacecolcon build | . install/setup.bash (uses the install directory created by colcon build) | . To run any node we develop in the package we can do . ros2 run my_package my_node . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#building-in-a-ros-package-setup",
     "relUrl": "/docs/ros/subscribers.html#building-in-a-ros-package-setup"
-  },"148": {
+  },"151": {
     "doc": "Building Subscribers and Publishers",
     "title": "Simple Example Subscriber from ROS",
     "content": "Reference . import rclpy from rclpy.node import Node from std_msgs.msg import String class MinimalSubscriber(Node): def __init__(self): super().__init__('minimal_subscriber') self.subscription = self.create_subscription( String, 'topic', self.listener_callback, 10) self.subscription # prevent unused variable warning def listener_callback(self, msg): self.get_logger().info('I heard: \"%s\"' % msg.data) def main(args=None): rclpy.init(args=args) minimal_subscriber = MinimalSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#simple-example-subscriber-from-ros",
     "relUrl": "/docs/ros/subscribers.html#simple-example-subscriber-from-ros"
-  },"149": {
+  },"152": {
     "doc": "Building Subscribers and Publishers",
     "title": "Subscriber for RealSense Images",
     "content": "import rclpy from rclpy.node import Node from sensor_msgs.msg import Image import cv2 from cv_bridge import CvBridge class ImageDumperSubscriber(Node): def __init__(self, image_): super().__init__('minimal_subscriber') self._bridge = CvBridge() self._color_subscription = self.create_subscription( Image, #msg_type '/camera/color/image_raw', #topic self._color_listener_callback, # callback 10) self.depth_subscription = self.create_subscription( Image, #msg_type '/camera/depth/image_rect_raw', #topic self._depth_listener_callback, # callback 10) def _color_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"bgr8\") self.counter += 1 self.get_logger().info(f'I heard: {msg.header.frame_id}') def _depth_listener_callback(self, msg): image_cv2 = self._bridge.imgmsg_to_cv2(msg, \"passthrough\") self.get_logger().info(f'I heard: {msg.header.frame_id}') def main(args=None): rclpy.init(args=args) minimal_subscriber = ImageDumperSubscriber() rclpy.spin(minimal_subscriber) # Destroy the node explicitly # (optional - otherwise it will be done automatically # when the garbage collector destroys the node object) minimal_subscriber.destroy_node() rclpy.shutdown() if __name__ == '__main__': main() . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html#subscriber-for-realsense-images",
     "relUrl": "/docs/ros/subscribers.html#subscriber-for-realsense-images"
-  },"150": {
+  },"153": {
     "doc": "Building Subscribers and Publishers",
     "title": "Building Subscribers and Publishers",
     "content": ". | Before You Begin . | Bare Minimum | Building in a ROS Package Setup . | Create Workspace and Clone an Existing Package | Now, let’s create our own package! . | Creating the Package | . | . | . | Simple Example Subscriber from ROS | Subscriber for RealSense Images | . ",
     "url": "http://localhost:4000/docs/ros/subscribers.html",
     "relUrl": "/docs/ros/subscribers.html"
-  },"151": {
+  },"154": {
     "doc": "Creating Custom World for SVD",
     "title": "Before you Begin",
     "content": "Please use This Repository for Reference . Also, a base setup has already been done on a docker container which can be pulled as docker pull sushanthj/humble_sim_mapping_built:latest . The docker is not complete, but all files that need to be added to the docker container can be found in this location or is also present here . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#before-you-begin",
     "relUrl": "/docs/Simulation/svd_demo.html#before-you-begin"
-  },"152": {
+  },"155": {
     "doc": "Creating Custom World for SVD",
     "title": "Folder Structure and New Files Added",
     "content": "The workspace presenent in root/neobotix_workspace in the docker conatiner mentioned above will look like the following: . As you can see, we have expanded only the neo_simulation2 package. To add the custom world we built onto the simulation we will need to make the following changes: . | Find where this folder is located | Copy all the contents of the to_copy_sdfs folder (excluding svd_demo.world or any world files) to the /root/neobotix_workspace/src/neo_simulation2/models folder. This is where the simulator will look for all the sdf files in the world | Copy the svd_demo.world present (or any other world file you created) to /root/neobotix_workspace/src/neo_simulation2/worlds | Run export MY_ROBOT=mp_400 | Run export MAP_NAME=svd_demo | Run colcon build --symlink-install | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added",
     "relUrl": "/docs/Simulation/svd_demo.html#folder-structure-and-new-files-added"
-  },"153": {
+  },"156": {
     "doc": "Creating Custom World for SVD",
     "title": "Testing",
     "content": "Trying out the above changes can be done as shown in the prior sections by running either: . | ros2 launch neo_simulation2 simulation.launch.py | ros2 launch neo_simulation2 navigation.launch.py map:=/root/neobotix_workspace/src/neo_mp_400-2/configs/navigation/sush_map.yaml | ros2 launch neo_nav2_bringup rviz_launch.py | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#testing",
     "relUrl": "/docs/Simulation/svd_demo.html#testing"
-  },"154": {
+  },"157": {
     "doc": "Creating Custom World for SVD",
     "title": "Sample Output in New World File",
     "content": ". ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html#sample-output-in-new-world-file",
     "relUrl": "/docs/Simulation/svd_demo.html#sample-output-in-new-world-file"
-  },"155": {
+  },"158": {
     "doc": "Creating Custom World for SVD",
     "title": "Creating Custom World for SVD",
     "content": ". | Before you Begin | Folder Structure and New Files Added | Testing | Sample Output in New World File | . ",
     "url": "http://localhost:4000/docs/Simulation/svd_demo.html",
     "relUrl": "/docs/Simulation/svd_demo.html"
-  },"156": {
+  },"159": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup on AGX",
     "content": "VERSION=latest wget -N -O vscode-linux-deb.arm64.deb https://update.code.visualstudio.com/$VERSION/linux-deb-arm64/stable sudo apt install ./vscode-linux-deb.arm64.deb . ",
     "url": "http://localhost:4000/docs/software_bringup/vscode.html#vs-code-setup-on-agx",
     "relUrl": "/docs/software_bringup/vscode.html#vs-code-setup-on-agx"
-  },"157": {
+  },"160": {
     "doc": "VS Code Setup",
     "title": "VS Code Setup",
     "content": ". | VS Code Setup on AGX | . ",

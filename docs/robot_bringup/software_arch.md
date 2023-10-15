@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Localization-Planner-Offboard Comms Integration
+title: High Level Navigation and Comms Integration
 parent: Robot Bringup
 nav_order: 3
 ---
@@ -14,12 +14,24 @@ nav_order: 3
 {:toc}
 </details>
 
-# State Change Handling
+# High Level Information Flow
 
-The nodes shown below live on the robot execpt global planner and offboard comms
-which are on the offboard server
+![](/images/robot_bringup/High%20Level.png)
 
-![](/images/Software_Arch/Robot_control_arch.png)
+# State Machine and Motion Action Servers
+
+![](/images/robot_bringup/Low_level.png)
+
+## State Machine
+
+TBD
+
+## Motion Action Server
+
+Each node of motion action server represents one form of Navigation
+
+- Navigation Action Server
+- Dock/Undock Action Server
 
 Run:
 
@@ -38,7 +50,7 @@ ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock "{se
 ```
 
 
-# Navigation, Planner and Localization Setup
+# Navigation, Planner and Localization Setup to test Integration
 
 ```bash
 ros2_foxy_docker
