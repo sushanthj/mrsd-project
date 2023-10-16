@@ -1,8 +1,8 @@
 ---
 layout: page
-title: PCL Localization Integration
+title: Neobotix-Orin Networking
 parent: Robot Software Integration
-nav_order: 1
+nav_order: 4
 ---
 
 <details open markdown="block">
@@ -14,67 +14,49 @@ nav_order: 1
 {:toc}
 </details>
 
-# Setup for Localization
+# Orin - AMR - LIDAR Networking
 
-This instruction set assumes that you are inside the `mfi_amr_ws` docker image that lies inside the host machine
+Created by: Sushanth Jayanth
+Created time: September 25, 2023 11:05 AM
 
-- Initialize the docker image and hop into it
+# Starting Issue
 
-```bash
-ros2_foxy_docker
-```
+To begin, the setup looks like the following:
 
-- Once inside the docker launch multiple windows and `source install/setup.bash` in each of them.
-- For the pcl_localization package, check the localization.yaml file and ensure the right path to the .pcd file has been used. Additionally, ensure it is subscribing to the right odom topic (here rf2o is the source of odometry)
-- Then run the following commands in the below order:
+- Orin and LIDAR is connected over Ethernet (utilizing the Ethernet port)
+- Orin has internal wifi card to connect to WiFi network
+- The AMR’s compute is connected to WiFi to begin, but has Ethernet ports and USB ports avialable
 
-```bash
-ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py
+Hence, because the Ethernet port of the Orin is occupied with the LIDAR, we need to utilize ‘USB Networking’ to enable the Orin to share data over usb.
 
-ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py
+# Current Fix
 
-ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py
+The ‘USB Networking’ has to be setup to share data as shown below. I specifically used an Ethernet cable to connect the Ethernet port on the AMR to the type-C USB port on the rearside (opposite side as HDMI/DP port) of the Orin. **This required the usage of a Ethernet-to-Type-C adapter (passive device)**
 
-rviz2
-```
+## On the Orin (Host PC)
 
-Once the above nodes are running rviz will show the pcl-localization pointcloud along with the pre-made map (saved as a .pcd)
+1. Open your Network Manager via the Network Icon on the Unity Panel:
+   ![](/images/robot_bringup/networking/image.png)
 
-A few caveats for pcl_localization_ros2
+2. Go all the way down to the **Edit Connections** option and click on it.
+   ![](/images/robot_bringup/networking/image%20(1).png)
 
-- We need to make sure that velodyne (LIDAR) frame is tied somewhere to the robot (here we set it as static transform). This is found in the the launch file for `pcl_localization_ros2`
+3. You will appear on the Wired Tab. Each Wired connection is by default related to each Ethernet Wired NIC card you have. For example if you have 2 Wired NICs you will see 2 options here. In the image below you see one since this is a Laptop and they normally have one. Select the Wired connection you wish to edit and double click on it or select the EDIT button.
+   ![](/images/robot_bringup/networking/image%20(2).png)
 
-```python
+4. You will appear on the Wired Tab (Again). This time, go to the IPv4 Settings if you are using IPv4 or IPv6 if you are using that one. On the **Method** option select **Share to Other Computers**. Now SAVE. You are done.
+   ![](/images/robot_bringup/networking/image%20(3).png)
 
-def generate_launch_description():
+## On AMR PC (Client PC)
 
-    ld = launch.LaunchDescription()
+This computer can be accessed by connecting the AMR’s Display Port to a monitor and setting the wired connection settings to what is shown below:
 
-    lidar_tf = launch_ros.actions.Node(
-        name='lidar_tf',
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=['0','0','0','0','0','0','1','robot2/base_link','velodyne']
-        )
-```
+![](/images/robot_bringup/networking/image(4).png)
 
-![](/images/robot_bringup/Localization_Integration/tf_tree_1.png)
+The Additional DNS servers may need to be changed (to the Orin’s IP), but setting it to the default shown in the image seems to work fine right now.
 
-- Further, to connect the odom to the robot’s base link, we will need to do
+# Benefits/Drawbacks of Above Networking
 
-```bash
-#include <pcl_localization/pcl_localization_component.hpp>
-PCLLocalization::PCLLocalization(const rclcpp::NodeOptions & options)
-: rclcpp_lifecycle::LifecycleNode("pcl_localization", options),
-  broadcaster_(this)
-{
-  declare_parameter("global_frame_id", "map");
-  declare_parameter("odom_frame_id", "/robot2/odom");
-  declare_parameter("base_frame_id", "/robot2/baselink");
-  declare_parameter("registration_method", "NDT");
-}
-```
-
-- The changes results in the following TF tree as shown below
-
-![](/images/robot_bringup/Localization_Integration/tf_tree_2.png)
+1. Because of no intermediate switch (only a passive adapter to convert Ethernet to type-C USB), low latency on comms
+2. All ROS2 topics generated on the AMR are available on the Orin
+3. Connecting the Orin to the Internet allows the AMR PC to also have network access (although via the Orin)

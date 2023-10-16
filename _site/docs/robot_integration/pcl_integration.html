@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="/assets/css/just-the-docs-default.css">
+
+  
+
+  
+    <script type="text/javascript" src="/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>PCL Localization Integration | Team Dock Dock Go!</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="PCL Localization Integration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="MRSD project Team H’s system description" />
+<meta property="og:description" content="MRSD project Team H’s system description" />
+<link rel="canonical" href="http://localhost:4000/docs/robot_integration/pcl_integration.html" />
+<meta property="og:url" content="http://localhost:4000/docs/robot_integration/pcl_integration.html" />
+<meta property="og:site_name" content="Team Dock Dock Go!" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PCL Localization Integration" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"MRSD project Team H’s system description","headline":"PCL Localization Integration","url":"http://localhost:4000/docs/robot_integration/pcl_integration.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="svg-link" viewBox="0 0 24 24">
+      <title>Link</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+    </symbol>
+    <symbol id="svg-search" viewBox="0 0 24 24">
+      <title>Search</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-menu" viewBox="0 0 24 24">
+      <title>Menu</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+        <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </symbol>
+    <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+      <title>Expand</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </symbol>
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+      <title>Document</title>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+      </svg>
+    </symbol>
+  </svg>
+
+  <div class="side-bar">
+    <div class="site-header">
+      <a href="http://localhost:4000/" class="site-title lh-tight">
+  Team Dock Dock Go!
+
+</a>
+      <a href="#" id="menu-button" class="site-button">
+        <svg viewBox="0 0 24 24" class="icon"><use xlink:href="#svg-menu"></use></svg>
+      </a>
+    </div>
+    <nav role="navigation" aria-label="Main" id="site-nav" class="site-nav">
+      
+        <ul class="nav-list"><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Nav2" class="nav-list-link">Nav2</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Nav2/costmap_updates.html" class="nav-list-link">Costmap Plugins</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Simulation" class="nav-list-link">Simulation Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/build_floorplan.html" class="nav-list-link">Gazebo Environment and Mapping</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/model_basics.html" class="nav-list-link">Understand Model and World Files</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/navigation.html" class="nav-list-link">Navigating in Simulation</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/svd_demo.html" class="nav-list-link">Creating Custom World for SVD</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/Simulation/adding_lidar.html" class="nav-list-link">Adding Lidar in Simulation</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/" class="nav-list-link">Home</a></li><li class="nav-list-item active"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/robot_integration" class="nav-list-link">Robot Software Integration</a><ul class="nav-list "><li class="nav-list-item  active"><a href="http://localhost:4000/docs/robot_integration/pcl_integration.html" class="nav-list-link active">PCL Localization Integration</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/robot_integration/neobotix_compute.html" class="nav-list-link">Working on Neobotix Compute</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/robot_integration/software_arch.html" class="nav-list-link">High Level Navigation and Comms Integration</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/robot_integration/neobotix_orin_networking.html" class="nav-list-link">Neobotix-Orin Networking</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/ros" class="nav-list-link">ROS Learnings</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/basics.html" class="nav-list-link">Basics</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/ros/subscribers.html" class="nav-list-link">Building Subscribers and Publishers</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/intro/" class="nav-list-link">Building this Website</a></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/software_bringup" class="nav-list-link">Systems Setup</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/ros_setup_2.html" class="nav-list-link">ROS2 on the Jetson and Desktop</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/RealSense.html" class="nav-list-link">RealSense Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/vscode.html" class="nav-list-link">VS Code Setup</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/software_bringup/docker_image_management.html" class="nav-list-link">Docker and Dockerhub</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Mechanical" class="nav-list-link">Mechanical Development</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Mechanical/frame.html" class="nav-list-link">Frame Design</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/SLAM_toolbox" class="nav-list-link">Understanding SLAM Toolbox</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/SLAM_Toolbox/running.html" class="nav-list-link">Running SLAM Toolbox</a></li><li class="nav-list-item "><a href="http://localhost:4000/docs/SLAM_Toolbox/setup.html" class="nav-list-link">Setup for SLAM Toolbox</a></li></ul></li><li class="nav-list-item"><a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a><a href="http://localhost:4000/docs/Localization" class="nav-list-link">Robot Localization</a><ul class="nav-list "><li class="nav-list-item "><a href="http://localhost:4000/docs/Localization/AMCL.html" class="nav-list-link">AMCL</a></li></ul></li><li class="nav-list-item"><a href="http://localhost:4000/git_concepts" class="nav-list-link">Git Usage</a></li><li class="nav-list-item"><a href="http://localhost:4000/miscellaneous" class="nav-list-link">Miscellaneous yet Useful</a></li></ul>
+
+      
+    </nav>
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  </div>
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+      
+        <div class="search">
+          <div class="search-input-wrap">
+            <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search Team Dock Dock Go!" aria-label="Search Team Dock Dock Go!" autocomplete="off">
+            <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      
+      
+      
+        <nav aria-label="Auxiliary" class="aux-nav">
+          <ul class="aux-nav-list">
+            
+              <li class="aux-nav-list-item">
+                <a href="https://github.com/orgs/DockDockGo/repositories" class="site-button"
+                  
+                >
+                  Teams's GitHub
+                </a>
+              </li>
+            
+          </ul>
+        </nav>
+      
+    </div>
+    <div id="main-content-wrap" class="main-content-wrap">
+      
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <ol class="breadcrumb-nav-list">
+              
+                <li class="breadcrumb-nav-list-item"><a href="http://localhost:4000/docs/robot_integration">Robot Software Integration</a></li>
+              
+              <li class="breadcrumb-nav-list-item"><span>PCL Localization Integration</span></li>
+            </ol>
+          </nav>
+        
+      
+      <div id="main-content" class="main-content" role="main">
+        
+          <details open="">
+  <summary class="text-delta">
+    Table of contents
+  </summary>
+<ol id="markdown-toc">
+  <li><a href="#setup-for-localization" id="markdown-toc-setup-for-localization">Setup for Localization</a></li>
+</ol>
+
+</details>
+      <h1 id="setup-for-localization">
+        
+        
+          <a href="#setup-for-localization" class="anchor-heading" aria-labelledby="setup-for-localization"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Setup for Localization
+        
+        
+      </h1>
+    
+
+<p>This instruction set assumes that you are inside the <code class="language-plaintext highlighter-rouge">mfi_amr_ws</code> docker image that lies inside the host machine</p>
+
+<ul>
+  <li>Initialize the docker image and hop into it</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2_foxy_docker
+</code></pre></div></div>
+
+<ul>
+  <li>Once inside the docker launch multiple windows and <code class="language-plaintext highlighter-rouge">source install/setup.bash</code> in each of them.</li>
+  <li>For the pcl_localization package, check the localization.yaml file and ensure the right path to the .pcd file has been used. Additionally, ensure it is subscribing to the right odom topic (here rf2o is the source of odometry)</li>
+  <li>Then run the following commands in the below order:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2 launch velodyne velodyne-all-nodes-VLP16-launch.py
+
+ros2 launch rf2o_laser_odometry rf2o_laser_odometry.launch.py
+
+ros2 launch pcl_localization_ros2 pcl_localization_with_odom.launch.py
+
+rviz2
+</code></pre></div></div>
+
+<p>Once the above nodes are running rviz will show the pcl-localization pointcloud along with the pre-made map (saved as a .pcd)</p>
+
+<p>A few caveats for pcl_localization_ros2</p>
+
+<ul>
+  <li>We need to make sure that velodyne (LIDAR) frame is tied somewhere to the robot (here we set it as static transform). This is found in the the launch file for <code class="language-plaintext highlighter-rouge">pcl_localization_ros2</code></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+
+    <span class="n">ld</span> <span class="o">=</span> <span class="n">launch</span><span class="p">.</span><span class="n">LaunchDescription</span><span class="p">()</span>
+
+    <span class="n">lidar_tf</span> <span class="o">=</span> <span class="n">launch_ros</span><span class="p">.</span><span class="n">actions</span><span class="p">.</span><span class="n">Node</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s">'lidar_tf'</span><span class="p">,</span>
+        <span class="n">package</span><span class="o">=</span><span class="s">'tf2_ros'</span><span class="p">,</span>
+        <span class="n">executable</span><span class="o">=</span><span class="s">'static_transform_publisher'</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s">'0'</span><span class="p">,</span><span class="s">'0'</span><span class="p">,</span><span class="s">'0'</span><span class="p">,</span><span class="s">'0'</span><span class="p">,</span><span class="s">'0'</span><span class="p">,</span><span class="s">'0'</span><span class="p">,</span><span class="s">'1'</span><span class="p">,</span><span class="s">'robot2/base_link'</span><span class="p">,</span><span class="s">'velodyne'</span><span class="p">]</span>
+        <span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/images/robot_bringup/Localization_Integration/tf_tree_1.png" alt="" /></p>
+
+<ul>
+  <li>Further, to connect the odom to the robot’s base link, we will need to do</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#include &lt;pcl_localization/pcl_localization_component.hpp&gt;</span>
+PCLLocalization::PCLLocalization<span class="o">(</span>const rclcpp::NodeOptions &amp; options<span class="o">)</span>
+: rclcpp_lifecycle::LifecycleNode<span class="o">(</span><span class="s2">"pcl_localization"</span>, options<span class="o">)</span>,
+  broadcaster_<span class="o">(</span>this<span class="o">)</span>
+<span class="o">{</span>
+  declare_parameter<span class="o">(</span><span class="s2">"global_frame_id"</span>, <span class="s2">"map"</span><span class="o">)</span><span class="p">;</span>
+  declare_parameter<span class="o">(</span><span class="s2">"odom_frame_id"</span>, <span class="s2">"/robot2/odom"</span><span class="o">)</span><span class="p">;</span>
+  declare_parameter<span class="o">(</span><span class="s2">"base_frame_id"</span>, <span class="s2">"/robot2/baselink"</span><span class="o">)</span><span class="p">;</span>
+  declare_parameter<span class="o">(</span><span class="s2">"registration_method"</span>, <span class="s2">"NDT"</span><span class="o">)</span><span class="p">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>The changes results in the following TF tree as shown below</li>
+</ul>
+
+<p><img src="/images/robot_bringup/Localization_Integration/tf_tree_2.png" alt="" /></p>
+
+        
+
+        
+
+        
+        
+          <hr>
+          <footer>
+            
+
+            <p class="text-small text-grey-dk-100 mb-0"></p>
+
+            
+              <div class="d-flex mt-2">
+                
+                
+              </div>
+            
+          </footer>
+        
+
+      </div>
+    </div>
+
+    
+      
+
+      <div class="search-overlay"></div>
+    
+  </div>
+</body>
+</html>
+

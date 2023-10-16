@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Working on Neobotix Compute
-parent: Robot Bringup
+parent: Robot Software Integration
 nav_order: 2
 ---
 
@@ -27,3 +27,5 @@ nav_order: 2
 
 # Running Teleop
 
+This is started by running the neo_mp400 bringup launch file (automatically started upon
+booting of the robot)

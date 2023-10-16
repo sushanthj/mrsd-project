@@ -16,7 +16,7 @@ nav_order: 1
 
 # Setup
 
-1. Get the latest updates from [robot_setup_tool][https://github.com/DockDockGo/robot-setup-tool/tree/ros2] repo
+1. Get the latest updates from [robot_setup_tool](https://github.com/DockDockGo/robot-setup-tool/tree/ros2) repo
 2. Launch docker (preferably use the sushantj/humble_sim_mapping_built docker image from dockerhub)
 3. from ```world_files/todo_copy_to_docker/to_copy_lidar/``` copy the setup_script.sh to the docker
 4. run the setup script: ```bash setup_script.sh```

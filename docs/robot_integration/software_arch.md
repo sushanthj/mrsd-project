@@ -1,7 +1,7 @@
 ---
 layout: page
 title: High Level Navigation and Comms Integration
-parent: Robot Bringup
+parent: Robot Software Integration
 nav_order: 3
 ---
 
@@ -20,7 +20,7 @@ nav_order: 3
 
 # State Machine and Motion Action Servers
 
-![](/images/robot_bringup/Low_level.png)
+![](/images/robot_bringup/low_level_v2.png)
 
 ## State Machine
 
