@@ -13,7 +13,13 @@ mobile robot capable of transporting LEGOs for MFI's Testbed
 
 ![](/images/team-logo.png)
 
-![](/images/robot-intro.gif)
+# Robots in Action!
+
+![](/images/dock_undock.gif)
+
+# Team Github
+
+Please find our [open source work here](https://github.com/orgs/DockDockGo/repositories) 
 
 ## SVD
 

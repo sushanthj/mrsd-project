@@ -147,11 +147,19 @@
 <ol id="markdown-toc">
   <li><a href="#high-level-information-flow" id="markdown-toc-high-level-information-flow">High Level Information Flow</a></li>
   <li><a href="#state-machine-and-motion-action-servers" id="markdown-toc-state-machine-and-motion-action-servers">State Machine and Motion Action Servers</a>    <ol>
-      <li><a href="#state-machine" id="markdown-toc-state-machine">State Machine</a></li>
-      <li><a href="#motion-action-server" id="markdown-toc-motion-action-server">Motion Action Server</a></li>
+      <li><a href="#state-machine-irl" id="markdown-toc-state-machine-irl">State Machine IRL</a></li>
+      <li><a href="#motion-action-server" id="markdown-toc-motion-action-server">Motion Action Server</a>        <ol>
+          <li><a href="#configured-setup-on-robots" id="markdown-toc-configured-setup-on-robots">Configured Setup on Robots</a></li>
+          <li><a href="#commands-to-test-state-machine-and-mission-control" id="markdown-toc-commands-to-test-state-machine-and-mission-control">Commands to Test State Machine and Mission Control</a></li>
+        </ol>
+      </li>
     </ol>
   </li>
-  <li><a href="#navigation-planner-and-localization-setup-to-test-integration" id="markdown-toc-navigation-planner-and-localization-setup-to-test-integration">Navigation, Planner and Localization Setup to test Integration</a></li>
+  <li><a href="#integration-is-tiring" id="markdown-toc-integration-is-tiring">Integration is Tiring</a>    <ol>
+      <li><a href="#detailed-list-of-nodes-to-run" id="markdown-toc-detailed-list-of-nodes-to-run">Detailed List of Nodes to Run</a></li>
+    </ol>
+  </li>
+  <li><a href="#navigation-planner-and-localization-nodes-to-start" id="markdown-toc-navigation-planner-and-localization-nodes-to-start">Navigation, Planner and Localization Nodes to Start</a></li>
 </ol>
 
 </details>
@@ -175,16 +183,16 @@
     
 
 <p><img src="/images/robot_bringup/low_level_v2.png" alt="" /></p>
-      <h2 id="state-machine">
+      <h2 id="state-machine-irl">
         
         
-          <a href="#state-machine" class="anchor-heading" aria-labelledby="state-machine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> State Machine
+          <a href="#state-machine-irl" class="anchor-heading" aria-labelledby="state-machine-irl"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> State Machine IRL
         
         
       </h2>
     
 
-<p>TBD</p>
+<p><img src="/images/dock_undock.gif" alt="" /></p>
       <h2 id="motion-action-server">
         
         
@@ -200,25 +208,90 @@
   <li>Navigation Action Server</li>
   <li>Dock/Undock Action Server</li>
 </ul>
+      <h3 id="configured-setup-on-robots">
+        
+        
+          <a href="#configured-setup-on-robots" class="anchor-heading" aria-labelledby="configured-setup-on-robots"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Configured Setup on Robots
+        
+        
+      </h3>
+    
 
-<p>Run:</p>
+<ul>
+  <li>Each <strong>robots on startup will launch all necessary nodes</strong> (mentioned in detailed section below)</li>
+  <li>The nodes will also be namespaced automatically</li>
+  <li>Only the <strong>Robot Mission Control</strong> node will have to run manually on the server computer as of now</li>
+</ul>
+      <h3 id="commands-to-test-state-machine-and-mission-control">
+        
+        
+          <a href="#commands-to-test-state-machine-and-mission-control" class="anchor-heading" aria-labelledby="commands-to-test-state-machine-and-mission-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Commands to Test State Machine and Mission Control
+        
+        
+      </h3>
+    
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ros2 launch robot_motion_server motion_servers.launch.py
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># sample state machine action goal to test simple navigation (ensure goal positions are valid in map)</span>
+ros2 action send_goal /StateMachine robot_action_interfaces/action/StateMachine <span class="s2">"{start_dock_id: 1, end_dock_id: 2, goals: [{header: {frame_id: 'map'}, pose: {position: {x: -4.0, y: -1.7627, z: 0.0}, orientation: {x: 0.0, y: 0.0, z: 0.6626, w: 0.7489}}}]}"</span>
+
+<span class="c"># Send example command</span>
+ros2 action send_goal /MissionControl robot_action_interfaces/action/MissionControl <span class="s2">"robot_specific_dock_ids: [1, 2]"</span>
+</code></pre></div></div>
+      <h1 id="integration-is-tiring">
+        
+        
+          <a href="#integration-is-tiring" class="anchor-heading" aria-labelledby="integration-is-tiring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration is Tiring
+        
+        
+      </h1>
+    
+
+<p><img src="/images/robot_bringup/robot-dining.jpg" alt="" /></p>
+      <h3 id="detailed-list-of-nodes-to-run">
+        
+        
+          <a href="#detailed-list-of-nodes-to-run" class="anchor-heading" aria-labelledby="detailed-list-of-nodes-to-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Detailed List of Nodes to Run
+        
+        
+      </h3>
+    
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Launch Nav2</span>
+ros2 launch neo_mp400-2 navigation.launch.py
+
+<span class="c"># Launch DDG Waypoint Follower (one per robot)</span>
+<span class="c"># cd to the workspace</span>
+<span class="c"># source install/setup.bash</span>
+ros2 launch ddg_waypoint_follower ddg_waypoint_follower.launch.py use_sim:<span class="o">=</span>True namespace:<span class="o">=</span><span class="s2">"robot1"</span>
+
+<span class="c"># Launch CBS Planner</span>
+ros2 launch ddg_multi_robot_planner multi_robot_planner.launch.py
+
+<span class="c"># Launch motion action servers</span>
+ros2 launch robot_motion_server motion_servers.launch.py
 <span class="c"># or</span>
 ros2 run robot_motion_server robot_motion_server_node
 
-<span class="c"># then</span>
-ros2 run robot_action_interfaces robot_pose_server.py
+<span class="c"># Launch State Machine</span>
+<span class="c"># With Namespacing (multi robot)</span>
+ros2 launch robot_state_machine state_machine.launch.py use_namespace:<span class="o">=</span>True namespace:<span class="o">=</span><span class="s2">"robot1"</span>
+<span class="c"># or</span>
+ros2 run robot_state_machine robot_state_machine_node use_namespace:<span class="o">=</span>True namespace:<span class="o">=</span><span class="s2">"robot1"</span>
 
-<span class="c"># then two action client calls</span>
-ros2 action send_goal /Navigate robot_action_interfaces/action/Navigate <span class="s2">"{secs: 1.0}"</span>
+<span class="c"># Without Namespacing (single robot)</span>
+ros2 launch robot_state_machine state_machine.launch.py
 
-ros2 action send_goal /DockUndock robot_action_interfaces/action/DockUndock <span class="s2">"{secs: 1.0}"</span>
+<span class="c"># Launch Mission Control</span>
+<span class="c"># With Namespacing (multi robot)</span>
+ros2 launch robot_mission_control mission_control.launch.py
+
+<span class="c"># For Single Robot</span>
+ros2 launch robot_mission_control mission_control_single.launch.py
 </code></pre></div></div>
-      <h1 id="navigation-planner-and-localization-setup-to-test-integration">
+      <h1 id="navigation-planner-and-localization-nodes-to-start">
         
         
-          <a href="#navigation-planner-and-localization-setup-to-test-integration" class="anchor-heading" aria-labelledby="navigation-planner-and-localization-setup-to-test-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Navigation, Planner and Localization Setup to test Integration
+          <a href="#navigation-planner-and-localization-nodes-to-start" class="anchor-heading" aria-labelledby="navigation-planner-and-localization-nodes-to-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Navigation, Planner and Localization Nodes to Start
         
         
       </h1>
@@ -236,8 +309,6 @@ ros2 launch nav2_map_server_start nav2_custom_bringup.launch.py
 
 ros2 launch rviz2
 </code></pre></div></div>
-
-<p>The nav2_configs has an rviz config which should be used</p>
 
         
 
