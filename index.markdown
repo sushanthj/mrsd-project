@@ -17,12 +17,16 @@ mobile robot capable of transporting LEGOs for MFI's Testbed
 
 ![](/images/dock_undock.gif)
 
-# Team Github
+# Team Website
 
-Please find our [open source work here](https://github.com/orgs/DockDockGo/repositories) 
+Please find our [Official Webpage Here](https://mrsdprojects.ri.cmu.edu/2023teamh/) 
 
 ## SVD
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/T0qUSdnG7XM?si=wJke8Ij1X7ki77Gm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## FVD (Dec. 2023)
+## FVD (Nov. 2023)
+
+# Project Life
+
+![](/images/robot_bringup/robot-dining.jpg)
